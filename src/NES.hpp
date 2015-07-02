@@ -1,0 +1,34 @@
+/*
+ * NES.hpp
+ *
+ *  Created on: 2 de jul. de 2015
+ *      Author: ibon
+ */
+
+#ifndef NES_HPP_
+#define NES_HPP_
+
+#include "cpu/CPU.hpp"
+#include "mappers/Mapper.h"
+#include "ppu/PPU.hpp"
+#include "ROM.hpp"
+#include <iostream>
+
+using namespace std;
+
+class NES {
+public:
+	NES();
+	virtual ~NES();
+
+	// Ejecuta la NES
+	void run();
+
+private:
+	ROM rom;			// Rom del juego
+	Mapper mapper;		// Mapper del cartucho
+	CPU cpu;			// CPU de la NES
+	PPU ppu;			// PPU de la NES
+};
+
+#endif /* NES_HPP_ */
