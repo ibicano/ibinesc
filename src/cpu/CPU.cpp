@@ -16,3 +16,9 @@ CPU::~CPU() {
 	// TODO Auto-generated destructor stub
 }
 
+
+// TODO: implementar esta función
+Instruction* CPU::fetchInst() {
+	return NULL;
+}
+

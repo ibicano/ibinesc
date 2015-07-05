@@ -20,8 +20,8 @@ public:
 	Joypad();
 	virtual ~Joypad();
 
-	int read_reg();			// Lee el registro del dispositivo
-	void write_reg();		// Escribe el registro del dispositivo
+	int readReg();			// Lee el registro del dispositivo
+	void writeReg();		// Escribe el registro del dispositivo
 
 
 	// Lee y establece el valor de los botones
@@ -50,7 +50,7 @@ public:
 	void setUp(bool up);
 
 protected:
-	int read_count;			// Contador del número de lectura del dispositivo
+	int readCount;			// Contador del número de lectura del dispositivo
 	int write;				// Almacena el valor del bit de la última escritura al registro de input
 
 	// Variables que indican el estado de los controles

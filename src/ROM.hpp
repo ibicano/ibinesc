@@ -17,7 +17,7 @@ public:
 	virtual ~ROM();
 
 	// Carga la ROM de un fichero
-	int load_file(string filename);
+	int loadFile(string filename);
 
 	/*
 	 * Devuelve el modo de mirroring indicado en la ROM:
@@ -26,16 +26,16 @@ public:
 	 * 2: single
 	 * 3: 4-screen
 	 */
-	int get_mirroring();
+	int getMirroring();
 
 	// Devuelve el código del Mapper de la ROM
-	int get_mapper_code();
+	int getMapperCode();
 
 	// Devuelve el número de bancos de programa de 16KB presentes en la ROM
-	int get_prg_count();
+	int getPrgCount();
 
 	// Devuelve el número de bancos de patrones de 8KB presentes en la ROM
-	int get_chr_count();
+	int getChrCount();
 
 	//TODO: Acabar la especificación de las funciones
 

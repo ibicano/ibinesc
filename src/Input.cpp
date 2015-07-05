@@ -8,7 +8,6 @@
 #include "Input.hpp"
 
 Input::Input() {
-	// TODO Auto-generated constructor stub
 
 }
 
@@ -16,3 +15,19 @@ Input::~Input() {
 	// TODO Auto-generated destructor stub
 }
 
+Joypad::Joypad() {
+	readCount = 0;
+	write = 0;
+
+	up = false;
+	down = false;
+	left = false;
+	right = false;
+	a = false;
+	b = false;
+	select = false;
+	start = false;
+}
+
+Joypad::~Joypad() {
+}

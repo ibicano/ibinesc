@@ -13,7 +13,7 @@ public:
 	PPU();
 	virtual ~PPU();
 
-	bool get_int_vblank();
+	bool getIntVblank();
 };
 
 #endif /* PPU_PPU_HPP_ */

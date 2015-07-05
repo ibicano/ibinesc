@@ -14,26 +14,26 @@ public:
 	virtual ~Instruction() = 0;
 
 	// Ejecuta la instrucción
-	virtual void execute() = 0;
+	virtual int execute() = 0;
 
 	// Devuelve el número de ciclos que consume la instrucción
-	virtual void get_cycles() = 0;
+	virtual void getCycles() = 0;
 
 	// Devuelve el operando de la instrucción
-	virtual void get_operand() = 0;
+	virtual void getOperand() = 0;
 
 	// Establece el oprando de la instrucción
-	virtual void set_operand() = 0;
+	virtual void setOperand() = 0;
 
 protected:
 	// Funciones que calculan la dirección de los modos de direccionamiento
-	int fetch_absolute_addrmode();
-	int fetch_indexed_abs_x_addrmode();
-	int fetch_indexed_abs_y_addrmode();
-	int fetch_indexed_zero_x_addrmode();
-	int fetch_indexed_zero_y_addrmode();
-	int fetch_preindexed_addrmode();
-	int fetch_postindexed_addrmode();
+	int fetchAbsoluteAddrmode();
+	int fetchIndexedAbsXAddrmode();
+	int fetchIndexedAbsYAddrmode();
+	int fetchIndexedZeroXAddrmode();
+	int fetchIndexedZeroYAddrmode();
+	int fetchPreindexedAddrmode();
+	int fetchPostindexedAddrmode();
 };
 
 #endif /* CPU_INSTRUCTION_HPP_ */

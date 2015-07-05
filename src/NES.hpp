@@ -9,9 +9,11 @@
 #define NES_HPP_
 
 #include "cpu/CPU.hpp"
+#include "cpu/Instruction.hpp"
 #include "mappers/Mapper.h"
 #include "ppu/PPU.hpp"
 #include "ROM.hpp"
+#include "Input.hpp"
 #include <iostream>
 
 using namespace std;
@@ -25,10 +27,11 @@ public:
 	void run();
 
 private:
-	ROM rom;			// Rom del juego
-	Mapper mapper;		// Mapper del cartucho
-	CPU cpu;			// CPU de la NES
-	PPU ppu;			// PPU de la NES
+	ROM* rom;			// Rom del juego
+	Mapper* mapper;		// Mapper del cartucho
+	CPU* cpu;			// CPU de la NES
+	PPU* ppu;			// PPU de la NES
+	Joypad* joypad;
 };
 
 #endif /* NES_HPP_ */

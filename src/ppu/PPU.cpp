@@ -16,6 +16,6 @@ PPU::~PPU() {
 	// TODO Auto-generated destructor stub
 }
 
-bool PPU::get_int_vblank() {
+bool PPU::getIntVblank() {
 	return false;
 }
