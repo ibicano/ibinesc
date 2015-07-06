@@ -169,4 +169,199 @@ class ADC_postindexi : public ADC {
 };
 
 
+/******************************************************************************
+ * AND: And memory with accumulator
+ *****************************************************************************/
+class AND : public Instruction {
+public:
+	AND(int operand, CPU* cpu);
+	virtual ~AND();
+
+	virtual int execute(int op);
+
+};//class AND
+
+
+class AND_inmediate : public AND {
+	// Constantes
+	static const int OPCODE = 0x29;
+	static const int BYTES = 2;
+	static const int CYCLES = 2;
+
+	AND_inmediate(int operand, CPU* cpu);
+	virtual ~AND_inmediate();
+
+	int execute();
+};
+
+
+class AND_zero : public AND {
+	// Constantes
+	static const int OPCODE = 0x25;
+	static const int BYTES = 2;
+	static const int CYCLES = 3;
+
+	AND_zero(int operand, CPU* cpu);
+	virtual ~AND_zero();
+
+	int execute();
+};
+
+
+class AND_zerox : public AND {
+	// Constantes
+	static const int OPCODE = 0x35;
+	static const int BYTES = 2;
+	static const int CYCLES = 4;
+
+	AND_zerox(int operand, CPU* cpu);
+	virtual ~AND_zerox();
+
+	int execute();
+};
+
+
+class AND_abs : public AND {
+	// Constantes
+	static const int OPCODE = 0x2D;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	AND_abs(int operand, CPU* cpu);
+	virtual ~AND_abs();
+
+	int execute();
+};
+
+
+class AND_absx : public AND {
+	// Constantes
+	static const int OPCODE = 0x3D;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	AND_absx(int operand, CPU* cpu);
+	virtual ~AND_absx();
+
+	int execute();
+};
+
+
+class AND_absy : public AND {
+	// Constantes
+	static const int OPCODE = 0x39;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	AND_absy(int operand, CPU* cpu);
+	virtual ~AND_absy();
+
+	int execute();
+};
+
+
+class AND_preindexi : public AND {
+	// Constantes
+	static const int OPCODE = 0x21;
+	static const int BYTES = 2;
+	static const int CYCLES = 6;
+
+	AND_preindexi(int operand, CPU* cpu);
+	virtual ~AND_preindexi();
+
+	int execute();
+};
+
+
+class AND_postindexi : public AND {
+	// Constantes
+	static const int OPCODE = 0x31;
+	static const int BYTES = 2;
+	static const int CYCLES = 5;
+
+	AND_postindexi(int operand, CPU* cpu);
+	virtual ~AND_postindexi();
+
+	int execute();
+};
+
+
+/******************************************************************************
+ * ASL: Shift Left One Bit (Memory or Accumulator)
+ *****************************************************************************/
+class ASL : public Instruction {
+public:
+	ASL(int operASL, CPU* cpu);
+	virtual ~ASL();
+
+	virtual int execute(int op);
+
+};//class ASL
+
+
+class ASL_accumulator : public ASL {
+	// Constantes
+	static const int OPCODE = 0x0A;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	ASL_accumulator(int operASL, CPU* cpu);
+	virtual ~ASL_accumulator();
+
+	int execute();
+};
+
+
+class ASL_zero : public ASL {
+	// Constantes
+	static const int OPCODE = 0x06;
+	static const int BYTES = 2;
+	static const int CYCLES = 5;
+
+	ASL_zero(int operASL, CPU* cpu);
+	virtual ~ASL_zero();
+
+	int execute();
+};
+
+
+class ASL_zerox : public ASL {
+	// Constantes
+	static const int OPCODE = 0x16;
+	static const int BYTES = 2;
+	static const int CYCLES = 6;
+
+	ASL_zerox(int operASL, CPU* cpu);
+	virtual ~ASL_zerox();
+
+	int execute();
+};
+
+
+class ASL_abs : public ASL {
+	// Constantes
+	static const int OPCODE = 0x0E;
+	static const int BYTES = 3;
+	static const int CYCLES = 6;
+
+	ASL_abs(int operASL, CPU* cpu);
+	virtual ~ASL_abs();
+
+	int execute();
+};
+
+
+class ASL_absx : public ASL {
+	// Constantes
+	static const int OPCODE = 0x1E;
+	static const int BYTES = 3;
+	static const int CYCLES = 7;
+
+	ASL_absx(int operASL, CPU* cpu);
+	virtual ~ASL_absx();
+
+	int execute();
+};
+
+
 #endif /* CPU_INSTRUCTION_HPP_ */

@@ -28,7 +28,7 @@
 		<link>
 			<name>ibines</name>
 			<type>2</type>
-			<location>/home/ibon/Private/workspace/ibines/ibines</location>
+			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/ibines</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
