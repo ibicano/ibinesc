@@ -1,18 +1,18 @@
 /*
- * Mapper.cpp
+ * MMC1.cpp
  *
- *  Created on: 2 de jul. de 2015
+ *  Created on: 6 de jul. de 2015
  *      Author: ibon
  */
 
-#include "Mapper.hpp"
+#include "MMC1.hpp"
 
-Mapper::Mapper() {
+MMC1::MMC1() {
 	// TODO Auto-generated constructor stub
 
 }
 
-Mapper::~Mapper() {
+MMC1::~MMC1() {
 	// TODO Auto-generated destructor stub
 }
 

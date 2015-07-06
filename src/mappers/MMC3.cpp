@@ -1,18 +1,18 @@
 /*
- * Mapper.cpp
+ * MMC3.cpp
  *
- *  Created on: 2 de jul. de 2015
+ *  Created on: 6 de jul. de 2015
  *      Author: ibon
  */
 
-#include "Mapper.hpp"
+#include "MMC3.hpp"
 
-Mapper::Mapper() {
+MMC3::MMC3() {
 	// TODO Auto-generated constructor stub
 
 }
 
-Mapper::~Mapper() {
+MMC3::~MMC3() {
 	// TODO Auto-generated destructor stub
 }
 

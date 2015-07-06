@@ -7,11 +7,21 @@
 
 #include "NES.hpp"
 
+#include "mappers/CNROM.hpp"
+#include "mappers/MMC1.hpp"
+#include "mappers/MMC3.hpp"
+#include "mappers/NROM.hpp"
+
 NES::NES() {
 	rom = new ROM();
 	ppu = new PPU();
 	cpu = new CPU();
 	joypad = new Joypad();
+
+	if (rom->getMapperCode() == 0) mapper = new NROM();
+	else if (rom->getMapperCode() == 1) mapper = new MMC1();
+	else if (rom->getMapperCode() == 3) mapper = new CNROM();
+	else if (rom->getMapperCode() == 4) mapper = new MMC3();
 }
 
 NES::~NES() {

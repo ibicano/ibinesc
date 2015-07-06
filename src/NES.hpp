@@ -10,11 +10,11 @@
 
 #include "cpu/CPU.hpp"
 #include "cpu/Instruction.hpp"
-#include "mappers/Mapper.h"
 #include "ppu/PPU.hpp"
 #include "ROM.hpp"
 #include "Input.hpp"
 #include <iostream>
+#include "mappers/Mapper.hpp"
 
 using namespace std;
 

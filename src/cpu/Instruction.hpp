@@ -11,6 +11,8 @@
 // Clase abstracte que sirve como base para las instrucciones
 class Instruction {
 public:
+	Instruction(int operand, CPU* cpu);
+
 	virtual ~Instruction() = 0;
 
 	// Ejecuta la instrucción
@@ -26,6 +28,9 @@ public:
 	virtual void setOperand() = 0;
 
 protected:
+	int operand;
+	CPU* cpu;
+
 	// Funciones que calculan la dirección de los modos de direccionamiento
 	int fetchAbsoluteAddrmode();
 	int fetchIndexedAbsXAddrmode();

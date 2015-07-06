@@ -1,18 +1,18 @@
 /*
- * Mapper.cpp
+ * CNROM.cpp
  *
- *  Created on: 2 de jul. de 2015
+ *  Created on: 6 de jul. de 2015
  *      Author: ibon
  */
 
-#include "Mapper.hpp"
+#include "CNROM.hpp"
 
-Mapper::Mapper() {
+CNROM::CNROM() {
 	// TODO Auto-generated constructor stub
 
 }
 
-Mapper::~Mapper() {
+CNROM::~CNROM() {
 	// TODO Auto-generated destructor stub
 }
 

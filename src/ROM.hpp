@@ -7,9 +7,10 @@
 
 #ifndef ROM_HPP_
 #define ROM_HPP_
-#include <iosfwd>
 
-using std::string;
+#include <string>
+
+using namespace std;
 
 class ROM {
 public:

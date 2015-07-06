@@ -5,8 +5,8 @@
  *      Author: ibon
  */
 
-#ifndef MAPPERS_MAPPER_H_
-#define MAPPERS_MAPPER_H_
+#ifndef MAPPERS_MAPPER_HPP_
+#define MAPPERS_MAPPER_HPP_
 
 class Mapper {
 public:
@@ -14,4 +14,4 @@ public:
 	virtual ~Mapper();
 };
 
-#endif /* MAPPERS_MAPPER_H_ */
+#endif /* MAPPERS_MAPPER_HPP_ */

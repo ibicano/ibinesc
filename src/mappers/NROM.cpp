@@ -1,18 +1,18 @@
 /*
- * Mapper.cpp
+ * NROM.cpp
  *
- *  Created on: 2 de jul. de 2015
+ *  Created on: 6 de jul. de 2015
  *      Author: ibon
  */
 
-#include "Mapper.hpp"
+#include "NROM.hpp"
 
-Mapper::Mapper() {
+NROM::NROM() {
 	// TODO Auto-generated constructor stub
 
 }
 
-Mapper::~Mapper() {
+NROM::~NROM() {
 	// TODO Auto-generated destructor stub
 }
 
