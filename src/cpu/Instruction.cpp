@@ -374,3 +374,54 @@ int ASL_absx::execute() {
 
 	return CYCLES;
 }
+
+
+/******************************************************************************
+ * BCC Branch on Carry Clear
+ *****************************************************************************/
+
+BCC::BCC(int operando, CPU* cpu) : Instruction(operando, cpu) {}
+
+int BCC::execute() {
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	if (!cpu->getReg_p_c_bit())
+		cpu->setRegPc(cpu->getRegPc() + c2ToInt(operand));
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * BCS Branch on carry set
+ *****************************************************************************/
+
+BCS::BCS(int operando, CPU* cpu) : Instruction(operando, cpu) {}
+
+int BCS::execute() {
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	if (cpu->getReg_p_c_bit())
+		cpu->setRegPc(cpu->getRegPc() + c2ToInt(operand));
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * BEQ Branch on result zero
+ *****************************************************************************/
+
+BEQ::BEQ(int operando, CPU* cpu) : Instruction(operando, cpu) {}
+
+int BEQ::execute() {
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	if (cpu->getReg_p_z_bit())
+		cpu->setRegPc(cpu->getRegPc() + c2ToInt(operand));
+
+	return CYCLES;
+}

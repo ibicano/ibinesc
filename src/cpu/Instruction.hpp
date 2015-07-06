@@ -30,7 +30,7 @@ public:
 	// Devuelve el número de ciclos que consume la instrucción
 	virtual void getCycles() = 0;
 
-	// Devuelve el operando de la instrucción
+	// Devuelve el operand de la instrucción
 	virtual void getOperand() = 0;
 
 	// Establece el oprando de la instrucción
@@ -291,7 +291,7 @@ class AND_postindexi : public AND {
  *****************************************************************************/
 class ASL : public Instruction {
 public:
-	ASL(int operASL, CPU* cpu);
+	ASL(int operand, CPU* cpu);
 	virtual ~ASL();
 
 	virtual int execute(int op);
@@ -305,7 +305,7 @@ class ASL_accumulator : public ASL {
 	static const int BYTES = 1;
 	static const int CYCLES = 2;
 
-	ASL_accumulator(int operASL, CPU* cpu);
+	ASL_accumulator(int operand, CPU* cpu);
 	virtual ~ASL_accumulator();
 
 	int execute();
@@ -318,7 +318,7 @@ class ASL_zero : public ASL {
 	static const int BYTES = 2;
 	static const int CYCLES = 5;
 
-	ASL_zero(int operASL, CPU* cpu);
+	ASL_zero(int operand, CPU* cpu);
 	virtual ~ASL_zero();
 
 	int execute();
@@ -331,7 +331,7 @@ class ASL_zerox : public ASL {
 	static const int BYTES = 2;
 	static const int CYCLES = 6;
 
-	ASL_zerox(int operASL, CPU* cpu);
+	ASL_zerox(int operand, CPU* cpu);
 	virtual ~ASL_zerox();
 
 	int execute();
@@ -344,7 +344,7 @@ class ASL_abs : public ASL {
 	static const int BYTES = 3;
 	static const int CYCLES = 6;
 
-	ASL_abs(int operASL, CPU* cpu);
+	ASL_abs(int operand, CPU* cpu);
 	virtual ~ASL_abs();
 
 	int execute();
@@ -357,11 +357,62 @@ class ASL_absx : public ASL {
 	static const int BYTES = 3;
 	static const int CYCLES = 7;
 
-	ASL_absx(int operASL, CPU* cpu);
+	ASL_absx(int operand, CPU* cpu);
 	virtual ~ASL_absx();
 
 	int execute();
 };
+
+
+/******************************************************************************
+ * BCC Branch on Carry Clear
+ *****************************************************************************/
+class BCC : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0x90;
+	static const int BYTES = 2;
+	static const int CYCLES = 2;
+
+	BCC(int operand, CPU* cpu);
+	~BCC();
+
+	int execute();
+};//class BCC
+
+
+/******************************************************************************
+ * BCS Branch on carry set
+ *****************************************************************************/
+class BCS : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0xB0;
+	static const int BYTES = 2;
+	static const int CYCLES = 2;
+
+	BCS(int operand, CPU* cpu);
+	~BCS();
+
+	int execute();
+};//class BCS
+
+
+/******************************************************************************
+ * BEQ Branch on result zero
+ *****************************************************************************/
+class BEQ : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0xF0;
+	static const int BYTES = 2;
+	static const int CYCLES = 2;
+
+	BEQ(int operand, CPU* cpu);
+	~BEQ();
+
+	int execute();
+};//class BEQ
 
 
 #endif /* CPU_INSTRUCTION_HPP_ */
