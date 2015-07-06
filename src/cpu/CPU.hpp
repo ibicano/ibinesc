@@ -9,12 +9,14 @@
 #define CPU_CPU_HPP_
 
 #include "../Memory.hpp"
-#include "Instruction.hpp"
 #include <iostream>
+
+// Forward para evitar el include
+class Instruction;
 
 class CPU {
 public:
-	CPU();
+	CPU(Memory* mem, PPU* ppu);
 	virtual ~CPU();
 
 	// Procesan interrupciones
@@ -31,6 +33,7 @@ public:
 	// Devuelven el contenido de los registros
 	int getRegPc();
 	int getRegSp();
+	int getRegA();
 	int getRegX();
 	int getRegY();
 	int getRegP();
@@ -38,6 +41,7 @@ public:
 	// Escriben el contenido de los registros
 	void setRegPc(int v);
 	void setRegSp(int v);
+	void setRegA(int v);
 	void setRegX(int v);
 	void setRegY(int v);
 	void setRegP(int v);
@@ -78,8 +82,21 @@ public:
 
 
 private:
+	// Variables de instancia
+	Memory* mem;		// Memoria principal
+	PPU* ppu;			// Procesador gráfico
+
+	// Variables de los registros
+	int regPc;
+	int regSp;
+	int regA;
+	int regX;
+	int regY;
+	int regP;
+
 	// Procesa una interrupción
 	void interrupt();
-};
+
+};// class CPU;
 
 #endif /* CPU_CPU_HPP_ */

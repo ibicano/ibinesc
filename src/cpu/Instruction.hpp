@@ -8,9 +8,18 @@
 #ifndef CPU_INSTRUCTION_HPP_
 #define CPU_INSTRUCTION_HPP_
 
+// Forward para evitar el include
+class CPU;
+
 // Clase abstracte que sirve como base para las instrucciones
 class Instruction {
 public:
+	// Constantes
+	static const int OPCODE = 0;
+	static const int BYTES = 0;
+	static const int CYCLES = 0;
+
+	// Métodos públicos
 	Instruction(int operand, CPU* cpu);
 
 	virtual ~Instruction() = 0;
@@ -39,6 +48,21 @@ protected:
 	int fetchIndexedZeroYAddrmode();
 	int fetchPreindexedAddrmode();
 	int fetchPostindexedAddrmode();
-};
+
+};//class Instruction
+
+
+/******************************************************************************
+ * ADC: Add memory to accumulator with carry
+ *****************************************************************************/
+class ADC : public Instruction {
+public:
+	ADC(int operand, CPU* cpu);
+	virtual ~ADC();
+
+	int execute(int op);
+
+};//class ADC
+
 
 #endif /* CPU_INSTRUCTION_HPP_ */
