@@ -60,9 +60,113 @@ public:
 	ADC(int operand, CPU* cpu);
 	virtual ~ADC();
 
-	int execute(int op);
+	virtual int execute(int op);
 
 };//class ADC
+
+
+class ADC_inmediate : public ADC {
+	// Constantes
+	static const int OPCODE = 0x69;
+	static const int BYTES = 2;
+	static const int CYCLES = 2;
+
+	ADC_inmediate(int operand, CPU* cpu);
+	virtual ~ADC_inmediate();
+
+	int execute();
+};
+
+
+class ADC_zero : public ADC {
+	// Constantes
+	static const int OPCODE = 0x65;
+	static const int BYTES = 2;
+	static const int CYCLES = 3;
+
+	ADC_zero(int operand, CPU* cpu);
+	virtual ~ADC_zero();
+
+	int execute();
+};
+
+
+class ADC_zerox : public ADC {
+	// Constantes
+	static const int OPCODE = 0x75;
+	static const int BYTES = 2;
+	static const int CYCLES = 4;
+
+	ADC_zerox(int operand, CPU* cpu);
+	virtual ~ADC_zerox();
+
+	int execute();
+};
+
+
+class ADC_abs : public ADC {
+	// Constantes
+	static const int OPCODE = 0x6D;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	ADC_abs(int operand, CPU* cpu);
+	virtual ~ADC_abs();
+
+	int execute();
+};
+
+
+class ADC_absx : public ADC {
+	// Constantes
+	static const int OPCODE = 0x7D;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	ADC_absx(int operand, CPU* cpu);
+	virtual ~ADC_absx();
+
+	int execute();
+};
+
+
+class ADC_absy : public ADC {
+	// Constantes
+	static const int OPCODE = 0x79;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	ADC_absy(int operand, CPU* cpu);
+	virtual ~ADC_absy();
+
+	int execute();
+};
+
+
+class ADC_preindexi : public ADC {
+	// Constantes
+	static const int OPCODE = 0x61;
+	static const int BYTES = 2;
+	static const int CYCLES = 6;
+
+	ADC_preindexi(int operand, CPU* cpu);
+	virtual ~ADC_preindexi();
+
+	int execute();
+};
+
+
+class ADC_postindexi : public ADC {
+	// Constantes
+	static const int OPCODE = 0x71;
+	static const int BYTES = 2;
+	static const int CYCLES = 5;
+
+	ADC_postindexi(int operand, CPU* cpu);
+	virtual ~ADC_postindexi();
+
+	int execute();
+};
 
 
 #endif /* CPU_INSTRUCTION_HPP_ */

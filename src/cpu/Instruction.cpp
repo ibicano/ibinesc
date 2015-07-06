@@ -96,3 +96,81 @@ int ADC::execute(int op) {
 
 	return CYCLES;
 }
+
+
+// ADC_inmediate
+ADC_inmediate::ADC_inmediate(int operand, CPU* cpu) : ADC(operand, cpu) {}
+
+int ADC_inmediate::execute() {
+	return ADC::execute(operand);
+}
+
+
+// ADC_zero
+ADC_zero::ADC_zero(int operand, CPU* cpu) : ADC(operand, cpu) {}
+
+int ADC_zero::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return ADC::execute(op);
+}
+
+
+// ADC_zerox
+ADC_zerox::ADC_zerox(int operand, CPU* cpu) : ADC(operand, cpu) {}
+
+int ADC_zerox::execute() {
+	int addr = fetchIndexedZeroXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return ADC::execute(op);
+}
+
+
+// ADC_abs
+ADC_abs::ADC_abs(int operand, CPU* cpu) : ADC(operand, cpu) {}
+
+int ADC_abs::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return ADC::execute(op);
+}
+
+
+// ADC_absx
+ADC_absx::ADC_absx(int operand, CPU* cpu) : ADC(operand, cpu) {}
+
+int ADC_absx::execute() {
+	int addr = fetchIndexedAbsXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return ADC::execute(op);
+}
+
+
+// ADC_absy
+ADC_absy::ADC_absy(int operand, CPU* cpu) : ADC(operand, cpu) {}
+
+int ADC_absy::execute() {
+	int addr = fetchIndexedAbsYAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return ADC::execute(op);
+}
+
+
+// ADC_preindexi
+ADC_preindexi::ADC_preindexi(int operand, CPU* cpu) : ADC(operand, cpu) {}
+
+int ADC_preindexi::execute() {
+	int addr = fetchPreindexedAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return ADC::execute(op);
+}
+
+
+// ADC_postindexi
+ADC_postindexi::ADC_postindexi(int operand, CPU* cpu) : ADC(operand, cpu) {}
+
+int ADC_postindexi::execute() {
+	int addr = fetchPostindexedAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return ADC::execute(op);
+}
