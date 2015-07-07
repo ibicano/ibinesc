@@ -415,4 +415,209 @@ public:
 };//class BEQ
 
 
+/******************************************************************************
+ * BIT Test bits in memory with accumulator
+ *****************************************************************************/
+class BIT : public Instruction {
+public:
+	BIT(int operand, CPU* cpu);
+	virtual ~BIT();
+
+	virtual int execute();
+
+};//class BIT
+
+
+class BIT_zero : public BIT {
+	// Constantes
+	static const int OPCODE = 0x24;
+	static const int BYTES = 2;
+	static const int CYCLES = 3;
+
+	BIT_zero(int operand, CPU* cpu);
+	virtual ~BIT_zero();
+};//class BIT_zero
+
+
+class BIT_abs : public BIT {
+	// Constantes
+	static const int OPCODE = 0x2C;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	BIT_abs(int operand, CPU* cpu);
+	virtual ~BIT_abs();
+};//class BIT_abs
+
+
+/******************************************************************************
+ * BMI Branch on result minus
+ *****************************************************************************/
+class BMI : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0x30;
+	static const int BYTES = 2;
+	static const int CYCLES = 2;
+
+	BMI(int operand, CPU* cpu);
+	~BMI();
+
+	int execute();
+};//class BMI
+
+
+/******************************************************************************
+ * BNE Branch on result not zero
+ *****************************************************************************/
+class BNE : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0xD0;
+	static const int BYTES = 2;
+	static const int CYCLES = 2;
+
+	BNE(int operand, CPU* cpu);
+	~BNE();
+
+	int execute();
+};//class BNE
+
+
+/******************************************************************************
+ * BPL Branch on result plus
+ *****************************************************************************/
+class BPL : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0x10;
+	static const int BYTES = 2;
+	static const int CYCLES = 2;
+
+	BPL(int operand, CPU* cpu);
+	~BPL();
+
+	int execute();
+};//class BPL
+
+
+/******************************************************************************
+ * BRK Force Break
+ *****************************************************************************/
+class BRK : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0x00;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	BRK(CPU* cpu);
+	~BRK();
+
+	int execute();
+};//class BRK
+
+
+/******************************************************************************
+ * BVC Branch on overflow clear
+ *****************************************************************************/
+class BVC : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0x50;
+	static const int BYTES = 2;
+	static const int CYCLES = 2;
+
+	BVC(int operand, CPU* cpu);
+	~BVC();
+
+	int execute();
+};//class BVC
+
+
+/******************************************************************************
+ * BVS Branch on overflow set
+ *****************************************************************************/
+class BVS : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0x70;
+	static const int BYTES = 2;
+	static const int CYCLES = 2;
+
+	BVS(int operand, CPU* cpu);
+	~BVS();
+
+	int execute();
+};//class BVS
+
+
+/******************************************************************************
+ * CLC Clear carry flag
+ *****************************************************************************/
+class CLC : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0x18;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	CLC(CPU* cpu);
+	~CLC();
+
+	int execute();
+};//class CLC
+
+
+/******************************************************************************
+ * CLD Clear decimal mode
+ *****************************************************************************/
+class CLD : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0xD8;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	CLD(CPU* cpu);
+	~CLD();
+
+	int execute();
+};//class CLD
+
+
+/******************************************************************************
+ * CLI Clear interrupt disable bit
+ *****************************************************************************/
+class CLI : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0x58;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	CLI(CPU* cpu);
+	~CLI();
+
+	int execute();
+};//class CLI
+
+
+/******************************************************************************
+ * CLV Clear overflow flag
+ *****************************************************************************/
+class CLV : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0xB8;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	CLV(CPU* cpu);
+	~CLV();
+
+	int execute();
+};//class CLV
+
+
 #endif /* CPU_INSTRUCTION_HPP_ */

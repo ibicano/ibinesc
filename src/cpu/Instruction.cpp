@@ -41,10 +41,10 @@ int Instruction::fetchIndexedZeroYAddrmode() {
 
 int Instruction::fetchPreindexedAddrmode() {
 	/* Calcula el índice de la dirección donde se almacena la dirección
-	final del operando */
+	final del operand */
 	int index = (operand + cpu->getRegX()) & 0xFF;
 
-	// Calcula la dirección final del operando
+	// Calcula la dirección final del operand
 	int addr = cpu->getMem()->readData(index);
 	addr = addr | (cpu->getMem()->readData(((index + 1) & 0xFF)) << 8);
 
@@ -54,7 +54,7 @@ int Instruction::fetchPreindexedAddrmode() {
 
 int Instruction::fetchPostindexedAddrmode() {
 	/* Calcula el índice de la dirección donde se almacena la direccións
-	base del operando a la que se sumará el desplazamiento Y */
+	base del operand a la que se sumará el desplazamiento Y */
 	int baseAddr = cpu->getMem()->readData(operand);
 	baseAddr = baseAddr | (cpu->getMem()->readData((operand + 1) & 0xFF) << 8);
 
@@ -282,7 +282,7 @@ int AND_postindexi::execute() {
  * ASL: Shift Left One Bit (Memory or Accumulator)
  *****************************************************************************/
 
-ASL::ASL(int operando, CPU* cpu) : Instruction(operando, cpu) {}
+ASL::ASL(int operand, CPU* cpu) : Instruction(operand, cpu) {}
 
 int ASL::execute(int op) {
 	int result = op << 1;
@@ -299,7 +299,7 @@ int ASL::execute(int op) {
 
 
 // ASL_accumulator
-ASL_accumulator::ASL_accumulator(int operando, CPU* cpu) : ASL(operando, cpu) {}
+ASL_accumulator::ASL_accumulator(int operand, CPU* cpu) : ASL(operand, cpu) {}
 
 int ASL_accumulator::execute() {
 	int result = ASL::execute(cpu->getRegA());
@@ -313,7 +313,7 @@ int ASL_accumulator::execute() {
 
 
 // ASL_zero
-ASL_zero::ASL_zero(int operando, CPU* cpu) : ASL(operando, cpu) {}
+ASL_zero::ASL_zero(int operand, CPU* cpu) : ASL(operand, cpu) {}
 
 int ASL_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -329,7 +329,7 @@ int ASL_zero::execute() {
 
 
 // ASL_zerox
-ASL_zerox::ASL_zerox(int operando, CPU* cpu) : ASL(operando, cpu) {}
+ASL_zerox::ASL_zerox(int operand, CPU* cpu) : ASL(operand, cpu) {}
 
 int ASL_zerox::execute() {
 	int addr = fetchIndexedZeroXAddrmode();
@@ -345,7 +345,7 @@ int ASL_zerox::execute() {
 
 
 // ASL_abs
-ASL_abs::ASL_abs(int operando, CPU* cpu) : ASL(operando, cpu) {}
+ASL_abs::ASL_abs(int operand, CPU* cpu) : ASL(operand, cpu) {}
 
 int ASL_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -361,7 +361,7 @@ int ASL_abs::execute() {
 
 
 // ASL_absx
-ASL_absx::ASL_absx(int operando, CPU* cpu) : ASL(operando, cpu) {}
+ASL_absx::ASL_absx(int operand, CPU* cpu) : ASL(operand, cpu) {}
 
 int ASL_absx::execute() {
 	int addr = fetchIndexedAbsXAddrmode();
@@ -380,7 +380,7 @@ int ASL_absx::execute() {
  * BCC Branch on Carry Clear
  *****************************************************************************/
 
-BCC::BCC(int operando, CPU* cpu) : Instruction(operando, cpu) {}
+BCC::BCC(int operand, CPU* cpu) : Instruction(operand, cpu) {}
 
 int BCC::execute() {
 	// Incrementa el registro contador (PC) de la CPU
@@ -397,7 +397,7 @@ int BCC::execute() {
  * BCS Branch on carry set
  *****************************************************************************/
 
-BCS::BCS(int operando, CPU* cpu) : Instruction(operando, cpu) {}
+BCS::BCS(int operand, CPU* cpu) : Instruction(operand, cpu) {}
 
 int BCS::execute() {
 	// Incrementa el registro contador (PC) de la CPU
@@ -414,7 +414,7 @@ int BCS::execute() {
  * BEQ Branch on result zero
  *****************************************************************************/
 
-BEQ::BEQ(int operando, CPU* cpu) : Instruction(operando, cpu) {}
+BEQ::BEQ(int operand, CPU* cpu) : Instruction(operand, cpu) {}
 
 int BEQ::execute() {
 	// Incrementa el registro contador (PC) de la CPU
@@ -422,6 +422,223 @@ int BEQ::execute() {
 
 	if (cpu->getReg_p_z_bit())
 		cpu->setRegPc(cpu->getRegPc() + c2ToInt(operand));
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * BIT Test bits in memory with accumulator
+ *****************************************************************************/
+
+BIT::BIT(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int BIT::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+
+	// Transfiere el bit de Signo
+	if (op & 0x80)
+		cpu->setReg_p_s_bit(1);
+	else
+		cpu->setReg_p_s_bit(0);
+
+	// Transfiere el bit de Overflow
+	if (op & 0x40)
+		cpu->setReg_p_v_bit(1);
+	else
+		cpu->setReg_p_v_bit(0);
+
+	// Calcula el bit Zero
+	if (!(op & cpu->getRegA()))
+		cpu->setReg_p_z_bit(1);
+	else
+		cpu->setReg_p_z_bit(0);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+BIT_zero::BIT_zero(int operand, CPU* cpu) : BIT(operand, cpu) {}
+
+BIT_abs::BIT_abs(int operand, CPU* cpu) : BIT(operand, cpu) {}
+
+
+/******************************************************************************
+ * BMI Branch on result minus
+ *****************************************************************************/
+
+BMI::BMI(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int BMI::execute() {
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	if (cpu->getReg_p_s_bit())
+		cpu->setRegPc(cpu->getRegPc() + c2ToInt(operand));
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * BNE Branch on result not zero
+ *****************************************************************************/
+
+BNE::BNE(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int BNE::execute() {
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	if (!cpu->getReg_p_z_bit())
+		cpu->setRegPc(cpu->getRegPc() + c2ToInt(operand));
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * BPL Branch on result plus
+ *****************************************************************************/
+
+BPL::BPL(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int BPL::execute() {
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	if (!cpu->getReg_p_s_bit())
+		cpu->setRegPc(cpu->getRegPc() + c2ToInt(operand));
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * BRK Force Break
+ *****************************************************************************/
+
+BRK::BRK(CPU* cpu) : Instruction(0, cpu) {}
+
+int BRK::execute() {
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	cpu->incrPc(BYTES);
+	int pc = cpu->getRegPc() + 1;
+	cpu->pushStack((pc >> 8) & 0xFF);
+	cpu->pushStack(pc & 0xFF);
+	cpu->setReg_p_b_bit(1);
+
+	// Los bit 4 y 5 se ponen siempre a 1
+	cpu->pushStack(cpu->getRegP() | 0x30);
+	cpu->setReg_p_i_bit(1);
+
+	pc = cpu->getMem()->readData(0xFFFE);
+	pc = pc | (cpu->getMem()->readData(0xFFFF) << 8);
+	cpu->setRegPc(pc);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * BVC Branch on overflow clear
+ *****************************************************************************/
+
+BVC::BVC(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int BVC::execute() {
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	if (!cpu->getReg_p_v_bit())
+		cpu->setRegPc(cpu->getRegPc() + c2ToInt(operand));
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * BVS Branch on overflow set
+ *****************************************************************************/
+
+BVS::BVS(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int BVS::execute() {
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	if (cpu->getReg_p_v_bit())
+		cpu->setRegPc(cpu->getRegPc() + c2ToInt(operand));
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * CLC Clear carry flag
+ *****************************************************************************/
+
+CLC::CLC(CPU* cpu) : Instruction(0, cpu) {}
+
+int CLC::execute() {
+	cpu->setReg_p_c_bit(0);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * CLD Clear decimal mode
+ *****************************************************************************/
+
+CLD::CLD(CPU* cpu) : Instruction(0, cpu) {}
+
+int CLD::execute() {
+	cpu->setReg_p_d_bit(0);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * CLI Clear interrupt disable bit
+ *****************************************************************************/
+
+CLI::CLI(CPU* cpu) : Instruction(0, cpu) {}
+
+int CLI::execute() {
+	cpu->setReg_p_i_bit(0);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * CLV Clear overflow flag
+ *****************************************************************************/
+
+CLV::CLV(CPU* cpu) : Instruction(0, cpu) {}
+
+int CLV::execute() {
+	cpu->setReg_p_v_bit(0);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
 
 	return CYCLES;
 }
