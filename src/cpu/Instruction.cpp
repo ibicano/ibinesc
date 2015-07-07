@@ -1256,5 +1256,450 @@ int JSR::execute(int op) {
 }
 
 
+/******************************************************************************
+ * LDA Load accumulator with memory
+ *****************************************************************************/
+
+LDA::LDA(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int LDA::execute(int op) {
+	// Establece el bit ZERO del registro P
+	cpu->setZeroBit(op);
+	// Establece el bit SIGN del registro P
+	cpu->setSignBit(op);
+
+	cpu->setRegA(op);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// LDA_inmediate
+LDA_inmediate::LDA_inmediate(int operand, CPU* cpu) : LDA(operand, cpu) {}
+
+int LDA_inmediate::execute() {
+	return LDA::execute(operand);
+}
+
+
+// LDA_zero
+LDA_zero::LDA_zero(int operand, CPU* cpu) : LDA(operand, cpu) {}
+
+int LDA_zero::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return LDA::execute(op);
+}
+
+
+// LDA_zerox
+LDA_zerox::LDA_zerox(int operand, CPU* cpu) : LDA(operand, cpu) {}
+
+int LDA_zerox::execute() {
+	int addr = fetchIndexedZeroXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return LDA::execute(op);
+}
+
+
+// LDA_abs
+LDA_abs::LDA_abs(int operand, CPU* cpu) : LDA(operand, cpu) {}
+
+int LDA_abs::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return LDA::execute(op);
+}
+
+
+// LDA_absx
+LDA_absx::LDA_absx(int operand, CPU* cpu) : LDA(operand, cpu) {}
+
+int LDA_absx::execute() {
+	int addr = fetchIndexedAbsXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return LDA::execute(op);
+}
+
+
+// LDA_absy
+LDA_absy::LDA_absy(int operand, CPU* cpu) : LDA(operand, cpu) {}
+
+int LDA_absy::execute() {
+	int addr = fetchIndexedAbsYAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return LDA::execute(op);
+}
+
+
+// LDA_preindexi
+LDA_preindexi::LDA_preindexi(int operand, CPU* cpu) : LDA(operand, cpu) {}
+
+int LDA_preindexi::execute() {
+	int addr = fetchPreindexedAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return LDA::execute(op);
+}
+
+
+// LDA_postindexi
+LDA_postindexi::LDA_postindexi(int operand, CPU* cpu) : LDA(operand, cpu) {}
+
+int LDA_postindexi::execute() {
+	int addr = fetchPostindexedAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return LDA::execute(op);
+}
+
+
+/******************************************************************************
+ * LDX Load index X with memory
+ *****************************************************************************/
+
+LDX::LDX(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int LDX::execute(int op) {
+	// Establece el bit ZERO del registro P
+	cpu->setZeroBit(op);
+	// Establece el bit SIGN del registro P
+	cpu->setSignBit(op);
+
+	cpu->setRegX(op);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// LDX_inmediate
+LDX_inmediate::LDX_inmediate(int operand, CPU* cpu) : LDX(operand, cpu) {}
+
+int LDX_inmediate::execute() {
+	return LDX::execute(operand);
+}
+
+
+// LDX_zero
+LDX_zero::LDX_zero(int operand, CPU* cpu) : LDX(operand, cpu) {}
+
+int LDX_zero::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return LDX::execute(op);
+}
+
+
+// LDX_zerox
+LDX_zeroy::LDX_zeroy(int operand, CPU* cpu) : LDX(operand, cpu) {}
+
+int LDX_zeroy::execute() {
+	int addr = fetchIndexedZeroYAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return LDX::execute(op);
+}
+
+
+// LDX_abs
+LDX_abs::LDX_abs(int operand, CPU* cpu) : LDX(operand, cpu) {}
+
+int LDX_abs::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return LDX::execute(op);
+}
+
+
+// LDX_absy
+LDX_absy::LDX_absy(int operand, CPU* cpu) : LDX(operand, cpu) {}
+
+int LDX_absy::execute() {
+	int addr = fetchIndexedAbsYAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return LDX::execute(op);
+}
+
+
+/******************************************************************************
+ * LDY Load index Y with memory
+ *****************************************************************************/
+
+LDY::LDY(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int LDY::execute(int op) {
+	// Establece el bit ZERO del registro P
+	cpu->setZeroBit(op);
+	// Establece el bit SIGN del registro P
+	cpu->setSignBit(op);
+
+	cpu->setRegY(op);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// LDY_inmediate
+LDY_inmediate::LDY_inmediate(int operand, CPU* cpu) : LDY(operand, cpu) {}
+
+int LDY_inmediate::execute() {
+	return LDY::execute(operand);
+}
+
+
+// LDY_zero
+LDY_zero::LDY_zero(int operand, CPU* cpu) : LDY(operand, cpu) {}
+
+int LDY_zero::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return LDY::execute(op);
+}
+
+
+// LDY_zerox
+LDY_zerox::LDY_zerox(int operand, CPU* cpu) : LDY(operand, cpu) {}
+
+int LDY_zerox::execute() {
+	int addr = fetchIndexedZeroXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return LDY::execute(op);
+}
+
+
+// LDY_abs
+LDY_abs::LDY_abs(int operand, CPU* cpu) : LDY(operand, cpu) {}
+
+int LDY_abs::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return LDY::execute(op);
+}
+
+
+// LDY_absy
+LDY_absx::LDY_absx(int operand, CPU* cpu) : LDY(operand, cpu) {}
+
+int LDY_absx::execute() {
+	int addr = fetchIndexedAbsXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return LDY::execute(op);
+}
+
+
+/******************************************************************************
+ * LSR Shift right one bit (memory or accumulator)
+ *****************************************************************************/
+
+LSR::LSR(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int LSR::execute(int op) {
+	int result = op >> 1;
+
+	cpu->setReg_p_c_bit(op & 0x01);
+	cpu->setReg_p_s_bit(0);
+	cpu->setZeroBit(result);
+
+	return result & 0xFF;
+}
+
+
+// LSR_accumulator
+LSR_accumulator::LSR_accumulator(int operand, CPU* cpu) : LSR(operand, cpu) {}
+
+int LSR_accumulator::execute() {
+	int result = LSR::execute(cpu->getRegA());
+	cpu->setRegA(result);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// LSR_zero
+LSR_zero::LSR_zero(int operand, CPU* cpu) : LSR(operand, cpu) {}
+
+int LSR_zero::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	int result = LSR::execute(op);
+	cpu->getMem()->writeData(result, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// LSR_zerox
+LSR_zerox::LSR_zerox(int operand, CPU* cpu) : LSR(operand, cpu) {}
+
+int LSR_zerox::execute() {
+	int addr = fetchIndexedZeroXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	int result = LSR::execute(op);
+	cpu->getMem()->writeData(result, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// LSR_abs
+LSR_abs::LSR_abs(int operand, CPU* cpu) : LSR(operand, cpu) {}
+
+int LSR_abs::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	int result = LSR::execute(op);
+	cpu->getMem()->writeData(result, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// LSR_absx
+LSR_absx::LSR_absx(int operand, CPU* cpu) : LSR(operand, cpu) {}
+
+int LSR_absx::execute() {
+	int addr = fetchIndexedAbsXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	int result = LSR::execute(op);
+	cpu->getMem()->writeData(result, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * NOP No operation
+ *****************************************************************************/
+
+NOP::NOP(CPU* cpu) : Instruction(0, cpu) {}
+
+int NOP::execute() {
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * ORA "OR" memory with accumulator
+ *****************************************************************************/
+
+ORA::ORA(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int ORA::execute(int op) {
+	int ac = cpu->getRegA();
+	int result = ac | op;
+
+	cpu->setSignBit(result);
+	cpu->setZeroBit(result);
+
+	cpu->setRegA(result);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// ORA_inmediate
+ORA_inmediate::ORA_inmediate(int operand, CPU* cpu) : ORA(operand, cpu) {}
+
+int ORA_inmediate::execute() {
+	return ORA::execute(operand);
+}
+
+
+// ORA_zero
+ORA_zero::ORA_zero(int operand, CPU* cpu) : ORA(operand, cpu) {}
+
+int ORA_zero::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return ORA::execute(op);
+}
+
+
+// ORA_zerox
+ORA_zerox::ORA_zerox(int operand, CPU* cpu) : ORA(operand, cpu) {}
+
+int ORA_zerox::execute() {
+	int addr = fetchIndexedZeroXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return ORA::execute(op);
+}
+
+
+// ORA_abs
+ORA_abs::ORA_abs(int operand, CPU* cpu) : ORA(operand, cpu) {}
+
+int ORA_abs::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return ORA::execute(op);
+}
+
+
+// ORA_absx
+ORA_absx::ORA_absx(int operand, CPU* cpu) : ORA(operand, cpu) {}
+
+int ORA_absx::execute() {
+	int addr = fetchIndexedAbsXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return ORA::execute(op);
+}
+
+
+// ORA_absy
+ORA_absy::ORA_absy(int operand, CPU* cpu) : ORA(operand, cpu) {}
+
+int ORA_absy::execute() {
+	int addr = fetchIndexedAbsYAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return ORA::execute(op);
+}
+
+
+// ORA_preindexi
+ORA_preindexi::ORA_preindexi(int operand, CPU* cpu) : ORA(operand, cpu) {}
+
+int ORA_preindexi::execute() {
+	int addr = fetchPreindexedAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return ORA::execute(op);
+}
+
+
+// ORA_postindexi
+ORA_postindexi::ORA_postindexi(int operand, CPU* cpu) : ORA(operand, cpu) {}
+
+int ORA_postindexi::execute() {
+	int addr = fetchPostindexedAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return ORA::execute(op);
+}
+
 
 

@@ -1272,4 +1272,518 @@ public:
 };//class JSR
 
 
+/******************************************************************************
+ * LDA Load accumulator with memory
+ *****************************************************************************/
+class LDA : public Instruction {
+public:
+	LDA(int operand, CPU* cpu);
+	virtual ~LDA();
+
+	virtual int execute(int op);
+
+};//class LDA
+
+
+class LDA_inmediate : public LDA {
+public:
+	// Constantes
+	static const int OPCODE = 0xA9;
+	static const int BYTES = 2;
+	static const int CYCLES = 2;
+
+	LDA_inmediate(int operand, CPU* cpu);
+	virtual ~LDA_inmediate();
+
+	int execute();
+};
+
+
+class LDA_zero : public LDA {
+public:
+	// Constantes
+	static const int OPCODE = 0xA5;
+	static const int BYTES = 2;
+	static const int CYCLES = 3;
+
+	LDA_zero(int operand, CPU* cpu);
+	virtual ~LDA_zero();
+
+	int execute();
+};
+
+
+class LDA_zerox : public LDA {
+public:
+	// Constantes
+	static const int OPCODE = 0xB5;
+	static const int BYTES = 2;
+	static const int CYCLES = 4;
+
+	LDA_zerox(int operand, CPU* cpu);
+	virtual ~LDA_zerox();
+
+	int execute();
+};
+
+
+class LDA_abs : public LDA {
+	// Constantes
+	static const int OPCODE = 0xAD;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	LDA_abs(int operand, CPU* cpu);
+	virtual ~LDA_abs();
+
+	int execute();
+};
+
+
+class LDA_absx : public LDA {
+public:
+	// Constantes
+	static const int OPCODE = 0xBD;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	LDA_absx(int operand, CPU* cpu);
+	virtual ~LDA_absx();
+
+	int execute();
+};
+
+
+class LDA_absy : public LDA {
+public:
+	// Constantes
+	static const int OPCODE = 0xB9;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	LDA_absy(int operand, CPU* cpu);
+	virtual ~LDA_absy();
+
+	int execute();
+};
+
+
+class LDA_preindexi : public LDA {
+public:
+	// Constantes
+	static const int OPCODE = 0xA1;
+	static const int BYTES = 2;
+	static const int CYCLES = 6;
+
+	LDA_preindexi(int operand, CPU* cpu);
+	virtual ~LDA_preindexi();
+
+	int execute();
+};
+
+
+class LDA_postindexi : public LDA {
+public:
+	// Constantes
+	static const int OPCODE = 0xB1;
+	static const int BYTES = 2;
+	static const int CYCLES = 5;
+
+	LDA_postindexi(int operand, CPU* cpu);
+	virtual ~LDA_postindexi();
+
+	int execute();
+};
+
+
+/******************************************************************************
+ * LDX Load index X with memory
+ *****************************************************************************/
+class LDX : public Instruction {
+public:
+	LDX(int operand, CPU* cpu);
+	virtual ~LDX();
+
+	virtual int execute(int op);
+
+};//class LDX
+
+
+class LDX_inmediate : public LDX {
+public:
+	// Constantes
+	static const int OPCODE = 0xA2;
+	static const int BYTES = 2;
+	static const int CYCLES = 2;
+
+	LDX_inmediate(int operand, CPU* cpu);
+	virtual ~LDX_inmediate();
+
+	int execute();
+};
+
+
+class LDX_zero : public LDX {
+public:
+	// Constantes
+	static const int OPCODE = 0xA6;
+	static const int BYTES = 2;
+	static const int CYCLES = 3;
+
+	LDX_zero(int operand, CPU* cpu);
+	virtual ~LDX_zero();
+
+	int execute();
+};
+
+
+class LDX_zeroy : public LDX {
+public:
+	// Constantes
+	static const int OPCODE = 0xB6;
+	static const int BYTES = 2;
+	static const int CYCLES = 4;
+
+	LDX_zeroy(int operand, CPU* cpu);
+	virtual ~LDX_zeroy();
+
+	int execute();
+};
+
+
+class LDX_abs : public LDX {
+	// Constantes
+	static const int OPCODE = 0xAE;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	LDX_abs(int operand, CPU* cpu);
+	virtual ~LDX_abs();
+
+	int execute();
+};
+
+
+class LDX_absy : public LDX {
+public:
+	// Constantes
+	static const int OPCODE = 0xBE;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	LDX_absy(int operand, CPU* cpu);
+	virtual ~LDX_absy();
+
+	int execute();
+};
+
+
+/******************************************************************************
+ * LDY Load index Y with memory
+ *****************************************************************************/
+class LDY : public Instruction {
+public:
+	LDY(int operand, CPU* cpu);
+	virtual ~LDY();
+
+	virtual int execute(int op);
+
+};//class LDY
+
+
+class LDY_inmediate : public LDY {
+public:
+	// Constantes
+	static const int OPCODE = 0xA0;
+	static const int BYTES = 2;
+	static const int CYCLES = 2;
+
+	LDY_inmediate(int operand, CPU* cpu);
+	virtual ~LDY_inmediate();
+
+	int execute();
+};
+
+
+class LDY_zero : public LDY {
+public:
+	// Constantes
+	static const int OPCODE = 0xA4;
+	static const int BYTES = 2;
+	static const int CYCLES = 3;
+
+	LDY_zero(int operand, CPU* cpu);
+	virtual ~LDY_zero();
+
+	int execute();
+};
+
+
+class LDY_zerox : public LDY {
+public:
+	// Constantes
+	static const int OPCODE = 0xB4;
+	static const int BYTES = 2;
+	static const int CYCLES = 4;
+
+	LDY_zerox(int operand, CPU* cpu);
+	virtual ~LDY_zerox();
+
+	int execute();
+};
+
+
+class LDY_abs : public LDY {
+	// Constantes
+	static const int OPCODE = 0xAC;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	LDY_abs(int operand, CPU* cpu);
+	virtual ~LDY_abs();
+
+	int execute();
+};
+
+
+class LDY_absx : public LDY {
+public:
+	// Constantes
+	static const int OPCODE = 0xBC;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	LDY_absx(int operand, CPU* cpu);
+	virtual ~LDY_absx();
+
+	int execute();
+};
+
+
+/******************************************************************************
+ * LSR Shift right one bit (memory or accumulator)
+ *****************************************************************************/
+class LSR : public Instruction {
+public:
+	LSR(int operand, CPU* cpu);
+	virtual ~LSR();
+
+	virtual int execute(int op);
+
+};//class LSR
+
+
+class LSR_accumulator : public LSR {
+public:
+	// Constantes
+	static const int OPCODE = 0x4A;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	LSR_accumulator(int operand, CPU* cpu);
+	virtual ~LSR_accumulator();
+
+	int execute();
+};
+
+
+class LSR_zero : public LSR {
+public:
+	// Constantes
+	static const int OPCODE = 0x46;
+	static const int BYTES = 2;
+	static const int CYCLES = 5;
+
+	LSR_zero(int operand, CPU* cpu);
+	virtual ~LSR_zero();
+
+	int execute();
+};
+
+
+class LSR_zerox : public LSR {
+public:
+	// Constantes
+	static const int OPCODE = 0x56;
+	static const int BYTES = 2;
+	static const int CYCLES = 6;
+
+	LSR_zerox(int operand, CPU* cpu);
+	virtual ~LSR_zerox();
+
+	int execute();
+};
+
+
+class LSR_abs : public LSR {
+public:
+	// Constantes
+	static const int OPCODE = 0x4E;
+	static const int BYTES = 3;
+	static const int CYCLES = 6;
+
+	LSR_abs(int operand, CPU* cpu);
+	virtual ~LSR_abs();
+
+	int execute();
+};
+
+
+class LSR_absx : public LSR {
+public:
+	// Constantes
+	static const int OPCODE = 0x5E;
+	static const int BYTES = 3;
+	static const int CYCLES = 7;
+
+	LSR_absx(int operand, CPU* cpu);
+	virtual ~LSR_absx();
+
+	int execute();
+};
+
+
+/******************************************************************************
+ * NOP No operation
+ *****************************************************************************/
+class NOP : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0xEA;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	NOP(CPU* cpu);
+	virtual ~NOP();
+
+	virtual int execute();
+
+};//class JSR
+
+
+/******************************************************************************
+ * ORA "OR" memory with accumulator
+ *****************************************************************************/
+class ORA : public Instruction {
+public:
+	ORA(int operand, CPU* cpu);
+	virtual ~ORA();
+
+	virtual int execute(int op);
+
+};//class ORA
+
+
+class ORA_inmediate : public ORA {
+public:
+	// Constantes
+	static const int OPCODE = 0x09;
+	static const int BYTES = 2;
+	static const int CYCLES = 2;
+
+	ORA_inmediate(int operand, CPU* cpu);
+	virtual ~ORA_inmediate();
+
+	int execute();
+};
+
+
+class ORA_zero : public ORA {
+public:
+	// Constantes
+	static const int OPCODE = 0x05;
+	static const int BYTES = 2;
+	static const int CYCLES = 3;
+
+	ORA_zero(int operand, CPU* cpu);
+	virtual ~ORA_zero();
+
+	int execute();
+};
+
+
+class ORA_zerox : public ORA {
+public:
+	// Constantes
+	static const int OPCODE = 0x15;
+	static const int BYTES = 2;
+	static const int CYCLES = 4;
+
+	ORA_zerox(int operand, CPU* cpu);
+	virtual ~ORA_zerox();
+
+	int execute();
+};
+
+
+class ORA_abs : public ORA {
+	// Constantes
+	static const int OPCODE = 0x0D;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	ORA_abs(int operand, CPU* cpu);
+	virtual ~ORA_abs();
+
+	int execute();
+};
+
+
+class ORA_absx : public ORA {
+public:
+	// Constantes
+	static const int OPCODE = 0x1D;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	ORA_absx(int operand, CPU* cpu);
+	virtual ~ORA_absx();
+
+	int execute();
+};
+
+
+class ORA_absy : public ORA {
+public:
+	// Constantes
+	static const int OPCODE = 0x19;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	ORA_absy(int operand, CPU* cpu);
+	virtual ~ORA_absy();
+
+	int execute();
+};
+
+
+class ORA_preindexi : public ORA {
+public:
+	// Constantes
+	static const int OPCODE = 0x01;
+	static const int BYTES = 2;
+	static const int CYCLES = 6;
+
+	ORA_preindexi(int operand, CPU* cpu);
+	virtual ~ORA_preindexi();
+
+	int execute();
+};
+
+
+class ORA_postindexi : public ORA {
+public:
+	// Constantes
+	static const int OPCODE = 0x11;
+	static const int BYTES = 2;
+	static const int CYCLES = 5;
+
+	ORA_postindexi(int operand, CPU* cpu);
+	virtual ~ORA_postindexi();
+
+	int execute();
+};
+
+
+
 #endif /* CPU_INSTRUCTION_HPP_ */
