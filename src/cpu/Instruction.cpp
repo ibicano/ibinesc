@@ -1197,5 +1197,64 @@ int INY::execute() {
 }
 
 
+/******************************************************************************
+ * JMP Jump to new location
+ *****************************************************************************/
+
+JMP::JMP(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int JMP::execute(int op) {
+	cpu->setRegPc(op);
+    return CYCLES;
+}
+
+
+// JMP_abs
+JMP_abs::JMP_abs(int operand, CPU* cpu) : JMP(operand, cpu) {}
+
+int JMP_abs::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	JMP::execute(addr);
+
+	return CYCLES;
+}
+
+
+// JMP_indirect
+JMP_indirect::JMP_indirect(int operand, CPU* cpu) : JMP(operand, cpu) {}
+
+int JMP_indirect::execute() {
+	Memory* mem = cpu->getMem();
+
+	int addr = mem->readData(operand);
+
+	if (operand & 0xFF == 0xFF)
+		addr = addr | (mem->readData(operand & 0xFF00) << 8);
+	else
+		addr = addr | (mem->readData(operand + 1) << 8);
+
+	JMP::execute(addr);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * JSR Jump to new location saving return address
+ *****************************************************************************/
+
+JSR::JSR(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int JSR::execute(int op) {
+	int pc = cpu->getRegPc() + BYTES - 1;
+	cpu->pushStack((pc >> 8) & 0xFF);
+	cpu->pushStack(pc & 0xFF);
+
+	cpu->setRegPc(operand);
+
+	return CYCLES;
+}
+
+
 
 

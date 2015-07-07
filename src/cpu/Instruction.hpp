@@ -66,6 +66,7 @@ public:
 
 
 class ADC_inmediate : public ADC {
+public:
 	// Constantes
 	static const int OPCODE = 0x69;
 	static const int BYTES = 2;
@@ -79,6 +80,7 @@ class ADC_inmediate : public ADC {
 
 
 class ADC_zero : public ADC {
+public:
 	// Constantes
 	static const int OPCODE = 0x65;
 	static const int BYTES = 2;
@@ -92,6 +94,7 @@ class ADC_zero : public ADC {
 
 
 class ADC_zerox : public ADC {
+public:
 	// Constantes
 	static const int OPCODE = 0x75;
 	static const int BYTES = 2;
@@ -105,6 +108,7 @@ class ADC_zerox : public ADC {
 
 
 class ADC_abs : public ADC {
+public:
 	// Constantes
 	static const int OPCODE = 0x6D;
 	static const int BYTES = 3;
@@ -118,6 +122,7 @@ class ADC_abs : public ADC {
 
 
 class ADC_absx : public ADC {
+public:
 	// Constantes
 	static const int OPCODE = 0x7D;
 	static const int BYTES = 3;
@@ -131,6 +136,7 @@ class ADC_absx : public ADC {
 
 
 class ADC_absy : public ADC {
+public:
 	// Constantes
 	static const int OPCODE = 0x79;
 	static const int BYTES = 3;
@@ -144,6 +150,7 @@ class ADC_absy : public ADC {
 
 
 class ADC_preindexi : public ADC {
+public:
 	// Constantes
 	static const int OPCODE = 0x61;
 	static const int BYTES = 2;
@@ -157,6 +164,7 @@ class ADC_preindexi : public ADC {
 
 
 class ADC_postindexi : public ADC {
+public:
 	// Constantes
 	static const int OPCODE = 0x71;
 	static const int BYTES = 2;
@@ -183,6 +191,7 @@ public:
 
 
 class AND_inmediate : public AND {
+public:
 	// Constantes
 	static const int OPCODE = 0x29;
 	static const int BYTES = 2;
@@ -196,6 +205,7 @@ class AND_inmediate : public AND {
 
 
 class AND_zero : public AND {
+public:
 	// Constantes
 	static const int OPCODE = 0x25;
 	static const int BYTES = 2;
@@ -209,6 +219,7 @@ class AND_zero : public AND {
 
 
 class AND_zerox : public AND {
+public:
 	// Constantes
 	static const int OPCODE = 0x35;
 	static const int BYTES = 2;
@@ -222,6 +233,7 @@ class AND_zerox : public AND {
 
 
 class AND_abs : public AND {
+public:
 	// Constantes
 	static const int OPCODE = 0x2D;
 	static const int BYTES = 3;
@@ -235,6 +247,7 @@ class AND_abs : public AND {
 
 
 class AND_absx : public AND {
+public:
 	// Constantes
 	static const int OPCODE = 0x3D;
 	static const int BYTES = 3;
@@ -248,6 +261,7 @@ class AND_absx : public AND {
 
 
 class AND_absy : public AND {
+public:
 	// Constantes
 	static const int OPCODE = 0x39;
 	static const int BYTES = 3;
@@ -261,6 +275,7 @@ class AND_absy : public AND {
 
 
 class AND_preindexi : public AND {
+public:
 	// Constantes
 	static const int OPCODE = 0x21;
 	static const int BYTES = 2;
@@ -274,6 +289,7 @@ class AND_preindexi : public AND {
 
 
 class AND_postindexi : public AND {
+public:
 	// Constantes
 	static const int OPCODE = 0x31;
 	static const int BYTES = 2;
@@ -300,6 +316,7 @@ public:
 
 
 class ASL_accumulator : public ASL {
+public:
 	// Constantes
 	static const int OPCODE = 0x0A;
 	static const int BYTES = 1;
@@ -313,6 +330,7 @@ class ASL_accumulator : public ASL {
 
 
 class ASL_zero : public ASL {
+public:
 	// Constantes
 	static const int OPCODE = 0x06;
 	static const int BYTES = 2;
@@ -326,6 +344,7 @@ class ASL_zero : public ASL {
 
 
 class ASL_zerox : public ASL {
+public:
 	// Constantes
 	static const int OPCODE = 0x16;
 	static const int BYTES = 2;
@@ -339,6 +358,7 @@ class ASL_zerox : public ASL {
 
 
 class ASL_abs : public ASL {
+public:
 	// Constantes
 	static const int OPCODE = 0x0E;
 	static const int BYTES = 3;
@@ -352,6 +372,7 @@ class ASL_abs : public ASL {
 
 
 class ASL_absx : public ASL {
+public:
 	// Constantes
 	static const int OPCODE = 0x1E;
 	static const int BYTES = 3;
@@ -429,6 +450,7 @@ public:
 
 
 class BIT_zero : public BIT {
+public:
 	// Constantes
 	static const int OPCODE = 0x24;
 	static const int BYTES = 2;
@@ -440,6 +462,7 @@ class BIT_zero : public BIT {
 
 
 class BIT_abs : public BIT {
+public:
 	// Constantes
 	static const int OPCODE = 0x2C;
 	static const int BYTES = 3;
@@ -634,6 +657,7 @@ public:
 
 
 class CMP_inmediate : public CMP {
+public:
 	// Constantes
 	static const int OPCODE = 0xC9;
 	static const int BYTES = 2;
@@ -647,6 +671,7 @@ class CMP_inmediate : public CMP {
 
 
 class CMP_zero : public CMP {
+public:
 	// Constantes
 	static const int OPCODE = 0xC5;
 	static const int BYTES = 2;
@@ -660,6 +685,7 @@ class CMP_zero : public CMP {
 
 
 class CMP_zerox : public CMP {
+public:
 	// Constantes
 	static const int OPCODE = 0xD5;
 	static const int BYTES = 2;
@@ -673,6 +699,7 @@ class CMP_zerox : public CMP {
 
 
 class CMP_abs : public CMP {
+public:
 	// Constantes
 	static const int OPCODE = 0xCD;
 	static const int BYTES = 3;
@@ -686,6 +713,7 @@ class CMP_abs : public CMP {
 
 
 class CMP_absx : public CMP {
+public:
 	// Constantes
 	static const int OPCODE = 0xDD;
 	static const int BYTES = 3;
@@ -699,6 +727,7 @@ class CMP_absx : public CMP {
 
 
 class CMP_absy : public CMP {
+public:
 	// Constantes
 	static const int OPCODE = 0xD9;
 	static const int BYTES = 3;
@@ -712,6 +741,7 @@ class CMP_absy : public CMP {
 
 
 class CMP_preindexi : public CMP {
+public:
 	// Constantes
 	static const int OPCODE = 0xC1;
 	static const int BYTES = 2;
@@ -725,6 +755,7 @@ class CMP_preindexi : public CMP {
 
 
 class CMP_postindexi : public CMP {
+public:
 	// Constantes
 	static const int OPCODE = 0xD1;
 	static const int BYTES = 2;
@@ -751,6 +782,7 @@ public:
 
 
 class CPX_inmediate : public CPX {
+public:
 	// Constantes
 	static const int OPCODE = 0xE0;
 	static const int BYTES = 2;
@@ -764,6 +796,7 @@ class CPX_inmediate : public CPX {
 
 
 class CPX_zero : public CPX {
+public:
 	// Constantes
 	static const int OPCODE = 0xE4;
 	static const int BYTES = 2;
@@ -777,6 +810,7 @@ class CPX_zero : public CPX {
 
 
 class CPX_abs : public CPX {
+public:
 	// Constantes
 	static const int OPCODE = 0xEC;
 	static const int BYTES = 3;
@@ -803,6 +837,7 @@ public:
 
 
 class CPY_inmediate : public CPY {
+public:
 	// Constantes
 	static const int OPCODE = 0xC0;
 	static const int BYTES = 2;
@@ -816,6 +851,7 @@ class CPY_inmediate : public CPY {
 
 
 class CPY_zero : public CPY {
+public:
 	// Constantes
 	static const int OPCODE = 0xC4;
 	static const int BYTES = 2;
@@ -829,6 +865,7 @@ class CPY_zero : public CPY {
 
 
 class CPY_abs : public CPY {
+public:
 	// Constantes
 	static const int OPCODE = 0xCC;
 	static const int BYTES = 3;
@@ -856,6 +893,7 @@ public:
 
 
 class DEC_zero : public DEC {
+public:
 	// Constantes
 	static const int OPCODE = 0xC6;
 	static const int BYTES = 2;
@@ -869,6 +907,7 @@ class DEC_zero : public DEC {
 
 
 class DEC_zerox : public DEC {
+public:
 	// Constantes
 	static const int OPCODE = 0xD6;
 	static const int BYTES = 2;
@@ -882,6 +921,7 @@ class DEC_zerox : public DEC {
 
 
 class DEC_abs : public DEC {
+public:
 	// Constantes
 	static const int OPCODE = 0xCE;
 	static const int BYTES = 3;
@@ -895,6 +935,7 @@ class DEC_abs : public DEC {
 
 
 class DEC_absx : public DEC {
+public:
 	// Constantes
 	static const int OPCODE = 0xDE;
 	static const int BYTES = 3;
@@ -912,6 +953,7 @@ class DEC_absx : public DEC {
  *****************************************************************************/
 
 class DEX : public Instruction {
+public:
 	// Constantes
 	static const int OPCODE = 0xCA;
 	static const int BYTES = 1;
@@ -929,6 +971,7 @@ class DEX : public Instruction {
  *****************************************************************************/
 
 class DEY : public Instruction {
+public:
 	// Constantes
 	static const int OPCODE = 0x88;
 	static const int BYTES = 1;
@@ -955,6 +998,7 @@ public:
 
 
 class EOR_inmediate : public EOR {
+public:
 	// Constantes
 	static const int OPCODE = 0x49;
 	static const int BYTES = 2;
@@ -968,6 +1012,7 @@ class EOR_inmediate : public EOR {
 
 
 class EOR_zero : public EOR {
+public:
 	// Constantes
 	static const int OPCODE = 0x45;
 	static const int BYTES = 2;
@@ -981,6 +1026,7 @@ class EOR_zero : public EOR {
 
 
 class EOR_zerox : public EOR {
+public:
 	// Constantes
 	static const int OPCODE = 0x55;
 	static const int BYTES = 2;
@@ -1007,6 +1053,7 @@ class EOR_abs : public EOR {
 
 
 class EOR_absx : public EOR {
+public:
 	// Constantes
 	static const int OPCODE = 0x5D;
 	static const int BYTES = 3;
@@ -1020,6 +1067,7 @@ class EOR_absx : public EOR {
 
 
 class EOR_absy : public EOR {
+public:
 	// Constantes
 	static const int OPCODE = 0x59;
 	static const int BYTES = 3;
@@ -1033,6 +1081,7 @@ class EOR_absy : public EOR {
 
 
 class EOR_preindexi : public EOR {
+public:
 	// Constantes
 	static const int OPCODE = 0x41;
 	static const int BYTES = 2;
@@ -1046,6 +1095,7 @@ class EOR_preindexi : public EOR {
 
 
 class EOR_postindexi : public EOR {
+public:
 	// Constantes
 	static const int OPCODE = 0x51;
 	static const int BYTES = 2;
@@ -1073,6 +1123,7 @@ public:
 
 
 class INC_zero : public INC {
+public:
 	// Constantes
 	static const int OPCODE = 0xE6;
 	static const int BYTES = 2;
@@ -1099,6 +1150,7 @@ class INC_zerox : public INC {
 
 
 class INC_abs : public INC {
+public:
 	// Constantes
 	static const int OPCODE = 0xEE;
 	static const int BYTES = 3;
@@ -1112,6 +1164,7 @@ class INC_abs : public INC {
 
 
 class INC_absx : public INC {
+public:
 	// Constantes
 	static const int OPCODE = 0xFE;
 	static const int BYTES = 3;
@@ -1129,6 +1182,7 @@ class INC_absx : public INC {
  *****************************************************************************/
 
 class INX : public Instruction {
+public:
 	// Constantes
 	static const int OPCODE = 0xE8;
 	static const int BYTES = 1;
@@ -1146,6 +1200,7 @@ class INX : public Instruction {
  *****************************************************************************/
 
 class INY : public Instruction {
+public:
 	// Constantes
 	static const int OPCODE = 0xC8;
 	static const int BYTES = 1;
@@ -1156,6 +1211,65 @@ class INY : public Instruction {
 
 	int execute();
 };
+
+
+/******************************************************************************
+ * JMP Jump to new location
+ *****************************************************************************/
+class JMP : public Instruction {
+public:
+	JMP(int operand, CPU* cpu);
+	virtual ~JMP();
+
+	virtual int execute(int op);
+
+};//class JMP
+
+
+class JMP_abs : public JMP {
+public:
+	// Constantes
+	static const int OPCODE = 0x4C;
+	static const int BYTES = 3;
+	static const int CYCLES = 3;
+
+	JMP_abs(int operand, CPU* cpu);
+	virtual ~JMP_abs();
+
+	int execute();
+};
+
+
+class JMP_indirect : public JMP {
+public:
+	// Constantes
+	static const int OPCODE = 0x6C;
+	static const int BYTES = 3;
+	static const int CYCLES = 5;
+
+	JMP_indirect(int operand, CPU* cpu);
+	virtual ~JMP_indirect();
+
+	int execute();
+};
+
+
+/******************************************************************************
+ * JSR Jump to new location saving return address
+ *****************************************************************************/
+class JSR : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0x20;
+	static const int BYTES = 3;
+	static const int CYCLES = 6;
+
+	JSR(int operand, CPU* cpu);
+	virtual ~JSR();
+
+	virtual int execute(int op);
+
+};//class JSR
 
 
 #endif /* CPU_INSTRUCTION_HPP_ */
