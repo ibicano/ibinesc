@@ -1702,4 +1702,268 @@ int ORA_postindexi::execute() {
 }
 
 
+/******************************************************************************
+ * PHA Push accumulator on stack
+ *****************************************************************************/
+
+PHA::PHA(CPU* cpu) : Instruction(0, cpu) {}
+
+int PHA::execute() {
+	cpu->pushStack(cpu->getRegA());
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * PHP Push processor status on stack
+ *****************************************************************************/
+
+PHP::PHP(CPU* cpu) : Instruction(0, cpu) {}
+
+int PHP::execute() {
+	// Los bit 4 y 5 se ponen siempre a 1
+	cpu->pushStack(cpu->getRegP() | 0x30);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * PLA Pull accumulator from stack
+ *****************************************************************************/
+
+PLA::PLA(CPU* cpu) : Instruction(0, cpu) {}
+
+int PLA::execute() {
+	int a = cpu->pullStack();
+	cpu->setRegA(a);
+	cpu->setSignBit(a);
+	cpu->setZeroBit(a);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * PLP Pull processor status from stack
+ *****************************************************************************/
+
+PLP::PLP(CPU* cpu) : Instruction(0, cpu) {}
+
+int PLP::execute() {
+	int p = cpu->pullStack();
+	cpu->setRegP(p);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * ROL Rotate one bit left (memory or accumulator)
+ *****************************************************************************/
+
+ROL::ROL(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int ROL::execute(int op) {
+	int result = op << 1;
+	if (cpu->getReg_p_c_bit())
+		result = result | 0x01;
+
+	cpu->setCarryBit(result);
+	cpu->setSignBit(result);
+	cpu->setZeroBit(result);
+
+	return result;
+}
+
+
+// ROL_accumulator
+ROL_accumulator::ROL_accumulator(int operand, CPU* cpu) : ROL(operand, cpu) {}
+
+int ROL_accumulator::execute() {
+	int result = ROL::execute(cpu->getRegA());
+	cpu->setRegA(result);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// ROL_zero
+ROL_zero::ROL_zero(int operand, CPU* cpu) : ROL(operand, cpu) {}
+
+int ROL_zero::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	int result = ROL::execute(op);
+	cpu->getMem()->writeData(result, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// ROL_zerox
+ROL_zerox::ROL_zerox(int operand, CPU* cpu) : ROL(operand, cpu) {}
+
+int ROL_zerox::execute() {
+	int addr = fetchIndexedZeroXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	int result = ROL::execute(op);
+	cpu->getMem()->writeData(result, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// ROL_abs
+ROL_abs::ROL_abs(int operand, CPU* cpu) : ROL(operand, cpu) {}
+
+int ROL_abs::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	int result = ROL::execute(op);
+	cpu->getMem()->writeData(result, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// ROL_absx
+ROL_absx::ROL_absx(int operand, CPU* cpu) : ROL(operand, cpu) {}
+
+int ROL_absx::execute() {
+	int addr = fetchIndexedAbsXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	int result = ROL::execute(op);
+	cpu->getMem()->writeData(result, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * ROR Rotate one bit right (memory or accumulator)
+ *****************************************************************************/
+
+ROR::ROR(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int ROR::execute(int op) {
+	int result = op >> 1;
+
+	if (cpu->getReg_p_c_bit())
+		result = result | 0x80;
+
+	cpu->setReg_p_c_bit(op & 0x01);
+	cpu->setSignBit(result);
+	cpu->setZeroBit(result);
+
+	return result;
+}
+
+
+// ROR_accumulator
+ROR_accumulator::ROR_accumulator(int operand, CPU* cpu) : ROR(operand, cpu) {}
+
+int ROR_accumulator::execute() {
+	int result = ROR::execute(cpu->getRegA());
+	cpu->setRegA(result);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// ROR_zero
+ROR_zero::ROR_zero(int operand, CPU* cpu) : ROR(operand, cpu) {}
+
+int ROR_zero::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	int result = ROR::execute(op);
+	cpu->getMem()->writeData(result, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// ROR_zerox
+ROR_zerox::ROR_zerox(int operand, CPU* cpu) : ROR(operand, cpu) {}
+
+int ROR_zerox::execute() {
+	int addr = fetchIndexedZeroXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	int result = ROR::execute(op);
+	cpu->getMem()->writeData(result, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// ROR_abs
+ROR_abs::ROR_abs(int operand, CPU* cpu) : ROR(operand, cpu) {}
+
+int ROR_abs::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	int result = ROR::execute(op);
+	cpu->getMem()->writeData(result, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// ROR_absx
+ROR_absx::ROR_absx(int operand, CPU* cpu) : ROR(operand, cpu) {}
+
+int ROR_absx::execute() {
+	int addr = fetchIndexedAbsXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	int result = ROR::execute(op);
+	cpu->getMem()->writeData(result, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
 

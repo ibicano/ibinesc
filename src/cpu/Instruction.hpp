@@ -1658,7 +1658,7 @@ public:
 
 	virtual int execute();
 
-};//class JSR
+};//class NOP
 
 
 /******************************************************************************
@@ -1780,6 +1780,244 @@ public:
 
 	ORA_postindexi(int operand, CPU* cpu);
 	virtual ~ORA_postindexi();
+
+	int execute();
+};
+
+
+/******************************************************************************
+ * PHA Push accumulator on stack
+ *****************************************************************************/
+class PHA : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0x48;
+	static const int BYTES = 1;
+	static const int CYCLES = 3;
+
+	PHA(CPU* cpu);
+	virtual ~PHA();
+
+	int execute();
+
+};//class PHA
+
+
+/******************************************************************************
+ * PHP Push processor status on stack
+ *****************************************************************************/
+class PHP : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0x08;
+	static const int BYTES = 1;
+	static const int CYCLES = 3;
+
+	PHP(CPU* cpu);
+	virtual ~PHP();
+
+	int execute();
+
+};//class PHP
+
+
+/******************************************************************************
+ * PLA Pull accumulator from stack
+ *****************************************************************************/
+class PLA : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0x68;
+	static const int BYTES = 1;
+	static const int CYCLES = 4;
+
+	PLA(CPU* cpu);
+	virtual ~PLA();
+
+	int execute();
+
+};//class PLA
+
+
+/******************************************************************************
+ * PLP Pull processor status from stack
+ *****************************************************************************/
+class PLP : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0x28;
+	static const int BYTES = 1;
+	static const int CYCLES = 4;
+
+	PLP(CPU* cpu);
+	virtual ~PLP();
+
+	int execute();
+
+};//class PLP
+
+
+/******************************************************************************
+ * ROL Rotate one bit left (memory or accumulator)
+ *****************************************************************************/
+class ROL : public Instruction {
+public:
+	ROL(int operand, CPU* cpu);
+	virtual ~ROL();
+
+	virtual int execute(int op);
+
+};//class ROL
+
+
+class ROL_accumulator : public ROL {
+public:
+	// Constantes
+	static const int OPCODE = 0x2A;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	ROL_accumulator(int operand, CPU* cpu);
+	virtual ~ROL_accumulator();
+
+	int execute();
+};
+
+
+class ROL_zero : public ROL {
+public:
+	// Constantes
+	static const int OPCODE = 0x26;
+	static const int BYTES = 2;
+	static const int CYCLES = 5;
+
+	ROL_zero(int operand, CPU* cpu);
+	virtual ~ROL_zero();
+
+	int execute();
+};
+
+
+class ROL_zerox : public ROL {
+public:
+	// Constantes
+	static const int OPCODE = 0x36;
+	static const int BYTES = 2;
+	static const int CYCLES = 6;
+
+	ROL_zerox(int operand, CPU* cpu);
+	virtual ~ROL_zerox();
+
+	int execute();
+};
+
+
+class ROL_abs : public ROL {
+public:
+	// Constantes
+	static const int OPCODE = 0x2E;
+	static const int BYTES = 3;
+	static const int CYCLES = 6;
+
+	ROL_abs(int operand, CPU* cpu);
+	virtual ~ROL_abs();
+
+	int execute();
+};
+
+
+class ROL_absx : public ROL {
+public:
+	// Constantes
+	static const int OPCODE = 0x3E;
+	static const int BYTES = 3;
+	static const int CYCLES = 7;
+
+	ROL_absx(int operand, CPU* cpu);
+	virtual ~ROL_absx();
+
+	int execute();
+};
+
+
+/******************************************************************************
+ * ROR Rotate one bit right (memory or accumulator)
+ *****************************************************************************/
+class ROR : public Instruction {
+public:
+	ROR(int operand, CPU* cpu);
+	virtual ~ROR();
+
+	virtual int execute(int op);
+
+};//class ROR
+
+
+class ROR_accumulator : public ROR {
+public:
+	// Constantes
+	static const int OPCODE = 0x6A;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	ROR_accumulator(int operand, CPU* cpu);
+	virtual ~ROR_accumulator();
+
+	int execute();
+};
+
+
+class ROR_zero : public ROR {
+public:
+	// Constantes
+	static const int OPCODE = 0x66;
+	static const int BYTES = 2;
+	static const int CYCLES = 5;
+
+	ROR_zero(int operand, CPU* cpu);
+	virtual ~ROR_zero();
+
+	int execute();
+};
+
+
+class ROR_zerox : public ROR {
+public:
+	// Constantes
+	static const int OPCODE = 0x76;
+	static const int BYTES = 2;
+	static const int CYCLES = 6;
+
+	ROR_zerox(int operand, CPU* cpu);
+	virtual ~ROR_zerox();
+
+	int execute();
+};
+
+
+class ROR_abs : public ROR {
+public:
+	// Constantes
+	static const int OPCODE = 0x6E;
+	static const int BYTES = 3;
+	static const int CYCLES = 6;
+
+	ROR_abs(int operand, CPU* cpu);
+	virtual ~ROR_abs();
+
+	int execute();
+};
+
+
+class ROR_absx : public ROR {
+public:
+	// Constantes
+	static const int OPCODE = 0x7E;
+	static const int BYTES = 3;
+	static const int CYCLES = 7;
+
+	ROR_absx(int operand, CPU* cpu);
+	virtual ~ROR_absx();
 
 	int execute();
 };
