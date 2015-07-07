@@ -2023,5 +2023,216 @@ public:
 };
 
 
+/******************************************************************************
+ * RTI Return from interrupt
+ *****************************************************************************/
+class RTI : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0x40;
+	static const int BYTES = 1;
+	static const int CYCLES = 6;
+
+	RTI(CPU* cpu);
+	virtual ~RTI();
+
+	int execute();
+
+};//class RTI
+
+
+/******************************************************************************
+ * RTS Return from subroutine
+ *****************************************************************************/
+class RTS : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0x60;
+	static const int BYTES = 1;
+	static const int CYCLES = 6;
+
+	RTS(CPU* cpu);
+	virtual ~RTS();
+
+	int execute();
+
+};//class RTS
+
+
+/******************************************************************************
+ * SBC Subtract memory from accumulator with borrow
+ *****************************************************************************/
+class SBC : public Instruction {
+public:
+	SBC(int operand, CPU* cpu);
+	virtual ~SBC();
+
+	virtual int execute(int op);
+
+};//class SBC
+
+
+class SBC_inmediate : public SBC {
+public:
+	// Constantes
+	static const int OPCODE = 0xE9;
+	static const int BYTES = 2;
+	static const int CYCLES = 2;
+
+	SBC_inmediate(int operand, CPU* cpu);
+	virtual ~SBC_inmediate();
+
+	int execute();
+};
+
+
+class SBC_zero : public SBC {
+public:
+	// Constantes
+	static const int OPCODE = 0xE5;
+	static const int BYTES = 2;
+	static const int CYCLES = 3;
+
+	SBC_zero(int operand, CPU* cpu);
+	virtual ~SBC_zero();
+
+	int execute();
+};
+
+
+class SBC_zerox : public SBC {
+public:
+	// Constantes
+	static const int OPCODE = 0xF5;
+	static const int BYTES = 2;
+	static const int CYCLES = 4;
+
+	SBC_zerox(int operand, CPU* cpu);
+	virtual ~SBC_zerox();
+
+	int execute();
+};
+
+
+class SBC_abs : public SBC {
+	// Constantes
+	static const int OPCODE = 0xED;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	SBC_abs(int operand, CPU* cpu);
+	virtual ~SBC_abs();
+
+	int execute();
+};
+
+
+class SBC_absx : public SBC {
+public:
+	// Constantes
+	static const int OPCODE = 0xFD;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	SBC_absx(int operand, CPU* cpu);
+	virtual ~SBC_absx();
+
+	int execute();
+};
+
+
+class SBC_absy : public SBC {
+public:
+	// Constantes
+	static const int OPCODE = 0xF9;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	SBC_absy(int operand, CPU* cpu);
+	virtual ~SBC_absy();
+
+	int execute();
+};
+
+
+class SBC_preindexi : public SBC {
+public:
+	// Constantes
+	static const int OPCODE = 0xE1;
+	static const int BYTES = 2;
+	static const int CYCLES = 6;
+
+	SBC_preindexi(int operand, CPU* cpu);
+	virtual ~SBC_preindexi();
+
+	int execute();
+};
+
+
+class SBC_postindexi : public SBC {
+public:
+	// Constantes
+	static const int OPCODE = 0xF1;
+	static const int BYTES = 2;
+	static const int CYCLES = 5;
+
+	SBC_postindexi(int operand, CPU* cpu);
+	virtual ~SBC_postindexi();
+
+	int execute();
+};
+
+
+/******************************************************************************
+ * SEC Set carry flag
+ *****************************************************************************/
+class SEC : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0x38;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	SEC(CPU* cpu);
+	~SEC();
+
+	int execute();
+};//class SEC
+
+
+/******************************************************************************
+ * SED Set decimal mode
+ *****************************************************************************/
+class SED : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0xF8;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	SED(CPU* cpu);
+	~SED();
+
+	int execute();
+};//class SED
+
+
+/******************************************************************************
+ * SEI Set interrupt disable status
+ *****************************************************************************/
+class SEI : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0x78;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	SEI(CPU* cpu);
+	~SEI();
+
+	int execute();
+};//class SEI
+
+
 
 #endif /* CPU_INSTRUCTION_HPP_ */

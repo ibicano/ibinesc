@@ -1966,4 +1966,203 @@ int ROR_absx::execute() {
 }
 
 
+/******************************************************************************
+ * RTI Return from interrupt
+ *****************************************************************************/
+
+RTI::RTI(CPU* cpu) : Instruction(0, cpu) {}
+
+int RTI::execute() {
+	int p = cpu->pullStack();
+	cpu->setRegP(p);
+
+	int pc = cpu->pullStack();
+	pc = pc | (cpu->pullStack() << 8);
+	cpu->setRegPc(pc);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * RTS Return from subroutine
+ *****************************************************************************/
+
+RTS::RTS(CPU* cpu) : Instruction(0, cpu) {}
+
+int RTS::execute() {
+	int pc = cpu->pullStack();
+	pc = pc | (cpu->pullStack() << 8);
+	pc = pc + 1;
+	cpu->setRegPc(pc);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * SBC Subtract memory from accumulator with borrow
+ *****************************************************************************/
+
+SBC::SBC(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int SBC::execute(int op) {
+	int ac = cpu->getRegA();
+	int carry = cpu->getReg_p_c_bit();
+
+	int rst = ac - op - 1 + carry;
+
+	// Establece el bit CARRY del registro P
+	if (0 <= rst < 0x100)
+		cpu->setReg_p_c_bit(1);
+	else
+		cpu->setReg_p_c_bit(0);
+
+	// Establece el bit ZERO del registro P
+	cpu->setZeroBit(rst);
+
+	// Establece el bit OVERFLOW del registro P
+	if (((ac ^ op) & 0x80) && ((ac ^ rst) & 0x80))
+		cpu->setReg_p_v_bit(1);
+	else
+		cpu->setReg_p_v_bit(0);
+
+	// Establece el bit SIGN del registro P
+	cpu->setSignBit(rst);
+
+	cpu->setRegA(rst);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// SBC_inmediate
+SBC_inmediate::SBC_inmediate(int operand, CPU* cpu) : SBC(operand, cpu) {}
+
+int SBC_inmediate::execute() {
+	return SBC::execute(operand);
+}
+
+
+// SBC_zero
+SBC_zero::SBC_zero(int operand, CPU* cpu) : SBC(operand, cpu) {}
+
+int SBC_zero::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return SBC::execute(op);
+}
+
+
+// SBC_zerox
+SBC_zerox::SBC_zerox(int operand, CPU* cpu) : SBC(operand, cpu) {}
+
+int SBC_zerox::execute() {
+	int addr = fetchIndexedZeroXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return SBC::execute(op);
+}
+
+
+// SBC_abs
+SBC_abs::SBC_abs(int operand, CPU* cpu) : SBC(operand, cpu) {}
+
+int SBC_abs::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return SBC::execute(op);
+}
+
+
+// SBC_absx
+SBC_absx::SBC_absx(int operand, CPU* cpu) : SBC(operand, cpu) {}
+
+int SBC_absx::execute() {
+	int addr = fetchIndexedAbsXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return SBC::execute(op);
+}
+
+
+// SBC_absy
+SBC_absy::SBC_absy(int operand, CPU* cpu) : SBC(operand, cpu) {}
+
+int SBC_absy::execute() {
+	int addr = fetchIndexedAbsYAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return SBC::execute(op);
+}
+
+
+// SBC_preindexi
+SBC_preindexi::SBC_preindexi(int operand, CPU* cpu) : SBC(operand, cpu) {}
+
+int SBC_preindexi::execute() {
+	int addr = fetchPreindexedAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return SBC::execute(op);
+}
+
+
+// SBC_postindexi
+SBC_postindexi::SBC_postindexi(int operand, CPU* cpu) : SBC(operand, cpu) {}
+
+int SBC_postindexi::execute() {
+	int addr = fetchPostindexedAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return SBC::execute(op);
+}
+
+
+/******************************************************************************
+ * SEC Set carry flag
+ *****************************************************************************/
+
+SEC::SEC(CPU* cpu) : Instruction(0, cpu) {}
+
+int SEC::execute() {
+	cpu->setReg_p_c_bit(1);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * SED Set decimal mode
+ *****************************************************************************/
+
+SED::SED(CPU* cpu) : Instruction(0, cpu) {}
+
+int SED::execute() {
+	cpu->setReg_p_d_bit(1);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * SEI Set interrupt disable status
+ *****************************************************************************/
+
+SEI::SEI(CPU* cpu) : Instruction(0, cpu) {}
+
+int SEI::execute() {
+	cpu->setReg_p_i_bit(1);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
 
