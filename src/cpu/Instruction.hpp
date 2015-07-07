@@ -620,4 +620,542 @@ public:
 };//class CLV
 
 
+/******************************************************************************
+ * CMP Compare memory and accumulator
+ *****************************************************************************/
+class CMP : public Instruction {
+public:
+	CMP(int operand, CPU* cpu);
+	virtual ~CMP();
+
+	virtual int execute(int op);
+
+};//class CMP
+
+
+class CMP_inmediate : public CMP {
+	// Constantes
+	static const int OPCODE = 0xC9;
+	static const int BYTES = 2;
+	static const int CYCLES = 2;
+
+	CMP_inmediate(int operand, CPU* cpu);
+	virtual ~CMP_inmediate();
+
+	int execute();
+};
+
+
+class CMP_zero : public CMP {
+	// Constantes
+	static const int OPCODE = 0xC5;
+	static const int BYTES = 2;
+	static const int CYCLES = 3;
+
+	CMP_zero(int operand, CPU* cpu);
+	virtual ~CMP_zero();
+
+	int execute();
+};
+
+
+class CMP_zerox : public CMP {
+	// Constantes
+	static const int OPCODE = 0xD5;
+	static const int BYTES = 2;
+	static const int CYCLES = 4;
+
+	CMP_zerox(int operand, CPU* cpu);
+	virtual ~CMP_zerox();
+
+	int execute();
+};
+
+
+class CMP_abs : public CMP {
+	// Constantes
+	static const int OPCODE = 0xCD;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	CMP_abs(int operand, CPU* cpu);
+	virtual ~CMP_abs();
+
+	int execute();
+};
+
+
+class CMP_absx : public CMP {
+	// Constantes
+	static const int OPCODE = 0xDD;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	CMP_absx(int operand, CPU* cpu);
+	virtual ~CMP_absx();
+
+	int execute();
+};
+
+
+class CMP_absy : public CMP {
+	// Constantes
+	static const int OPCODE = 0xD9;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	CMP_absy(int operand, CPU* cpu);
+	virtual ~CMP_absy();
+
+	int execute();
+};
+
+
+class CMP_preindexi : public CMP {
+	// Constantes
+	static const int OPCODE = 0xC1;
+	static const int BYTES = 2;
+	static const int CYCLES = 6;
+
+	CMP_preindexi(int operand, CPU* cpu);
+	virtual ~CMP_preindexi();
+
+	int execute();
+};
+
+
+class CMP_postindexi : public CMP {
+	// Constantes
+	static const int OPCODE = 0xD1;
+	static const int BYTES = 2;
+	static const int CYCLES = 5;
+
+	CMP_postindexi(int operand, CPU* cpu);
+	virtual ~CMP_postindexi();
+
+	int execute();
+};
+
+
+/******************************************************************************
+ * CPX Compare Memory and Index X
+ *****************************************************************************/
+class CPX : public Instruction {
+public:
+	CPX(int operand, CPU* cpu);
+	virtual ~CPX();
+
+	virtual int execute(int op);
+
+};//class CPX
+
+
+class CPX_inmediate : public CPX {
+	// Constantes
+	static const int OPCODE = 0xE0;
+	static const int BYTES = 2;
+	static const int CYCLES = 2;
+
+	CPX_inmediate(int operand, CPU* cpu);
+	virtual ~CPX_inmediate();
+
+	int execute();
+};
+
+
+class CPX_zero : public CPX {
+	// Constantes
+	static const int OPCODE = 0xE4;
+	static const int BYTES = 2;
+	static const int CYCLES = 3;
+
+	CPX_zero(int operand, CPU* cpu);
+	virtual ~CPX_zero();
+
+	int execute();
+};
+
+
+class CPX_abs : public CPX {
+	// Constantes
+	static const int OPCODE = 0xEC;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	CPX_abs(int operand, CPU* cpu);
+	virtual ~CPX_abs();
+
+	int execute();
+};
+
+
+/******************************************************************************
+ * CPY Compare Memory and Index Y
+ *****************************************************************************/
+class CPY : public Instruction {
+public:
+	CPY(int operand, CPU* cpu);
+	virtual ~CPY();
+
+	virtual int execute(int op);
+
+};//class CPY
+
+
+class CPY_inmediate : public CPY {
+	// Constantes
+	static const int OPCODE = 0xC0;
+	static const int BYTES = 2;
+	static const int CYCLES = 2;
+
+	CPY_inmediate(int operand, CPU* cpu);
+	virtual ~CPY_inmediate();
+
+	int execute();
+};
+
+
+class CPY_zero : public CPY {
+	// Constantes
+	static const int OPCODE = 0xC4;
+	static const int BYTES = 2;
+	static const int CYCLES = 3;
+
+	CPY_zero(int operand, CPU* cpu);
+	virtual ~CPY_zero();
+
+	int execute();
+};
+
+
+class CPY_abs : public CPY {
+	// Constantes
+	static const int OPCODE = 0xCC;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	CPY_abs(int operand, CPU* cpu);
+	virtual ~CPY_abs();
+
+	int execute();
+};
+
+
+/******************************************************************************
+ * DEC Decrement memory by one
+ *****************************************************************************/
+class DEC : public Instruction {
+public:
+	DEC(int operand, CPU* cpu);
+	virtual ~DEC();
+
+	virtual int execute(int op);
+
+};//class DEC
+
+
+
+class DEC_zero : public DEC {
+	// Constantes
+	static const int OPCODE = 0xC6;
+	static const int BYTES = 2;
+	static const int CYCLES = 5;
+
+	DEC_zero(int operand, CPU* cpu);
+	virtual ~DEC_zero();
+
+	int execute();
+};
+
+
+class DEC_zerox : public DEC {
+	// Constantes
+	static const int OPCODE = 0xD6;
+	static const int BYTES = 2;
+	static const int CYCLES = 6;
+
+	DEC_zerox(int operand, CPU* cpu);
+	virtual ~DEC_zerox();
+
+	int execute();
+};
+
+
+class DEC_abs : public DEC {
+	// Constantes
+	static const int OPCODE = 0xCE;
+	static const int BYTES = 3;
+	static const int CYCLES = 6;
+
+	DEC_abs(int operand, CPU* cpu);
+	virtual ~DEC_abs();
+
+	int execute();
+};
+
+
+class DEC_absx : public DEC {
+	// Constantes
+	static const int OPCODE = 0xDE;
+	static const int BYTES = 3;
+	static const int CYCLES = 7;
+
+	DEC_absx(int operand, CPU* cpu);
+	virtual ~DEC_absx();
+
+	int execute();
+};
+
+
+/******************************************************************************
+ * DEX Decrement index X by one
+ *****************************************************************************/
+
+class DEX : public Instruction {
+	// Constantes
+	static const int OPCODE = 0xCA;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	DEX(CPU* cpu);
+	virtual ~DEX();
+
+	int execute();
+};
+
+
+/******************************************************************************
+ * DEY Decrement index Y by one
+ *****************************************************************************/
+
+class DEY : public Instruction {
+	// Constantes
+	static const int OPCODE = 0x88;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	DEY(CPU* cpu);
+	virtual ~DEY();
+
+	int execute();
+};
+
+
+/******************************************************************************
+ * EOR "Exclusive-Or" memory with accumulator
+ *****************************************************************************/
+class EOR : public Instruction {
+public:
+	EOR(int operand, CPU* cpu);
+	virtual ~EOR();
+
+	virtual int execute(int op);
+
+};//class EOR
+
+
+class EOR_inmediate : public EOR {
+	// Constantes
+	static const int OPCODE = 0x49;
+	static const int BYTES = 2;
+	static const int CYCLES = 2;
+
+	EOR_inmediate(int operand, CPU* cpu);
+	virtual ~EOR_inmediate();
+
+	int execute();
+};
+
+
+class EOR_zero : public EOR {
+	// Constantes
+	static const int OPCODE = 0x45;
+	static const int BYTES = 2;
+	static const int CYCLES = 3;
+
+	EOR_zero(int operand, CPU* cpu);
+	virtual ~EOR_zero();
+
+	int execute();
+};
+
+
+class EOR_zerox : public EOR {
+	// Constantes
+	static const int OPCODE = 0x55;
+	static const int BYTES = 2;
+	static const int CYCLES = 4;
+
+	EOR_zerox(int operand, CPU* cpu);
+	virtual ~EOR_zerox();
+
+	int execute();
+};
+
+
+class EOR_abs : public EOR {
+	// Constantes
+	static const int OPCODE = 0x4D;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	EOR_abs(int operand, CPU* cpu);
+	virtual ~EOR_abs();
+
+	int execute();
+};
+
+
+class EOR_absx : public EOR {
+	// Constantes
+	static const int OPCODE = 0x5D;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	EOR_absx(int operand, CPU* cpu);
+	virtual ~EOR_absx();
+
+	int execute();
+};
+
+
+class EOR_absy : public EOR {
+	// Constantes
+	static const int OPCODE = 0x59;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	EOR_absy(int operand, CPU* cpu);
+	virtual ~EOR_absy();
+
+	int execute();
+};
+
+
+class EOR_preindexi : public EOR {
+	// Constantes
+	static const int OPCODE = 0x41;
+	static const int BYTES = 2;
+	static const int CYCLES = 6;
+
+	EOR_preindexi(int operand, CPU* cpu);
+	virtual ~EOR_preindexi();
+
+	int execute();
+};
+
+
+class EOR_postindexi : public EOR {
+	// Constantes
+	static const int OPCODE = 0x51;
+	static const int BYTES = 2;
+	static const int CYCLES = 5;
+
+	EOR_postindexi(int operand, CPU* cpu);
+	virtual ~EOR_postindexi();
+
+	int execute();
+};
+
+
+/******************************************************************************
+ * INC Increment memory by one
+ *****************************************************************************/
+class INC : public Instruction {
+public:
+	INC(int operand, CPU* cpu);
+	virtual ~INC();
+
+	virtual int execute(int op);
+
+};//class INC
+
+
+
+class INC_zero : public INC {
+	// Constantes
+	static const int OPCODE = 0xE6;
+	static const int BYTES = 2;
+	static const int CYCLES = 5;
+
+	INC_zero(int operand, CPU* cpu);
+	virtual ~INC_zero();
+
+	int execute();
+};
+
+
+class INC_zerox : public INC {
+	// Constantes
+	static const int OPCODE = 0xF6;
+	static const int BYTES = 2;
+	static const int CYCLES = 6;
+
+	INC_zerox(int operand, CPU* cpu);
+	virtual ~INC_zerox();
+
+	int execute();
+};
+
+
+class INC_abs : public INC {
+	// Constantes
+	static const int OPCODE = 0xEE;
+	static const int BYTES = 3;
+	static const int CYCLES = 6;
+
+	INC_abs(int operand, CPU* cpu);
+	virtual ~INC_abs();
+
+	int execute();
+};
+
+
+class INC_absx : public INC {
+	// Constantes
+	static const int OPCODE = 0xFE;
+	static const int BYTES = 3;
+	static const int CYCLES = 7;
+
+	INC_absx(int operand, CPU* cpu);
+	virtual ~INC_absx();
+
+	int execute();
+};
+
+
+/******************************************************************************
+ * INX Increment Index X by one
+ *****************************************************************************/
+
+class INX : public Instruction {
+	// Constantes
+	static const int OPCODE = 0xE8;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	INX(CPU* cpu);
+	virtual ~INX();
+
+	int execute();
+};
+
+
+/******************************************************************************
+ * INY Increment Index Y by one
+ *****************************************************************************/
+
+class INY : public Instruction {
+	// Constantes
+	static const int OPCODE = 0xC8;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	INY(CPU* cpu);
+	virtual ~INY();
+
+	int execute();
+};
+
+
 #endif /* CPU_INSTRUCTION_HPP_ */

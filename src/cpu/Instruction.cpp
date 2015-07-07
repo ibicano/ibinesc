@@ -642,3 +642,560 @@ int CLV::execute() {
 
 	return CYCLES;
 }
+
+
+/******************************************************************************
+ * CMP Compare memory and accumulator
+ *****************************************************************************/
+
+CMP::CMP(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int CMP::execute(int op) {
+	int ac = cpu->getRegA();
+	int result = ac - op;
+
+	if (0 <= result < 0x100)
+		cpu->setReg_p_c_bit(1);
+	else
+		cpu->setReg_p_c_bit(0);
+
+	cpu->setSignBit(result);
+	cpu->setZeroBit(result);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// CMP_inmediate
+CMP_inmediate::CMP_inmediate(int operand, CPU* cpu) : CMP(operand, cpu) {}
+
+int CMP_inmediate::execute() {
+	return CMP::execute(operand);
+}
+
+
+// CMP_zero
+CMP_zero::CMP_zero(int operand, CPU* cpu) : CMP(operand, cpu) {}
+
+int CMP_zero::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return CMP::execute(op);
+}
+
+
+// CMP_zerox
+CMP_zerox::CMP_zerox(int operand, CPU* cpu) : CMP(operand, cpu) {}
+
+int CMP_zerox::execute() {
+	int addr = fetchIndexedZeroXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return CMP::execute(op);
+}
+
+
+// CMP_abs
+CMP_abs::CMP_abs(int operand, CPU* cpu) : CMP(operand, cpu) {}
+
+int CMP_abs::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return CMP::execute(op);
+}
+
+
+// CMP_absx
+CMP_absx::CMP_absx(int operand, CPU* cpu) : CMP(operand, cpu) {}
+
+int CMP_absx::execute() {
+	int addr = fetchIndexedAbsXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return CMP::execute(op);
+}
+
+
+// CMP_absy
+CMP_absy::CMP_absy(int operand, CPU* cpu) : CMP(operand, cpu) {}
+
+int CMP_absy::execute() {
+	int addr = fetchIndexedAbsYAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return CMP::execute(op);
+}
+
+
+// CMP_preindexi
+CMP_preindexi::CMP_preindexi(int operand, CPU* cpu) : CMP(operand, cpu) {}
+
+int CMP_preindexi::execute() {
+	int addr = fetchPreindexedAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return CMP::execute(op);
+}
+
+
+// CMP_postindexi
+CMP_postindexi::CMP_postindexi(int operand, CPU* cpu) : CMP(operand, cpu) {}
+
+int CMP_postindexi::execute() {
+	int addr = fetchPostindexedAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return CMP::execute(op);
+}
+
+
+/******************************************************************************
+ * CPX Compare Memory and Index X
+ *****************************************************************************/
+
+CPX::CPX(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int CPX::execute(int op) {
+	int reg_x = cpu->getRegX();
+	int result = reg_x - op;
+
+	if (0 <= result < 0x100)
+		cpu->setReg_p_c_bit(1);
+	else
+		cpu->setReg_p_c_bit(0);
+
+	cpu->setSignBit(result);
+	cpu->setZeroBit(result);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// CPX_inmediate
+CPX_inmediate::CPX_inmediate(int operand, CPU* cpu) : CPX(operand, cpu) {}
+
+int CPX_inmediate::execute() {
+	return CPX::execute(operand);
+}
+
+
+// CPX_zero
+CPX_zero::CPX_zero(int operand, CPU* cpu) : CPX(operand, cpu) {}
+
+int CPX_zero::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return CPX::execute(op);
+}
+
+
+// CPX_abs
+CPX_abs::CPX_abs(int operand, CPU* cpu) : CPX(operand, cpu) {}
+
+int CPX_abs::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return CPX::execute(op);
+}
+
+
+/******************************************************************************
+ * CPY Compare Memory and Index Y
+ *****************************************************************************/
+
+CPY::CPY(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int CPY::execute(int op) {
+	int reg_y = cpu->getRegY();
+	int result = reg_y - op;
+
+	if (0 <= result < 0x100)
+		cpu->setReg_p_c_bit(1);
+	else
+		cpu->setReg_p_c_bit(0);
+
+	cpu->setSignBit(result);
+	cpu->setZeroBit(result);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// CPY_inmediate
+CPY_inmediate::CPY_inmediate(int operand, CPU* cpu) : CPY(operand, cpu) {}
+
+int CPY_inmediate::execute() {
+	return CPY::execute(operand);
+}
+
+
+// CPY_zero
+CPY_zero::CPY_zero(int operand, CPU* cpu) : CPY(operand, cpu) {}
+
+int CPY_zero::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return CPY::execute(op);
+}
+
+
+// CPY_abs
+CPY_abs::CPY_abs(int operand, CPU* cpu) : CPY(operand, cpu) {}
+
+int CPY_abs::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return CPY::execute(op);
+}
+
+
+/******************************************************************************
+ * DEC: Shift Left One Bit (Memory or Accumulator)
+ *****************************************************************************/
+
+DEC::DEC(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int DEC::execute(int op) {
+	int result = (op - 1) & 0xFF;
+
+	cpu->setSignBit(result);
+	cpu->setZeroBit(result);
+
+	return result;
+}
+
+
+// DEC_zero
+DEC_zero::DEC_zero(int operand, CPU* cpu) : DEC(operand, cpu) {}
+
+int DEC_zero::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	int result = DEC::execute(op);
+	cpu->getMem()->writeData(result, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// DEC_zerox
+DEC_zerox::DEC_zerox(int operand, CPU* cpu) : DEC(operand, cpu) {}
+
+int DEC_zerox::execute() {
+	int addr = fetchIndexedZeroXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	int result = DEC::execute(op);
+	cpu->getMem()->writeData(result, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// DEC_abs
+DEC_abs::DEC_abs(int operand, CPU* cpu) : DEC(operand, cpu) {}
+
+int DEC_abs::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	int result = DEC::execute(op);
+	cpu->getMem()->writeData(result, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// DEC_absx
+DEC_absx::DEC_absx(int operand, CPU* cpu) : DEC(operand, cpu) {}
+
+int DEC_absx::execute() {
+	int addr = fetchIndexedAbsXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	int result = DEC::execute(op);
+	cpu->getMem()->writeData(result, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * DEX Decrement index X by one
+ *****************************************************************************/
+
+DEX::DEX(CPU* cpu) : Instruction(0, cpu) {}
+
+int DEX::execute() {
+	int result = (cpu->getRegX() - 1) & 0xFF;
+
+	cpu->setSignBit(result);
+	cpu->setZeroBit(result);
+
+	cpu->setRegX(result);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * DEY Decrement index Y by one
+ *****************************************************************************/
+
+DEY::DEY(CPU* cpu) : Instruction(0, cpu) {}
+
+int DEY::execute() {
+	int result = (cpu->getRegY() - 1) & 0xFF;
+
+	cpu->setSignBit(result);
+	cpu->setZeroBit(result);
+
+	cpu->setRegY(result);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * EOR "Exclusive-Or" memory with accumulator
+ *****************************************************************************/
+
+EOR::EOR(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int EOR::execute(int op) {
+	int ac = cpu->getRegA();
+	int result = ac ^ op;
+
+	cpu->setSignBit(result);
+	cpu->setZeroBit(result);
+
+	cpu->setRegA(result);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// EOR_inmediate
+EOR_inmediate::EOR_inmediate(int operand, CPU* cpu) : EOR(operand, cpu) {}
+
+int EOR_inmediate::execute() {
+	return EOR::execute(operand);
+}
+
+
+// EOR_zero
+EOR_zero::EOR_zero(int operand, CPU* cpu) : EOR(operand, cpu) {}
+
+int EOR_zero::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return EOR::execute(op);
+}
+
+
+// EOR_zerox
+EOR_zerox::EOR_zerox(int operand, CPU* cpu) : EOR(operand, cpu) {}
+
+int EOR_zerox::execute() {
+	int addr = fetchIndexedZeroXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return EOR::execute(op);
+}
+
+
+// EOR_abs
+EOR_abs::EOR_abs(int operand, CPU* cpu) : EOR(operand, cpu) {}
+
+int EOR_abs::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return EOR::execute(op);
+}
+
+
+// EOR_absx
+EOR_absx::EOR_absx(int operand, CPU* cpu) : EOR(operand, cpu) {}
+
+int EOR_absx::execute() {
+	int addr = fetchIndexedAbsXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return EOR::execute(op);
+}
+
+
+// EOR_absy
+EOR_absy::EOR_absy(int operand, CPU* cpu) : EOR(operand, cpu) {}
+
+int EOR_absy::execute() {
+	int addr = fetchIndexedAbsYAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return EOR::execute(op);
+}
+
+
+// EOR_preindexi
+EOR_preindexi::EOR_preindexi(int operand, CPU* cpu) : EOR(operand, cpu) {}
+
+int EOR_preindexi::execute() {
+	int addr = fetchPreindexedAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return EOR::execute(op);
+}
+
+
+// EOR_postindexi
+EOR_postindexi::EOR_postindexi(int operand, CPU* cpu) : EOR(operand, cpu) {}
+
+int EOR_postindexi::execute() {
+	int addr = fetchPostindexedAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return EOR::execute(op);
+}
+
+
+/******************************************************************************
+ * INC Increment memory by one
+ *****************************************************************************/
+
+INC::INC(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int INC::execute(int op) {
+	int result = (op + 1) & 0xFF;
+
+	cpu->setSignBit(result);
+	cpu->setZeroBit(result);
+
+	return result;
+}
+
+
+// INC_zero
+INC_zero::INC_zero(int operand, CPU* cpu) : INC(operand, cpu) {}
+
+int INC_zero::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	int result = INC::execute(op);
+	cpu->getMem()->writeData(result, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// INC_zerox
+INC_zerox::INC_zerox(int operand, CPU* cpu) : INC(operand, cpu) {}
+
+int INC_zerox::execute() {
+	int addr = fetchIndexedZeroXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	int result = INC::execute(op);
+	cpu->getMem()->writeData(result, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// INC_abs
+INC_abs::INC_abs(int operand, CPU* cpu) : INC(operand, cpu) {}
+
+int INC_abs::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	int result = INC::execute(op);
+	cpu->getMem()->writeData(result, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+// INC_absx
+INC_absx::INC_absx(int operand, CPU* cpu) : INC(operand, cpu) {}
+
+int INC_absx::execute() {
+	int addr = fetchIndexedAbsXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	int result = INC::execute(op);
+	cpu->getMem()->writeData(result, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * INX Increment Index X by one
+ *****************************************************************************/
+
+INX::INX(CPU* cpu) : Instruction(0, cpu) {}
+
+int INX::execute() {
+	int result = (cpu->getRegX() + 1) & 0xFF;
+
+	cpu->setSignBit(result);
+	cpu->setZeroBit(result);
+
+	cpu->setRegX(result);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * INY Increment Index Y by one
+ *****************************************************************************/
+
+INY::INY(CPU* cpu) : Instruction(0, cpu) {}
+
+int INY::execute() {
+	int result = (cpu->getRegY() + 1) & 0xFF;
+
+	cpu->setSignBit(result);
+	cpu->setZeroBit(result);
+
+	cpu->setRegY(result);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+
+
