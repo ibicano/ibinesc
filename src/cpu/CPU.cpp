@@ -7,16 +7,23 @@
 
 #include "CPU.hpp"
 
+// Constructor
 CPU::CPU(Memory* mem, PPU* ppu) {
 	this->mem = mem;
 	this->ppu = ppu;
 
-	regPc = 0x0000;
-	regSp = 0x00;
+	// Inicializa los registros
+	regPc = mem->readData(CPU::INT_ADDR_RESET);
+	regPc = regPc | (mem->readData(CPU::INT_ADDR_RESET + 1) << 8);
+
+	regSp = 0xFF;
 	regA = 0x00;
 	regX = 0x00;
 	regY = 0x00;
-	regP = 0x00;
+	regP = 0x34;
+
+	// Inicializa el flag de IRQ
+	irq = false;
 }//CPU()
 
 CPU::~CPU() {

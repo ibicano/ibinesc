@@ -11,13 +11,45 @@
 #include "../Memory.hpp"
 #include <iostream>
 
-// Forward para evitar el include
+// Forwards para evitar el include
 class Instruction;
+class PPU;
 
 class CPU {
 public:
+	/*
+	 * Constantes públicas
+	 */
+
+	// Posiciones en el registro de estado
+	static const int REG_P_BIT_C = 0;
+    static const int REG_P_BIT_Z = 1;
+    static const int EG_P_BIT_I = 2;
+    static const int REG_P_BIT_D = 3;
+    static const int REG_P_BIT_B = 4;
+    static const int REG_P_BIT_V = 6;
+    static const int REG_P_BIT_S = 7;
+
+    // Frecuencia de la CPU en Hz
+    static const int CPU_FREQ = 1660000;
+
+    // Direcciones de memoria vector de interrupciones
+    static const int INT_ADDR_VBLANK = 0xFFFA;
+    static const int INT_ADDR_RESET = 0xFFFC;
+    static const int INT_ADDR_IRQ = 0xFFFE;
+
+    // Latencia de interrupción en ciclos
+    static const int INT_LATENCY = 7;
+
+	/*
+	 * Métodos públicos
+	 */
+
 	CPU(Memory* mem, PPU* ppu);
 	virtual ~CPU();
+
+	// Devuelve un puntero a la memoria
+	Memory* getMem();
 
 	// Procesan interrupciones
 	void interruptIrq();
@@ -26,9 +58,6 @@ public:
 	// Indica si hay una IRQ pendiente
 	bool getIrq();
 	bool setIrq(bool v);
-
-	// Devuelve un puntero a la memoria
-	Memory* getMem();
 
 	// Devuelven el contenido de los registros
 	int getRegPc();
@@ -82,7 +111,10 @@ public:
 
 
 private:
-	// Variables de instancia
+	/*
+	 * Variables de instancia privadas
+	 */
+
 	Memory* mem;		// Memoria principal
 	PPU* ppu;			// Procesador gráfico
 
@@ -93,6 +125,13 @@ private:
 	int regX;
 	int regY;
 	int regP;
+
+	// Flag de irq
+	bool irq;
+
+	/*
+	 * Métodos de instancia privados
+	 */
 
 	// Procesa una interrupción
 	void interrupt();
