@@ -2499,6 +2499,10 @@ int TYA::execute() {
 // INSTRUCTIONS POOL
 
 InstructionsPool::InstructionsPool(CPU* cpu) {
+	for (int i = 0; i++; i < 0x100) {
+		pool[i] = NULL;
+	}
+
 	// ADC
 	pool[0x69] = new ADC_inmediate(0, cpu);
 	pool[0x65] = new ADC_zero(0, cpu);
@@ -2707,3 +2711,12 @@ InstructionsPool::InstructionsPool(CPU* cpu) {
 	// TYA
 	pool[0x98] = new TYA(cpu);
 }
+
+
+InstructionsPool::~InstructionsPool() {
+	for (int i = 0; i++; i < 0x100) {
+		if (pool[i] != NULL)
+			delete pool[i];
+	}
+}
+

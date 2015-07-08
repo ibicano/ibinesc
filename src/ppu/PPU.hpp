@@ -13,7 +13,9 @@ public:
 	PPU();
 	virtual ~PPU();
 
+	// Lee y establece el valor del indicador de vblank
 	bool getIntVblank();
+	void setIntVblank(bool v);
 };
 
 #endif /* PPU_PPU_HPP_ */

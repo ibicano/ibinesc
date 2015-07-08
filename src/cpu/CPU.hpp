@@ -10,9 +10,9 @@
 
 #include "../Memory.hpp"
 #include <iostream>
+#include "Instruction.hpp"
 
 // Forwards para evitar el include
-class Instruction;
 class PPU;
 
 class CPU {
@@ -24,7 +24,7 @@ public:
 	// Posiciones en el registro de estado
 	static const int REG_P_BIT_C = 0;
     static const int REG_P_BIT_Z = 1;
-    static const int EG_P_BIT_I = 2;
+    static const int REG_P_BIT_I = 2;
     static const int REG_P_BIT_D = 3;
     static const int REG_P_BIT_B = 4;
     static const int REG_P_BIT_V = 6;
@@ -57,7 +57,7 @@ public:
 
 	// Indica si hay una IRQ pendiente
 	bool getIrq();
-	bool setIrq(bool v);
+	void setIrq(bool v);
 
 	// Devuelven el contenido de los registros
 	int getRegPc();
@@ -101,9 +101,9 @@ public:
 
 	/* Calcula el valor de los bits del registro de estado en función
 	 * del resultado de una instrucción */
-	void setCarryBit(int result);
-	void setZeroBit(int result);
-	void setSignBit(int result);
+	int setCarryBit(int instResult);
+	int setZeroBit(int instResult);
+	int setSignBit(int instResult);
 
 	// Mete y saca datos de la pila
 	void pushStack(int byte);
@@ -126,6 +126,9 @@ private:
 	int regY;
 	int regP;
 
+	// Pool de instrucciones
+	InstructionsPool* instructionsPool;
+
 	// Flag de irq
 	bool irq;
 
@@ -134,7 +137,7 @@ private:
 	 */
 
 	// Procesa una interrupción
-	void interrupt();
+	void interrupt(int vectorAddr);
 
 };// class CPU;
 
