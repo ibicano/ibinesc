@@ -2165,4 +2165,317 @@ int SEI::execute() {
 }
 
 
+/******************************************************************************
+ * STA Store accumulator in memory
+ *****************************************************************************/
+
+STA::STA(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int STA::execute(int addr) {
+	int ac = cpu->getRegA();
+	cpu->getMem()->writeData(ac, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	if (addr != 0x4014)
+		return CYCLES;
+	else
+		return CYCLES + 512;
+}
+
+
+// STA_zero
+STA_zero::STA_zero(int operand, CPU* cpu) : STA(operand, cpu) {}
+
+int STA_zero::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return STA::execute(op);
+}
+
+
+// STA_zerox
+STA_zerox::STA_zerox(int operand, CPU* cpu) : STA(operand, cpu) {}
+
+int STA_zerox::execute() {
+	int addr = fetchIndexedZeroXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return STA::execute(op);
+}
+
+
+// STA_abs
+STA_abs::STA_abs(int operand, CPU* cpu) : STA(operand, cpu) {}
+
+int STA_abs::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return STA::execute(op);
+}
+
+
+// STA_absx
+STA_absx::STA_absx(int operand, CPU* cpu) : STA(operand, cpu) {}
+
+int STA_absx::execute() {
+	int addr = fetchIndexedAbsXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return STA::execute(op);
+}
+
+
+// STA_absy
+STA_absy::STA_absy(int operand, CPU* cpu) : STA(operand, cpu) {}
+
+int STA_absy::execute() {
+	int addr = fetchIndexedAbsYAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return STA::execute(op);
+}
+
+
+// STA_preindexi
+STA_preindexi::STA_preindexi(int operand, CPU* cpu) : STA(operand, cpu) {}
+
+int STA_preindexi::execute() {
+	int addr = fetchPreindexedAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return STA::execute(op);
+}
+
+
+// STA_postindexi
+STA_postindexi::STA_postindexi(int operand, CPU* cpu) : STA(operand, cpu) {}
+
+int STA_postindexi::execute() {
+	int addr = fetchPostindexedAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return STA::execute(op);
+}
+
+
+/******************************************************************************
+ * STX Store index X in memory
+ *****************************************************************************/
+
+STX::STX(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int STX::execute(int addr) {
+	int regX = cpu->getRegX();
+	cpu->getMem()->writeData(regX, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	if (addr != 0x4014)
+		return CYCLES;
+	else
+		return CYCLES + 512;
+}
+
+
+// STX_zero
+STX_zero::STX_zero(int operand, CPU* cpu) : STX(operand, cpu) {}
+
+int STX_zero::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return STX::execute(op);
+}
+
+
+// STX_zerox
+STX_zeroy::STX_zeroy(int operand, CPU* cpu) : STX(operand, cpu) {}
+
+int STX_zeroy::execute() {
+	int addr = fetchIndexedZeroYAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return STX::execute(op);
+}
+
+
+// STX_abs
+STX_abs::STX_abs(int operand, CPU* cpu) : STX(operand, cpu) {}
+
+int STX_abs::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return STX::execute(op);
+}
+
+
+/******************************************************************************
+ * STY Store index Y in memory
+ *****************************************************************************/
+
+STY::STY(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+int STY::execute(int addr) {
+	int regY = cpu->getRegY();
+	cpu->getMem()->writeData(regY, addr);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	if (addr != 0x4014)
+		return CYCLES;
+	else
+		return CYCLES + 512;
+}
+
+
+// STY_zero
+STY_zero::STY_zero(int operand, CPU* cpu) : STY(operand, cpu) {}
+
+int STY_zero::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return STY::execute(op);
+}
+
+
+// STY_zerox
+STY_zerox::STY_zerox(int operand, CPU* cpu) : STY(operand, cpu) {}
+
+int STY_zerox::execute() {
+	int addr = fetchIndexedZeroXAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return STY::execute(op);
+}
+
+
+// STY_abs
+STY_abs::STY_abs(int operand, CPU* cpu) : STY(operand, cpu) {}
+
+int STY_abs::execute() {
+	int addr = fetchAbsoluteAddrmode();
+	int op = cpu->getMem()->readData(addr);
+	return STY::execute(op);
+}
+
+
+/******************************************************************************
+ * TAX Transfer accumulator to index X
+ *****************************************************************************/
+
+TAX::TAX(CPU* cpu) : Instruction(0, cpu) {}
+
+int TAX::execute() {
+    int ac = cpu->getRegA();
+
+	cpu->setZeroBit(ac);
+	cpu->setSignBit(ac);
+
+	cpu->setRegX(ac);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * TAY Transfer accumulator to index Y
+ *****************************************************************************/
+
+TAY::TAY(CPU* cpu) : Instruction(0, cpu) {}
+
+int TAY::execute() {
+    int ac = cpu->getRegA();
+
+	cpu->setZeroBit(ac);
+	cpu->setSignBit(ac);
+
+	cpu->setRegY(ac);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * TSX Transfer stack pointer to index X
+ *****************************************************************************/
+
+TSX::TSX(CPU* cpu) : Instruction(0, cpu) {}
+
+int TSX::execute() {
+    int sp = cpu->getRegSp();
+
+	cpu->setZeroBit(sp);
+	cpu->setSignBit(sp);
+
+	cpu->setRegX(sp);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * TXA Transfer index X to accumulator
+ *****************************************************************************/
+
+TXA::TXA(CPU* cpu) : Instruction(0, cpu) {}
+
+int TXA::execute() {
+    int regX = cpu->getRegX();
+
+	cpu->setZeroBit(regX);
+	cpu->setSignBit(regX);
+
+	cpu->setRegA(regX);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * TXS Transfer index X to stack pointer
+ *****************************************************************************/
+
+TXS::TXS(CPU* cpu) : Instruction(0, cpu) {}
+
+int TXS::execute() {
+    int regX = cpu->getRegX();
+
+	cpu->setRegSp(regX);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
+/******************************************************************************
+ * TYA Transfer index Y to accumulator
+ *****************************************************************************/
+
+TYA::TYA(CPU* cpu) : Instruction(0, cpu) {}
+
+int TYA::execute() {
+    int regY = cpu->getRegX();
+
+	cpu->setZeroBit(regY);
+	cpu->setSignBit(regY);
+
+	cpu->setRegA(regY);
+
+	// Incrementa el registro contador (PC) de la CPU
+	cpu->incrPc(BYTES);
+
+	return CYCLES;
+}
+
+
 

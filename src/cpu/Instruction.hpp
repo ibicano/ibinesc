@@ -2234,5 +2234,324 @@ public:
 };//class SEI
 
 
+/******************************************************************************
+ * STA Store accumulator in memory
+ *****************************************************************************/
+class STA : public Instruction {
+public:
+	STA(int operand, CPU* cpu);
+	virtual ~STA();
+
+	virtual int execute(int addr);
+
+};//class STA
+
+
+class STA_zero : public STA {
+public:
+	// Constantes
+	static const int OPCODE = 0x85;
+	static const int BYTES = 2;
+	static const int CYCLES = 3;
+
+	STA_zero(int operand, CPU* cpu);
+	virtual ~STA_zero();
+
+	int execute();
+};
+
+
+class STA_zerox : public STA {
+public:
+	// Constantes
+	static const int OPCODE = 0x95;
+	static const int BYTES = 2;
+	static const int CYCLES = 4;
+
+	STA_zerox(int operand, CPU* cpu);
+	virtual ~STA_zerox();
+
+	int execute();
+};
+
+
+class STA_abs : public STA {
+	// Constantes
+	static const int OPCODE = 0x8D;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	STA_abs(int operand, CPU* cpu);
+	virtual ~STA_abs();
+
+	int execute();
+};
+
+
+class STA_absx : public STA {
+public:
+	// Constantes
+	static const int OPCODE = 0x9D;
+	static const int BYTES = 3;
+	static const int CYCLES = 5;
+
+	STA_absx(int operand, CPU* cpu);
+	virtual ~STA_absx();
+
+	int execute();
+};
+
+
+class STA_absy : public STA {
+public:
+	// Constantes
+	static const int OPCODE = 0x99;
+	static const int BYTES = 3;
+	static const int CYCLES = 5;
+
+	STA_absy(int operand, CPU* cpu);
+	virtual ~STA_absy();
+
+	int execute();
+};
+
+
+class STA_preindexi : public STA {
+public:
+	// Constantes
+	static const int OPCODE = 0x81;
+	static const int BYTES = 2;
+	static const int CYCLES = 6;
+
+	STA_preindexi(int operand, CPU* cpu);
+	virtual ~STA_preindexi();
+
+	int execute();
+};
+
+
+class STA_postindexi : public STA {
+public:
+	// Constantes
+	static const int OPCODE = 0x91;
+	static const int BYTES = 2;
+	static const int CYCLES = 5;
+
+	STA_postindexi(int operand, CPU* cpu);
+	virtual ~STA_postindexi();
+
+	int execute();
+};
+
+
+/******************************************************************************
+ * STX Store index X in memory
+ *****************************************************************************/
+class STX : public Instruction {
+public:
+	STX(int operand, CPU* cpu);
+	virtual ~STX();
+
+	virtual int execute(int addr);
+
+};//class STX
+
+
+class STX_zero : public STX {
+public:
+	// Constantes
+	static const int OPCODE = 0x86;
+	static const int BYTES = 2;
+	static const int CYCLES = 3;
+
+	STX_zero(int operand, CPU* cpu);
+	virtual ~STX_zero();
+
+	int execute();
+};
+
+
+class STX_zeroy : public STX {
+public:
+	// Constantes
+	static const int OPCODE = 0x96;
+	static const int BYTES = 2;
+	static const int CYCLES = 4;
+
+	STX_zeroy(int operand, CPU* cpu);
+	virtual ~STX_zeroy();
+
+	int execute();
+};
+
+
+class STX_abs : public STX {
+	// Constantes
+	static const int OPCODE = 0x8E;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	STX_abs(int operand, CPU* cpu);
+	virtual ~STX_abs();
+
+	int execute();
+};
+
+
+/******************************************************************************
+ * STY Store index Y in memory
+ *****************************************************************************/
+class STY : public Instruction {
+public:
+	STY(int operand, CPU* cpu);
+	virtual ~STY();
+
+	virtual int execute(int addr);
+
+};//class STY
+
+
+class STY_zero : public STY {
+public:
+	// Constantes
+	static const int OPCODE = 0x84;
+	static const int BYTES = 2;
+	static const int CYCLES = 3;
+
+	STY_zero(int operand, CPU* cpu);
+	virtual ~STY_zero();
+
+	int execute();
+};
+
+
+class STY_zerox : public STY {
+public:
+	// Constantes
+	static const int OPCODE = 0x94;
+	static const int BYTES = 2;
+	static const int CYCLES = 4;
+
+	STY_zerox(int operand, CPU* cpu);
+	virtual ~STY_zerox();
+
+	int execute();
+};
+
+
+class STY_abs : public STY {
+	// Constantes
+	static const int OPCODE = 0x8C;
+	static const int BYTES = 3;
+	static const int CYCLES = 4;
+
+	STY_abs(int operand, CPU* cpu);
+	virtual ~STY_abs();
+
+	int execute();
+};
+
+
+/******************************************************************************
+ * TAX Transfer accumulator to index X
+ *****************************************************************************/
+class TAX : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0xAA;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	TAX(CPU* cpu);
+	~TAX();
+
+	int execute();
+};//class TAX
+
+
+/******************************************************************************
+ * TAY Transfer accumulator to index Y
+ *****************************************************************************/
+class TAY : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0xA8;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	TAY(CPU* cpu);
+	~TAY();
+
+	int execute();
+};//class TAY
+
+
+/******************************************************************************
+ * TSX Transfer stack pointer to index X
+ *****************************************************************************/
+class TSX : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0xBA;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	TSX(CPU* cpu);
+	~TSX();
+
+	int execute();
+};//class TSX
+
+
+/******************************************************************************
+ * TXA Transfer index X to accumulator
+ *****************************************************************************/
+class TXA : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0x8A;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	TXA(CPU* cpu);
+	~TXA();
+
+	int execute();
+};//class TXA
+
+
+/******************************************************************************
+ * TXS Transfer index X to stack pointer
+ *****************************************************************************/
+class TXS : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0x9A;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	TXS(CPU* cpu);
+	~TXS();
+
+	int execute();
+};//class TXS
+
+
+/******************************************************************************
+ * TYA Transfer index Y to accumulator
+ *****************************************************************************/
+class TYA : public Instruction {
+public:
+	// Constantes
+	static const int OPCODE = 0x98;
+	static const int BYTES = 1;
+	static const int CYCLES = 2;
+
+	TYA(CPU* cpu);
+	~TYA();
+
+	int execute();
+};//class TYA
+
 
 #endif /* CPU_INSTRUCTION_HPP_ */
