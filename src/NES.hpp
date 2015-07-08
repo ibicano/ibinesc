@@ -29,6 +29,7 @@ public:
 private:
 	ROM* rom;			// Rom del juego
 	Mapper* mapper;		// Mapper del cartucho
+	Memory* mem;
 	CPU* cpu;			// CPU de la NES
 	PPU* ppu;			// PPU de la NES
 	Joypad* joypad;

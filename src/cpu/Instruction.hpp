@@ -22,19 +22,19 @@ public:
 	// Métodos públicos
 	Instruction(int operand, CPU* cpu);
 
-	virtual ~Instruction() = 0;
+	virtual ~Instruction();
 
 	// Ejecuta la instrucción
-	virtual int execute() = 0;
+	virtual int execute();
 
 	// Devuelve el número de ciclos que consume la instrucción
-	virtual void getCycles() = 0;
+	virtual int getCycles();
 
 	// Devuelve el operand de la instrucción
-	virtual void getOperand() = 0;
+	virtual int getOperand();
 
 	// Establece el oprando de la instrucción
-	virtual void setOperand() = 0;
+	virtual void setOperand(int op);
 
 protected:
 	int operand;
@@ -1040,6 +1040,7 @@ public:
 
 
 class EOR_abs : public EOR {
+public:
 	// Constantes
 	static const int OPCODE = 0x4D;
 	static const int BYTES = 3;
@@ -1137,6 +1138,7 @@ public:
 
 
 class INC_zerox : public INC {
+public:
 	// Constantes
 	static const int OPCODE = 0xF6;
 	static const int BYTES = 2;
@@ -1328,6 +1330,7 @@ public:
 
 
 class LDA_abs : public LDA {
+public:
 	// Constantes
 	static const int OPCODE = 0xAD;
 	static const int BYTES = 3;
@@ -1452,6 +1455,7 @@ public:
 
 
 class LDX_abs : public LDX {
+public:
 	// Constantes
 	static const int OPCODE = 0xAE;
 	static const int BYTES = 3;
@@ -1534,6 +1538,7 @@ public:
 
 
 class LDY_abs : public LDY {
+public:
 	// Constantes
 	static const int OPCODE = 0xAC;
 	static const int BYTES = 3;
@@ -1717,6 +1722,7 @@ public:
 
 
 class ORA_abs : public ORA {
+public:
 	// Constantes
 	static const int OPCODE = 0x0D;
 	static const int BYTES = 3;
@@ -2115,6 +2121,7 @@ public:
 
 
 class SBC_abs : public SBC {
+public:
 	// Constantes
 	static const int OPCODE = 0xED;
 	static const int BYTES = 3;
@@ -2276,6 +2283,7 @@ public:
 
 
 class STA_abs : public STA {
+public:
 	// Constantes
 	static const int OPCODE = 0x8D;
 	static const int BYTES = 3;
@@ -2386,6 +2394,7 @@ public:
 
 
 class STX_abs : public STX {
+public:
 	// Constantes
 	static const int OPCODE = 0x8E;
 	static const int BYTES = 3;
@@ -2440,6 +2449,7 @@ public:
 
 
 class STY_abs : public STY {
+public:
 	// Constantes
 	static const int OPCODE = 0x8C;
 	static const int BYTES = 3;
@@ -2552,6 +2562,20 @@ public:
 
 	int execute();
 };//class TYA
+
+
+/****************************************************************************/
+
+
+// POOL DE INSTRUCCIONES
+class InstructionsPool {
+public:
+	// Array que almacena las instrucciones por OPCODE
+	Instruction* pool[0x100];
+
+	InstructionsPool(CPU* cpu);
+	virtual ~InstructionsPool();
+};
 
 
 #endif /* CPU_INSTRUCTION_HPP_ */

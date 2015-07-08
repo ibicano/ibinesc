@@ -7,10 +7,26 @@
 
 #include "Instruction.hpp"
 #include "CPU.hpp"
+#include "../nesutils.hpp"
 
 Instruction::Instruction(int operand, CPU* cpu) {
 	this->operand = operand;
 	this->cpu = cpu;
+}
+
+
+int Instruction::getOperand() {
+	return operand;
+}
+
+
+void Instruction::setOperand(int op) {
+	operand = op;
+}
+
+
+int Instruction::getCycles() {
+	return CYCLES;
 }
 
 
@@ -2478,4 +2494,216 @@ int TYA::execute() {
 }
 
 
+/*****************************************************************************/
 
+// INSTRUCTIONS POOL
+
+InstructionsPool::InstructionsPool(CPU* cpu) {
+	// ADC
+	pool[0x69] = new ADC_inmediate(0, cpu);
+	pool[0x65] = new ADC_zero(0, cpu);
+	pool[0x75] = new ADC_zerox(0, cpu);
+	pool[0x6D] = new ADC_abs(0, cpu);
+	pool[0x7D] = new ADC_absx(0, cpu);
+	pool[0x79] = new ADC_absy(0, cpu);
+	pool[0x61] = new ADC_preindexi(0, cpu);
+	pool[0x71] = new ADC_postindexi(0, cpu);
+	// AND
+	pool[0x29] = new AND_inmediate(0, cpu);
+	pool[0x25] = new AND_zero(0, cpu);
+	pool[0x35] = new AND_zerox(0, cpu);
+	pool[0x2D] = new AND_abs(0, cpu);
+	pool[0x3D] = new AND_absx(0, cpu);
+	pool[0x39] = new AND_absy(0, cpu);
+	pool[0x21] = new AND_preindexi(0, cpu);
+	pool[0x31] = new AND_postindexi(0, cpu);
+	// ASL
+	pool[0x0A] = new ASL_accumulator(0, cpu);
+	pool[0x06] = new ASL_zero(0, cpu);
+	pool[0x16] = new ASL_zerox(0, cpu);
+	pool[0x0E] = new ASL_abs(0, cpu);
+	pool[0x1E] = new ASL_absx(0, cpu);
+	// BCC
+	pool[0x90] = new BCC(0, cpu);
+	// BCS
+	pool[0xB0] = new BCS(0, cpu);
+	// BEQ
+	pool[0xF0] = new BEQ(0, cpu);
+	// BIT
+	pool[0x24] = new BIT_zero(0, cpu);
+	pool[0x2C] = new BIT_abs(0, cpu);
+	// BMI
+	pool[0x30] = new BMI(0, cpu);
+	// BNE
+	pool[0xD0] = new BNE(0, cpu);
+	// BPL
+	pool[0x10] = new BPL(0, cpu);
+	// BRK
+	pool[0x00] = new BRK(cpu);
+	// BVC
+	pool[0x50] = new BVC(0, cpu);
+	// BVS
+	pool[0x70] = new BVS(0, cpu);
+	// CLC
+	pool[0x18] = new CLC(cpu);
+	// CLD
+	pool[0xD8] = new CLD(cpu);
+	// CLI
+	pool[0x58] = new CLI(cpu);
+	// CLV
+	pool[0xB8] = new CLV(cpu);
+	// CMP
+	pool[0xC9] = new CMP_inmediate(0, cpu);
+	pool[0xC5] = new CMP_zero(0, cpu);
+	pool[0xD5] = new CMP_zerox(0, cpu);
+	pool[0xCD] = new CMP_abs(0, cpu);
+	pool[0xDD] = new CMP_absx(0, cpu);
+	pool[0xD9] = new CMP_absy(0, cpu);
+	pool[0xC1] = new CMP_preindexi(0, cpu);
+	pool[0xD1] = new CMP_postindexi(0, cpu);
+	// CPX
+	pool[0xE0] = new CPX_inmediate(0, cpu);
+	pool[0xE4] = new CPX_zero(0, cpu);
+	pool[0xEC] = new CPX_abs(0, cpu);
+	// CPY
+	pool[0xC0] = new CPY_inmediate(0, cpu);
+	pool[0xC4] = new CPY_zero(0, cpu);
+	pool[0xCC] = new CPY_abs(0, cpu);
+	// DEC
+	pool[0xC6] = new DEC_zero(0, cpu);
+	pool[0xD6] = new DEC_zerox(0, cpu);
+	pool[0xCE] = new DEC_abs(0, cpu);
+	pool[0xDE] = new DEC_absx(0, cpu);
+	// DEX
+	pool[0xCA] = new DEX(cpu);
+	// DEY
+	pool[0x88] = new DEY(cpu);
+	// EOR
+	pool[0x49] = new EOR_inmediate(0, cpu);
+	pool[0x45] = new EOR_zero(0, cpu);
+	pool[0x55] = new EOR_zerox(0, cpu);
+	pool[0x4D] = new EOR_abs(0, cpu);
+	pool[0x5D] = new EOR_absx(0, cpu);
+	pool[0x59] = new EOR_absy(0, cpu);
+	pool[0x41] = new EOR_preindexi(0, cpu);
+	pool[0x51] = new EOR_postindexi(0, cpu);
+	// INC
+	pool[0xE6] = new INC_zero(0, cpu);
+	pool[0xF6] = new INC_zerox(0, cpu);
+	pool[0xEE] = new INC_abs(0, cpu);
+	pool[0xFE] = new INC_absx(0, cpu);
+	// INX
+	pool[0xE8] = new INX(cpu);
+	// INY
+	pool[0xC8] = new INY(cpu);
+	// JMP
+	pool[0x4C] = new JMP_abs(0, cpu);
+	pool[0x6C] = new JMP_indirect(0, cpu);
+	// JSR
+	pool[0x20] = new JSR(0, cpu);
+	// LDA
+	pool[0xA9] = new LDA_inmediate(0, cpu);
+	pool[0xA5] = new LDA_zero(0, cpu);
+	pool[0xB5] = new LDA_zerox(0, cpu);
+	pool[0xAD] = new LDA_abs(0, cpu);
+	pool[0xBD] = new LDA_absx(0, cpu);
+	pool[0xB9] = new LDA_absy(0, cpu);
+	pool[0xA1] = new LDA_preindexi(0, cpu);
+	pool[0xB1] = new LDA_postindexi(0, cpu);
+	// LDX
+	pool[0xA2] = new LDX_inmediate(0, cpu);
+	pool[0xA6] = new LDX_zero(0, cpu);
+	pool[0xB6] = new LDX_zeroy(0, cpu);
+	pool[0xAE] = new LDX_abs(0, cpu);
+	pool[0xBE] = new LDX_absy(0, cpu);
+	// LDY
+	pool[0xA0] = new LDY_inmediate(0, cpu);
+	pool[0xA4] = new LDY_zero(0, cpu);
+	pool[0xB4] = new LDY_zerox(0, cpu);
+	pool[0xAC] = new LDY_abs(0, cpu);
+	pool[0xBC] = new LDY_absx(0, cpu);
+	// LSR
+	pool[0x4A] = new LSR_accumulator(0, cpu);
+	pool[0x46] = new LSR_zero(0, cpu);
+	pool[0x56] = new LSR_zerox(0, cpu);
+	pool[0x4E] = new LSR_abs(0, cpu);
+	pool[0x5E] = new LSR_absx(0, cpu);
+	// NOP
+	pool[0xEA] = new NOP(cpu);
+	// ORA
+	pool[0x09] = new ORA_inmediate(0, cpu);
+	pool[0x05] = new ORA_zero(0, cpu);
+	pool[0x15] = new ORA_zerox(0, cpu);
+	pool[0x0D] = new ORA_abs(0, cpu);
+	pool[0x1D] = new ORA_absx(0, cpu);
+	pool[0x19] = new ORA_absy(0, cpu);
+	pool[0x01] = new ORA_preindexi(0, cpu);
+	pool[0x11] = new ORA_postindexi(0, cpu);
+	// PHA
+	pool[0x48] = new PHA(cpu);
+	// PHP
+	pool[0x08] = new PHP(cpu);
+	// PLA
+	pool[0x68] = new PLA(cpu);
+	// PLP
+	pool[0x28] = new PLP(cpu);
+	// ROL
+	pool[0x2A] = new ROL_accumulator(0, cpu);
+	pool[0x26] = new ROL_zero(0, cpu);
+	pool[0x36] = new ROL_zerox(0, cpu);
+	pool[0x2E] = new ROL_abs(0, cpu);
+	pool[0x3E] = new ROL_absx(0, cpu);
+	// ROR
+	pool[0x6A] = new ROR_accumulator(0, cpu);
+	pool[0x66] = new ROR_zero(0, cpu);
+	pool[0x76] = new ROR_zerox(0, cpu);
+	pool[0x6E] = new ROR_abs(0, cpu);
+	pool[0x7E] = new ROR_absx(0, cpu);
+	// RTI
+	pool[0x40] = new RTI(cpu);
+	// RTS
+	pool[0x60] = new RTS(cpu);
+	// SBC
+	pool[0xE9] = new SBC_inmediate(0, cpu);
+	pool[0xE5] = new SBC_zero(0, cpu);
+	pool[0xF5] = new SBC_zerox(0, cpu);
+	pool[0xED] = new SBC_abs(0, cpu);
+	pool[0xFD] = new SBC_absx(0, cpu);
+	pool[0xF9] = new SBC_absy(0, cpu);
+	pool[0xE1] = new SBC_preindexi(0, cpu);
+	pool[0xF1] = new SBC_postindexi(0, cpu);
+	// SEC
+	pool[0x38] = new SEC(cpu);
+	// SED
+	pool[0xF8] = new SED(cpu);
+	// SEI
+	pool[0x78] = new RTS(cpu);
+	// STA
+	pool[0x85] = new STA_zero(0, cpu);
+	pool[0x95] = new STA_zerox(0, cpu);
+	pool[0x8D] = new STA_abs(0, cpu);
+	pool[0x9D] = new STA_absx(0, cpu);
+	pool[0x99] = new STA_absy(0, cpu);
+	pool[0x81] = new STA_preindexi(0, cpu);
+	pool[0x91] = new STA_postindexi(0, cpu);
+	// STX
+	pool[0x86] = new STX_zero(0, cpu);
+	pool[0x96] = new STX_zeroy(0, cpu);
+	pool[0x8E] = new STX_abs(0, cpu);
+	// STY
+	pool[0x84] = new STY_zero(0, cpu);
+	pool[0x94] = new STY_zerox(0, cpu);
+	pool[0x8C] = new STY_abs(0, cpu);
+	// TAX
+	pool[0xAA] = new TAX(cpu);
+	// TAY
+	pool[0xA8] = new TAY(cpu);
+	// TSX
+	pool[0xBA] = new TSX(cpu);
+	// TXA
+	pool[0x8A] = new TXA(cpu);
+	// TXS
+	pool[0x9A] = new TXS(cpu);
+	// TYA
+	pool[0x98] = new TYA(cpu);
+}

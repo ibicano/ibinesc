@@ -15,7 +15,8 @@
 NES::NES() {
 	rom = new ROM();
 	ppu = new PPU();
-	cpu = new CPU();
+	mem = new Memory();
+	cpu = new CPU(mem, ppu);
 	joypad = new Joypad();
 
 	if (rom->getMapperCode() == 0) mapper = new NROM();
