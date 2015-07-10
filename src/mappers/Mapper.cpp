@@ -17,3 +17,10 @@ Mapper::~Mapper() {
 
 }
 
+int Mapper::getPrgCount() {
+	return rom->getPrgCount();
+}
+
+int Mapper::getChrCount() {
+	return rom->getChrCount();
+}

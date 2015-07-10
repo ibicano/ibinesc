@@ -19,6 +19,9 @@ public:
 	virtual int readChr(int addr) = 0;
 	virtual void writeChr(int data, int addr) = 0;
 
+	int getPrgCount();
+	int getChrCount();
+
 	// Devuelve el modo de mirror activo (puede variar entre mappers)
 	virtual int mirrorMode() = 0;
 
