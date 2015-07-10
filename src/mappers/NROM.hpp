@@ -12,8 +12,25 @@
 
 class NROM : public Mapper {
 public:
-	NROM();
+	static const int MAPPER_CODE = 0;
+
+	NROM(ROM* rom);
 	virtual ~NROM();
+
+	int readPrg(int addr);
+	void writePrg(int data, int addr);
+
+	int readChr(int addr);
+	void writeChr(int data, int addr);
+
+	int mirrorMode();
+
+private:
+	int* prgRom0;
+	int* prgRom1;
+
+	int* chrRom0;
+	int* chrRom1;
 };
 
 #endif /* MAPPERS_NROM_HPP_ */

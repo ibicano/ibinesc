@@ -7,12 +7,13 @@
 
 #include "Mapper.hpp"
 
-Mapper::Mapper() {
-	// TODO Auto-generated constructor stub
 
+Mapper::Mapper(ROM* rom) {
+	this->rom = rom;
 }
 
+
 Mapper::~Mapper() {
-	// TODO Auto-generated destructor stub
+
 }
 

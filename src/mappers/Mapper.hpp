@@ -10,8 +10,20 @@
 
 class Mapper {
 public:
-	Mapper();
+	Mapper(ROM* rom);
 	virtual ~Mapper();
+
+	virtual int readPrg(int addr) = 0;
+	virtual void writePrg(int data, int addr) = 0;
+
+	virtual int readChr(int addr) = 0;
+	virtual void writeChr(int data, int addr) = 0;
+
+	// Devuelve el modo de mirror activo (puede variar entre mappers)
+	virtual int mirrorMode() = 0;
+
+protected:
+	ROM* rom;		// Puntero a la rom del juego
 };
 
 #endif /* MAPPERS_MAPPER_HPP_ */
