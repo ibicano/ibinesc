@@ -8,6 +8,12 @@
 #ifndef PPU_PPU_HPP_
 #define PPU_PPU_HPP_
 
+struct RGB {
+	int r;
+	int g;
+	int b;
+};
+
 class PPU {
 public:
 	PPU();
