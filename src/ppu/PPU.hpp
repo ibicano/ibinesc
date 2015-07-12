@@ -29,7 +29,7 @@ public:
 	static const int FRAME_WIDTH = 256;
 	static const int FRAME_HEIGHT = 240;
 
-	PPU();
+	PPU(Mapper *mapper);
 	virtual ~PPU();
 
 	// Ejecuta los ciclos indicados en la PPU
@@ -46,6 +46,55 @@ public:
 	void setIntVblank(bool v);
 
 private:
+	PPUMemory* memory;
+	SpriteMemory* spriteMemory;
+	Mapper* mapper;
+	GFX* gfx;
+
+	int cyclesFrame;		// Ciclos restantes hasta el siguiente frame
+
+	bool endFrame;			// Indica si se ha terminado el frame
+	bool endScanline;		// Indica si se ha terminado el scanline
+
+	bool fetchPattern;		// Indica si tenemos que leer un nuevo tile de memoria o usamos el cacheado
+
+	int scanlineNumber;		// Número del scanline actual
+	int scanlinesPending;	// Número de scanlines pendientes de procesar
+
+	Sprite* spritesList[64];	// Lista de sprites en el frame actual
+	Sprite* spriteZero;		// Referencia al sprite zero
+
+	int** tileSpriteZeroIndex0;
+	RGB** tileSpriteZeroRgb0;
+
+	int** tileSpriteZeroIndex1;
+	RGB** tileSpriteZeroRgb1;
+
+	bool spriteHit;			// Indica si ha habido colisión de sprite en el frame actual
+
+	int pixelBackground[256][240];	// Indica si el pixel es de background transparente(0), de background sólido (1) o de sprite (2)
+
+	bool intVblank;		// Flag de VBlank (se activa cuando se entra en vblank)
+
+	// Buffer de lectura de la VRAM (la lectura del registro $2007 se entrega retrasada)
+	int vramBuffer;
+
+	// Variables que almacenan el tile del fondo que se está procesando
+	int** tileBgIndex;
+	RGB** tileBgRgb;
+
+	// Variables que almacenan el tile del sprite que se está procesando
+    int** tileSpriteIndex;
+    RGB** tileSpriteRgb;
+
+    // Cache de tiles para mejorar rendimiento
+
+
+	// Indica si ya se ha inicializado la vblank en este frame. Se resetea al finalizar el frame.
+	// Sirve para controlar si ya se ha procesado o no el período VBLANK cuando estamos dentro de
+	// él, ya que sólo debe procesarse una vez.
+	bool startedVblank;
+
 	int readReg2002();		// Devuelve el contenido del registro $2002
 	int readReg2004();		// Devuelve el contenido del registro $2004
 	int readReg2007();		// Devuelve el contenido del registro $2007
