@@ -56,7 +56,7 @@ private:
 	bool endFrame;			// Indica si se ha terminado el frame
 	bool endScanline;		// Indica si se ha terminado el scanline
 
-	bool fetchPattern;		// Indica si tenemos que leer un nuevo tile de memoria o usamos el cacheado
+	bool newPattern;		// Indica si tenemos que leer un nuevo tile de memoria o usamos el cacheado
 
 	int scanlineNumber;		// Número del scanline actual
 	int scanlinesPending;	// Número de scanlines pendientes de procesar
@@ -64,11 +64,11 @@ private:
 	Sprite* spritesList[64];	// Lista de sprites en el frame actual
 	Sprite* spriteZero;		// Referencia al sprite zero
 
-	int** tileSpriteZeroIndex0;
-	RGB** tileSpriteZeroRgb0;
+	int tileSpriteZeroIndex0[8][8];
+	RGB tileSpriteZeroRgb0[8][8];
 
-	int** tileSpriteZeroIndex1;
-	RGB** tileSpriteZeroRgb1;
+	int tileSpriteZeroIndex1[8][8];
+	RGB tileSpriteZeroRgb1[8][8];
 
 	bool spriteHit;			// Indica si ha habido colisión de sprite en el frame actual
 
@@ -80,14 +80,30 @@ private:
 	int vramBuffer;
 
 	// Variables que almacenan el tile del fondo que se está procesando
-	int** tileBgIndex;
-	RGB** tileBgRgb;
+	int tileBgIndex[8][8];
+	RGB tileBgRgb[8][8];
 
 	// Variables que almacenan el tile del sprite que se está procesando
-    int** tileSpriteIndex;
-    RGB** tileSpriteRgb;
+    int tileSpriteIndex[8][8];
+    RGB tileSpriteRgb[8][8];
 
     // Cache de tiles para mejorar rendimiento
+
+	// Registros I/O
+	int regControl1;            // Dirección 0x2000 - write
+	int regControl2;            // Dirección 0x2001 - write
+	int regStatus;               // Dirección 0x2002 - read
+	int regSprAddr;             // Dirección 0x2003 - write
+	int regSprIo;               // Dirección 0x2004 - write
+	int regVramTmp;             // Dirección 0x2005 y 0x2006 - write (16-bit)
+	int regVramAddr;            // Dirección 0x2006 - write (16-bit)
+	int regVramIo;              // Dirección 0x2007 - read/write
+	int regSpriteDma;           // Dirección 0x4014 - write
+
+	// Registros estado
+	int regXOffset;             // Scroll patrón (3-bit)
+	int tmpYOffset;             // Alamcena el offset y de forma temporal para leerlo más rápido
+	int regVramSwitch;            // Indica si estamos en la 1ª(0) o 2ª(1) escritura de los registros vram
 
 
 	// Indica si ya se ha inicializado la vblank en este frame. Se resetea al finalizar el frame.
@@ -99,13 +115,13 @@ private:
 	int readReg2004();		// Devuelve el contenido del registro $2004
 	int readReg2007();		// Devuelve el contenido del registro $2007
 
-	void writeReg2000();	// Escribe el registro $2000
-	void writeReg2001();	// Escribe el registro $2001
-	void writeReg2003();	// Escribe el registro $2003
-	void writeReg2004();	// Escribe el registro $2004
-	void writeReg2005();	// Escribe el registro $2005
-	void writeReg2006();	// Escribe el registro $2006
-	void writeReg2007();	// Escribe el registro $2007
+	void writeReg2000(int data);	// Escribe el registro $2000
+	void writeReg2001(int data);	// Escribe el registro $2001
+	void writeReg2003(int data);	// Escribe el registro $2003
+	void writeReg2004(int data);	// Escribe el registro $2004
+	void writeReg2005(int data);	// Escribe el registro $2005
+	void writeReg2006(int data);	// Escribe el registro $2006
+	void writeReg2007(int data);	// Escribe el registro $2007
 
 	// Realiza una transferencia DMA que llena la memoria de sprites con las los
 	// datos contenidos en las 256 posiciones de memoria consecutivas de la memoria
