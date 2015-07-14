@@ -54,7 +54,7 @@ PPU::PPU(Mapper* mapper) {
 	regVramSwitch = 0;
 
 	//Inicializa variable de cache de tiles
-	tilesCache.clear();
+	resetTilesCache();
 }//PPU()
 
 
@@ -491,9 +491,88 @@ void PPU::calcSpriteHit() {
 }//calcSpriteHit()
 
 
+// Devuelve el color almacenado en la attr table para el tile de una dirección de la name table
 int PPU::calcAttrColor(int nametableAddr) {
+	// La posición de la name table en la que está el tile
+	int pos = nametableAddr & 0x03FF;
+
+	// Posición del grupo de 8x8 tiles que contiene el tile con el que estamos trabajando
+	int groupX = (pos >> 2) & 0x07;
+	int groupY = (pos >> 7) & 0x07;
+
+	// Posición del byte en la "attr table" correspondiente al grupo 8x8
+	int attrPos = (groupY * 8) + groupX;
+
+	// Dirección de memoria de la "attr table"
+	int attrAddr = (nametableAddr & 0xFC00)  | (0x03C0 + attrPos);
+
+	// Byte leído de la attr table que contiene la info de color
+	int attrData = memory->readData(attrAddr);
+
+	// Calculamos la posición relativa del tile dentro del grupo 8x8
+	// La posición x dentro del grupo 4x4 la dan los 2 bits menos significativos de la posición del tile en la name table
+	int posX = pos & 0x03;
+
+	// La posición y dentro del grupo 4x4 la dan los bits 5 y 6 de la posición del tile en la name table
+	int posY = (pos >> 5) & 0x03;
+
+	// Calcula el area que le corresponde al tile dentro del grupo 4x4
+	int attrArea = (posY & 0x02) | (posX >> 1);
+
+	int color = (attrData >> (attrArea << 1)) & 0x03;
+
+	return color;
+}//calcAttrColor()
+
+
+// Devuelve un color de la paleta de colores
+RGB PPU::getColor(int index) {
+	return PPU::COLOR_PALETTE[index & 0x3F];
 }
 
+
+// Lee el patrón "pattern_index" de la tabla de patrones "pattern_table" con el color "attr_color" y la paleta
+// de colores ubicada en la dirección de memoria "palette_addr" y lo coloca en las variables de salida
+// "tile_palette_index" y "tile_rgb"
 void PPU::fetchPattern(int patternTable, int patternIndex, int attrColor,
-		int paletteAddr, int** tileIndex, RGB** tileRGB) {
+	int paletteAddr, int** tileIndex, RGB** tileRgb) {
+
+	int addr;
+	if (patternTable == 0)
+		addr = 0x0000;
+	else
+		addr = 0x1000;
+
+	addr = addr + patternIndex * 16;
+
+	int y = 0;
+	int byte1, byte2;
+	// Lee los bytes del patrón de memoria y lo guarda en una lista
+	for (int a = addr; a < addr + 8; a++) {
+
+		byte1 = memory->readData(a);
+		byte2 = memory->readData(a + 8);
+
+		int paletteIndex;
+		for (int x = 0; x < 8; x++) {
+			// Calcula la dirección del color en la paleta de memoria y lo extrae de la tabla de colores
+			paletteIndex = (0x00 | ((byte1 & (0x01 << x)) >> x) | (((byte2 & (0x01 << x)) >> x) << 1) | ((attrColor & 0x03) << 2));
+
+			// Asigna el índice de la paleta a la posición correspondiente:
+			tileIndex[7 - x][y] = paletteIndex;
+
+			int colorIndex = memory->readData(paletteAddr + paletteIndex) & 0x3F;
+			RGB rgb = getColor(colorIndex);
+			tileRgb[7 - x][y] = rgb;
+		}
+
+		y = (y + 1) & 0x07;
+	}
+}
+
+
+void PPU::resetTilesCache() {
+	// FIXME: probablemente esto no libere bien la memoria. Hay que hacerlo
+	// correctamente porque se reserva memoria para cada tile que se carga
+	tilesCache.clear();
 }

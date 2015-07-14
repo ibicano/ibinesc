@@ -224,6 +224,11 @@ private:
     // Devuelve el color almacenado en la attr table para el tile de una dirección de la name table
     int calcAttrColor(int nametableAddr);
 
+    // Devuelve un color de la paleta de colores
+    RGB getColor(int index);
+
+    // Borra y libera la memoria de la cache de tiles
+    void resetTilesCache();
 
 	// Lee el patrón "patternIndex" de la tabla de patrones "patternTable" con el color "attrColor" y la paleta
     // de colores ubicada en la dirección de memoria "paletteAddr" y lo coloca en las variables de salida
