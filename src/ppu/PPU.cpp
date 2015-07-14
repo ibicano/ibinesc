@@ -52,6 +52,8 @@ PPU::PPU(Mapper* mapper) {
 	regXOffset = 0x0;             // Scroll patrón (3-bit)
 	tmpYOffset = 0x0;             // Alamcena el offset y de forma temporal para leerlo más rápido
 	regVramSwitch = 0;
+
+	//TODO: Inicializar variable de cache de tiles
 }//PPU()
 
 
@@ -71,6 +73,7 @@ bool PPU::getIntVblank() {
 
 
 void PPU::execCycles(int cycles) {
+	//TODO
 }
 
 
@@ -90,11 +93,19 @@ int PPU::readReg(int addr) {
 
 
 void PPU::writeReg(int data, int addr) {
-}
+	if (addr == 0x2000) writeReg2000(data);
+	else if (addr == 0x2001) writeReg2001(data);
+	else if (addr == 0x2003) writeReg2003(data);
+	else if (addr == 0x2004) writeReg2004(data);
+	else if (addr == 0x2005) writeReg2005(data);
+	else if (addr == 0x2006) writeReg2006(data);
+	else if (addr == 0x2007) writeReg2007(data);
+}//writeReg()
 
 
 void PPU::setIntVblank(bool v) {
-}
+	intVblank = v;
+}//setIntVblank()
 
 
 int PPU::readReg2002() {
@@ -273,69 +284,145 @@ void PPU::writeSpriteDma(Memory* cpuMem, int srcAddr) {
 
 
 void PPU::incrXScroll() {
-}
+	int r = regVramAddr;
+	regXOffset = (regXOffset + 1) & 0x07;
+	int bit10 = (r & 0x0400) >> 10;
+	int bits0_4 = r & 0x001F;
+
+	if (regXOffset == 0) {
+		bits0_4 = (bits0_4 + 1) & 0x1F;
+
+		if (bits0_4 == 0x0) bit10 = ~bit10 & 0x1;
+	}
+
+	r = (r & 0xFBE0) | (bit10 << 10) | bits0_4;
+
+	regVramAddr = r;
+}//incrXScroll()
+
 
 void PPU::incrYScroll() {
-}
+	int r = regVramAddr;
+	tmpYOffset = (((r & 0x7000) >> 12) + 1) & 0x07;
+	int bit11 = (r & 0x0800) >> 11;
+	int bits5_9 = (r & 0x03E0) >> 5;
+
+	if (tmpYOffset == 0) {
+		bits5_9 = (bits5_9 + 1) % 30;
+
+		if (bits5_9 == 0x0) bit11 = ~bit11 & 0x1;
+	}
+
+	r = (r & 0x41F) | (tmpYOffset << 12) | (bit11 << 11) | (bits5_9 << 5);
+
+	regVramAddr = r;
+}//incrYScroll()
+
 
 int PPU::getXOffset() {
+	return getXOffset;
 }
+
 
 int PPU::getYOffset() {
+	return (regVramAddr & 0x7000) >> 12;
 }
+
 
 int PPU::control1NametableBits0_1() {
+	return regControl1 & 0x03;
 }
 
+
 int PPU::control1IncrementBit2() {
+	return (regControl1 & 0x04) >> 2;
 }
 
 int PPU::control1SpritesPatternBit3() {
+	return (regControl1 & 0x08) >> 3;
 }
 
 int PPU::control1BackgroundPatternBit4() {
+	return (regControl1 & 0x10) >> 4;
 }
 
 int PPU::control1SpritesSizeBit5() {
+	return (regControl1 & 0x20) >> 5;
 }
 
 int PPU::control1MasterModeBit6() {
+	return (regControl1 & 0x40) >> 6;
 }
 
 int PPU::control1NmiBit7() {
+	return (regControl1 & 0x80) >> 7;
 }
 
 int PPU::control2MonochromeBit0() {
+	return (regControl2 & 0x01);
 }
 
 int PPU::control2ClipbackgroundBit1() {
+	return (regControl2 & 0x02) >> 1;
 }
 
 int PPU::control2ClipspritesBit2() {
+	return (regControl2 & 0x04) >> 2;
 }
 
 int PPU::control2BackgroundBit3() {
+	return (regControl2 & 0x08) >> 3;
 }
 
 int PPU::control2SpritesBit4() {
+	return (regControl2 & 0x10) >> 4;
 }
 
 int PPU::control2ColourconfigBits5_7() {
+	return (regControl2 & 0xE0) >> 5;
 }
 
 int PPU::activeNametableAddr() {
+	int nt = control1NametableBits0_1();
+
+	int addr = 0;
+
+	if (nt == 0x0)
+		addr = 0x2000;
+	else if (nt == 0x1)
+		addr = 0x2400;
+	else if (nt == 0x2)
+		addr = 0x2800;
+	else if (nt == 0x3)
+		addr = 0x2C00;
+
+	return addr;
 }
 
 int PPU::startVblank() {
-}
+	// Ponemos el bit 7 del registro de Status a 1, que indica que estamos en el período VBLANK
+	regStatus = setBit(regStatus, 7, 1);
+
+	// Activamos la interrupción si las NMI están activadas en el registro de control 1
+	if (regControl1 & 0x80)
+		intVblank = 1;
+
+	// Indicamos que ya hemos procesado el período VBLANK
+	startedVblank = 1;
+}//startVblank()
 
 int PPU::endVblank() {
+	regStatus = 0;
+    startedVblank = 0;
 }
 
 int PPU::setSpriteHit(bool v) {
+	spriteHit = v;
+    regStatus = setBit(regStatus, 6, v);
 }
 
 bool PPU::isVblank() {
+	return scanlineNumber > 240;
 }
 
 void PPU::drawScanline() {

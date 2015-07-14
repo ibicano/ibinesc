@@ -123,6 +123,8 @@ private:
 	void writeReg2006(int data);	// Escribe el registro $2006
 	void writeReg2007(int data);	// Escribe el registro $2007
 
+	//TODO: Incluir variable cache de tiles
+
 	// Realiza una transferencia DMA que llena la memoria de sprites con las los
 	// datos contenidos en las 256 posiciones de memoria consecutivas de la memoria
 	// principal pasada como "cpuMem" empezando en la dirección "srcAddr"
