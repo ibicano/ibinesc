@@ -339,49 +339,61 @@ int PPU::control1IncrementBit2() {
 	return (regControl1 & 0x04) >> 2;
 }
 
+
 int PPU::control1SpritesPatternBit3() {
 	return (regControl1 & 0x08) >> 3;
 }
+
 
 int PPU::control1BackgroundPatternBit4() {
 	return (regControl1 & 0x10) >> 4;
 }
 
+
 int PPU::control1SpritesSizeBit5() {
 	return (regControl1 & 0x20) >> 5;
 }
+
 
 int PPU::control1MasterModeBit6() {
 	return (regControl1 & 0x40) >> 6;
 }
 
+
 int PPU::control1NmiBit7() {
 	return (regControl1 & 0x80) >> 7;
 }
+
 
 int PPU::control2MonochromeBit0() {
 	return (regControl2 & 0x01);
 }
 
+
 int PPU::control2ClipbackgroundBit1() {
 	return (regControl2 & 0x02) >> 1;
 }
+
 
 int PPU::control2ClipspritesBit2() {
 	return (regControl2 & 0x04) >> 2;
 }
 
+
 int PPU::control2BackgroundBit3() {
 	return (regControl2 & 0x08) >> 3;
 }
+
 
 int PPU::control2SpritesBit4() {
 	return (regControl2 & 0x10) >> 4;
 }
 
+
 int PPU::control2ColourconfigBits5_7() {
 	return (regControl2 & 0xE0) >> 5;
 }
+
 
 int PPU::activeNametableAddr() {
 	int nt = control1NametableBits0_1();
@@ -400,6 +412,7 @@ int PPU::activeNametableAddr() {
 	return addr;
 }
 
+
 int PPU::startVblank() {
 	// Ponemos el bit 7 del registro de Status a 1, que indica que estamos en el período VBLANK
 	regStatus = setBit(regStatus, 7, 1);
@@ -412,31 +425,160 @@ int PPU::startVblank() {
 	startedVblank = 1;
 }//startVblank()
 
+
 int PPU::endVblank() {
 	regStatus = 0;
     startedVblank = 0;
 }
+
 
 int PPU::setSpriteHit(bool v) {
 	spriteHit = v;
     regStatus = setBit(regStatus, 6, v);
 }
 
+
 bool PPU::isVblank() {
 	return scanlineNumber > 240;
 }
 
+
 void PPU::drawScanline() {
 }
 
+
 void PPU::drawPixel(int x, int y) {
+    pixelBackground[x][y] = 0;
+
+    // Dibuja el fondo
+    int patternPixelX = regXOffset;
+    int patternPixelY = tmpYOffset;
+
+    // Calcula la dirección en la Name Table activa
+    int nametableAddr = 0x2000 + (regVramAddr & 0x0FFF);
+
+    // FIXME: hacer bien la reserva de memoria de los tiles, ya que resulta confuso
+    if (newPattern) {
+        int patternTableNumber = control1BackgroundPatternBit4();
+        int patternIndex = memory->readData(nametableAddr);
+
+        int attrColor = calcAttrColor(nametableAddr);
+
+        TileCacheKey key = (patternTableNumber, patternIndex, attrColor);
+
+        if (tilesCache.count(key) > 0)
+            (tileBgIndex, tileBgRgb) = tilesCache[patternTableNumber, patternIndex, attrColor];
+        else {
+            fetchPattern(patternTableNumber, patternIndex, attrColor, PPUMemory::ADDR_IMAGE_PALETTE, tileBgIndex, tileBgRgb);
+            tilesCache[(patternTableNumber, patternIndex, attrColor)] = (tileBgIndex, tileBgRgb);
+        }
+
+        newPattern = false;
+    }
+
+    // Desactivado el clipping por cuestiones de rendimiento
+    //if control2clipbackgroundbit1() or x >= 8:
+
+    // Comprueba si el pixel actual es de background
+    if (tileBgIndex[patternPixelX][patternPixelY] & 0x03)
+        pixelBackground[x][y] = 1;
+
+    gfx->drawPixel(x, y, tileBgRgb[patternPixelX][patternPixelY]);
 }
+
 
 void PPU::drawSprites() {
-}
+    int sizeBit = control1SpritesSizeBit5();
+    int n = 0;
+    while (n < 64) {
+        Sprite* sprite = spritesList[n];
 
+        int sizeY = sizeBit * 8 + 8;
+
+        for (int sprX = 0; sprX < 8; sprX++) {
+            for (int sprY = 0; sprY < sizeY; sprY++)
+                drawSpritePixel(sprite, sprX, sprY);
+        }
+
+        n += 1;
+    }//while
+}//drawSprites()
+
+
+// Dibuja el pixel (spr_x, spr_y) del sprite en pantalla en su posición correspondiente
 void PPU::drawSpritePixel(Sprite* sprite, int sprX, int sprY) {
-}
+	// Tamaño de los sprites
+	int sizeBit = control1SpritesSizeBit5();
+
+	int offX = sprite->getOffsetX();
+	int offY = sprite->getOffsetY();
+
+	int screenX = offX + sprX;
+	int screenY = offY + sprY;
+
+	if (screenX < 256 && screenY < 240) {
+		int pixelBck = pixelBackground[screenX][screenY];
+		// Si los sprites son 8x8
+		if (sizeBit == 0) {
+			// Obtenemos el tile
+			tileSpriteIndex = sprite->getTileIndex0();
+			tileSpriteRgb = sprite->getTileRgb0();
+
+			// Si está activado el flag de invertir horizontalmente
+			if (sprite->getHorizontalFlip())
+				sprX = 7 - sprX;
+
+			// Si está activado el flag de invertir verticalmente
+			if (sprite->getVerticalFlip())
+				sprY = 7 - sprY;
+		}
+		// Si los sprites son 8x16
+		else {
+			bool verticalFlip = sprite->getVerticalFlip();
+
+			// Obtenemos los tiles
+			if (sprY < 8) {
+				if (verticalFlip == 0) {
+					tileSpriteIndex = sprite->getTileIndex0();
+					tileSpriteRgb = sprite->getTileRgb0();
+				}
+				else {
+					tileSpriteIndex = sprite->getTileIndex1();
+					tileSpriteRgb = sprite->getTileRgb1();
+				}
+			}
+			else {
+				if (verticalFlip == 0) {
+					tileSpriteIndex = sprite->getTileIndex1();
+					tileSpriteRgb = sprite->getTileRgb1();
+				}
+				else {
+					tileSpriteIndex = sprite->getTileIndex0();
+					tileSpriteRgb = sprite->getTileRgb0();
+				}
+				sprY = sprY & 0x07;
+			}
+
+			// Si está activado el flag de invertir horizontalmente
+			if (sprite->getHorizontalFlip())
+				sprX = 7 - sprX;
+
+			// Si está activado el flag de invertir verticalmente
+			if (verticalFlip)
+				sprY = 7 - sprY;
+		}
+
+		// Si el pixel del sprite no es vacío
+		bool transparent = !(tileSpriteIndex[sprX][sprY] & 0x03);
+		if (!transparent) {
+			// Pinta el pixel si tiene prioridad sobre las nametables, o en caso contrario si el color de fondo es transparente
+			if ((pixelBck != 2) && (sprite->getPriority() == 0 || !pixelBck))
+				gfx->drawPixel(screenX, screenY, tileSpriteRgb[sprX][sprY]);
+
+			pixelBackground[screenX][screenY] = 2;
+		}//if
+	}//if
+}//drawSpritePixel()
 
 
 void PPU::getSpritesList() {
@@ -568,7 +710,7 @@ void PPU::fetchPattern(int patternTable, int patternIndex, int attrColor,
 
 		y = (y + 1) & 0x07;
 	}
-}
+}//fetchPattern()
 
 
 void PPU::resetTilesCache() {

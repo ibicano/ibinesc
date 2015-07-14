@@ -85,11 +85,11 @@ private:
 	Sprite* spritesList[64];	// Lista de sprites en el frame actual
 	Sprite* spriteZero;		// Referencia al sprite zero
 
-	int tileSpriteZeroIndex0[8][8];
-	RGB tileSpriteZeroRgb0[8][8];
+	int** tileSpriteZeroIndex0;
+	RGB** tileSpriteZeroRgb0;
 
-	int tileSpriteZeroIndex1[8][8];
-	RGB tileSpriteZeroRgb1[8][8];
+	int** tileSpriteZeroIndex1;
+	RGB** tileSpriteZeroRgb1;
 
 	bool spriteHit;			// Indica si ha habido colisión de sprite en el frame actual
 
@@ -101,12 +101,12 @@ private:
 	int vramBuffer;
 
 	// Variables que almacenan el tile del fondo que se está procesando
-	int tileBgIndex[8][8];
-	RGB tileBgRgb[8][8];
+	int** tileBgIndex;
+	RGB** tileBgRgb;
 
 	// Variables que almacenan el tile del sprite que se está procesando
-    int tileSpriteIndex[8][8];
-    RGB tileSpriteRgb[8][8];
+    int** tileSpriteIndex;
+    RGB** tileSpriteRgb;
 
     // Cache de tiles para mejorar rendimiento
     map<TileCacheKey, TilePair> tilesCache;

@@ -66,7 +66,7 @@ void Sprite::loadByAddr(SpriteMemory* spriteMem, int addr) {
         int patternTable = ppu->control1SpritesPatternBit3();
 
         // Obtenemos el tile
-        ppu->fetchPattern(patternTable, getIndex(), getAttrColor(), PPUMemory->ADDRSPRITEPALETTE, tileIndex0, tileRgb0);
+        ppu->fetchPattern(patternTable, getIndex(), getAttrColor(), PPUMemory::ADDR_SPRITE_PALETTE, tileIndex0, tileRgb0);
     }
     // Si los sprites son 8x16
     else {
@@ -74,8 +74,8 @@ void Sprite::loadByAddr(SpriteMemory* spriteMem, int addr) {
         index = index & 0xFE;
 
         // Obtenemos los tiles
-        ppu->fetchPattern(patternTable, index, getAttrColor(), PPUMemory->ADDRSPRITEPALETTE, tileIndex0, tileRgb0);
-        ppu->fetchPattern(patternTable, index + 1, getAttrColor(), PPUMemory->ADDRSPRITEPALETTE, tileIndex1, tileRgb1);
+        ppu->fetchPattern(patternTable, index, getAttrColor(), PPUMemory::ADDR_SPRITE_PALETTE, tileIndex0, tileRgb0);
+        ppu->fetchPattern(patternTable, index + 1, getAttrColor(), PPUMemory::ADDR_SPRITE_PALETTE, tileIndex1, tileRgb1);
     }
 }//loadByAddr()
 

@@ -59,10 +59,10 @@ private:
 
 	// Información de los tiles
 	int** tileIndex0;
-	int** tileRgb0;
+	RGB** tileRgb0;
 
 	int** tileIndex1;
-	int** tileRgb1;
+	RGB** tileRgb1;
 };
 
 #endif /* PPU_SPRITE_HPP_ */
