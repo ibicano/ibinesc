@@ -53,7 +53,8 @@ PPU::PPU(Mapper* mapper) {
 	tmpYOffset = 0x0;             // Alamcena el offset y de forma temporal para leerlo más rápido
 	regVramSwitch = 0;
 
-	//TODO: Inicializar variable de cache de tiles
+	//Inicializa variable de cache de tiles
+	tilesCache.clear();
 }//PPU()
 
 
@@ -437,11 +438,58 @@ void PPU::drawSprites() {
 void PPU::drawSpritePixel(Sprite* sprite, int sprX, int sprY) {
 }
 
+
 void PPU::getSpritesList() {
-}
+	int n = 0;
+	int addr = 0x00;
+
+	while (n < 64) {
+		spritesList[n]->loadByAddr(spriteMemory, addr);
+		addr += 0x04;
+		n += 1;
+	}
+}//getSpritesList()
+
 
 void PPU::calcSpriteHit() {
-}
+	int spritesSizeBit = control1SpritesSizeBit5();
+	if (spriteZero->isInScanline(scanlineNumber, spritesSizeBit)) {
+		int y = scanlineNumber - 1;
+		int offsetX = spriteZero->getOffsetX();
+		int sprY = y - spriteZero->getOffsetY();
+
+		int** tileIndex;
+		RGB** tileRgb;
+
+		if (spritesSizeBit == 0) {
+			tileIndex = spriteZero->getTileIndex0();
+			tileRgb = spriteZero->getTileRgb0();
+		}
+		else {
+			if (sprY < 8) {
+				tileIndex = spriteZero->getTileIndex0();
+				tileRgb = spriteZero->getTileRgb0();
+			}
+			else {
+				tileIndex = spriteZero->getTileIndex1();
+				tileRgb = spriteZero->getTileRgb1();
+			}
+		}
+
+		sprY = sprY & 0x07;
+
+		int screenX = 0;
+		// Calcula si hay alguna colisión
+		for (int sprX = 0; sprX < 8; sprX++) {
+			screenX = offsetX + sprX;
+			if (screenX < 255) {
+				if ((tileIndex[sprX][sprY] & (0x03 != 0)) && (pixelBackground[screenX][y] == 1))
+					setSpriteHit(1);
+			}//if
+		}//for
+	}//if
+}//calcSpriteHit()
+
 
 int PPU::calcAttrColor(int nametableAddr) {
 }
