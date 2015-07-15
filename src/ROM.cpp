@@ -10,6 +10,7 @@
 #include <fstream>
 #include <iosfwd>
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -43,6 +44,7 @@ ROM::~ROM() {
 int ROM::loadFile(string fileName) {
 
 	// Lee el fichero de la ROM y lo almacena en un vector en memoria para poder parsearlo
+	// FIXME: NO CARGA BIEN LA ROM. ARREGLARLO
 	ifstream f(fileName.c_str());
 
 	char byte;
