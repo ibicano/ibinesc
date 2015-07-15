@@ -444,7 +444,43 @@ bool PPU::isVblank() {
 
 
 void PPU::drawScanline() {
-}
+    int y = scanlineNumber - 1;
+
+    if (control2BackgroundBit3()) {
+        // Copia el desplazamiento X del registro tmp al addr al principio del scanline
+        int tmp = regVramTmp;
+
+        // Copia los bits correspondientes del registro temporal al de dirección al principio
+        // del scanline
+        regVramAddr = (regVramAddr & 0b1111101111100000) | (tmp & 0x41F);
+
+        // Pintamos el pixel
+        int x = 0;
+        while (x < 256) {
+            drawPixel(x, y);
+
+            // Incrementamos el registro de dirección horizontalmente si estamos pintando el background
+            incrXScroll();
+
+            // Si hemos dibujado el último pixel en anchura del "pattern", indicamos que hay que usar otro
+            if (regXOffset == 0)
+                newPattern = true;
+
+            x += 1;
+        }
+
+        // Incrementamos el registro de dirección verticalmente si estamos pintando el background
+        incrYScroll();
+    }//if
+
+    // Si aún no se ha producido, calculamos si ha habido impacto del Sprite zero con el fondo
+    if (!spriteHit)
+        calcSpriteHit();
+
+
+    // Cuando se termina de dibujar el scanline siempre hay que usar otro "pattern"
+    newPattern = true;
+}//drawScanline()
 
 
 void PPU::drawPixel(int x, int y) {
