@@ -9,6 +9,10 @@
 #define GFX_HPP_
 
 #include <SDL2/SDL.h>
+#include <SDL2/begin_code.h>
+#include <SDL2/SDL_render.h>
+#include <SDL2/SDL_surface.h>
+#include <SDL2/SDL_video.h>
 
 struct RGB;
 

@@ -8,7 +8,10 @@
 #include "ROM.hpp"
 
 #include <fstream>
+#include <iosfwd>
 #include <iostream>
+
+using namespace std;
 
 
 ROM::ROM(string fileName) {
@@ -40,7 +43,8 @@ ROM::~ROM() {
 int ROM::loadFile(string fileName) {
 
 	// Lee el fichero de la ROM y lo almacena en un vector en memoria para poder parsearlo
-	ifstream f(fileName);
+	ifstream f(fileName.c_str());
+
 	char byte;
 	while (f.get(byte)) {
 		rom.push_back(byte);

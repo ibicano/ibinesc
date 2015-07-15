@@ -6,12 +6,20 @@
  */
 
 #include "Instruction.hpp"
-#include "CPU.hpp"
+
+#include <stddef.h>
+
+#include "../Memory.hpp"
 #include "../nesutils.hpp"
+#include "CPU.hpp"
 
 Instruction::Instruction(int operand, CPU* cpu) {
 	this->operand = operand;
 	this->cpu = cpu;
+}
+
+
+Instruction::~Instruction() {
 }
 
 
@@ -67,6 +75,8 @@ int Instruction::fetchPreindexedAddrmode() {
 	return addr;
 }
 
+int Instruction::execute() {
+}
 
 int Instruction::fetchPostindexedAddrmode() {
 	/* Calcula el índice de la dirección donde se almacena la direccións
@@ -83,6 +93,9 @@ int Instruction::fetchPostindexedAddrmode() {
  *****************************************************************************/
 
 ADC::ADC(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+ADC::~ADC() {
+}
 
 int ADC::execute(int op) {
 	int ac = cpu->getRegA();
@@ -117,6 +130,9 @@ int ADC::execute(int op) {
 // ADC_inmediate
 ADC_inmediate::ADC_inmediate(int operand, CPU* cpu) : ADC(operand, cpu) {}
 
+ADC_inmediate::~ADC_inmediate() {
+}
+
 int ADC_inmediate::execute() {
 	return ADC::execute(operand);
 }
@@ -124,6 +140,9 @@ int ADC_inmediate::execute() {
 
 // ADC_zero
 ADC_zero::ADC_zero(int operand, CPU* cpu) : ADC(operand, cpu) {}
+
+ADC_zero::~ADC_zero() {
+}
 
 int ADC_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -135,6 +154,9 @@ int ADC_zero::execute() {
 // ADC_zerox
 ADC_zerox::ADC_zerox(int operand, CPU* cpu) : ADC(operand, cpu) {}
 
+ADC_zerox::~ADC_zerox() {
+}
+
 int ADC_zerox::execute() {
 	int addr = fetchIndexedZeroXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -144,6 +166,9 @@ int ADC_zerox::execute() {
 
 // ADC_abs
 ADC_abs::ADC_abs(int operand, CPU* cpu) : ADC(operand, cpu) {}
+
+ADC_abs::~ADC_abs() {
+}
 
 int ADC_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -155,6 +180,9 @@ int ADC_abs::execute() {
 // ADC_absx
 ADC_absx::ADC_absx(int operand, CPU* cpu) : ADC(operand, cpu) {}
 
+ADC_absx::~ADC_absx() {
+}
+
 int ADC_absx::execute() {
 	int addr = fetchIndexedAbsXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -164,6 +192,9 @@ int ADC_absx::execute() {
 
 // ADC_absy
 ADC_absy::ADC_absy(int operand, CPU* cpu) : ADC(operand, cpu) {}
+
+ADC_absy::~ADC_absy() {
+}
 
 int ADC_absy::execute() {
 	int addr = fetchIndexedAbsYAddrmode();
@@ -175,6 +206,9 @@ int ADC_absy::execute() {
 // ADC_preindexi
 ADC_preindexi::ADC_preindexi(int operand, CPU* cpu) : ADC(operand, cpu) {}
 
+ADC_preindexi::~ADC_preindexi() {
+}
+
 int ADC_preindexi::execute() {
 	int addr = fetchPreindexedAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -184,6 +218,9 @@ int ADC_preindexi::execute() {
 
 // ADC_postindexi
 ADC_postindexi::ADC_postindexi(int operand, CPU* cpu) : ADC(operand, cpu) {}
+
+ADC_postindexi::~ADC_postindexi() {
+}
 
 int ADC_postindexi::execute() {
 	int addr = fetchPostindexedAddrmode();
@@ -197,6 +234,9 @@ int ADC_postindexi::execute() {
  *****************************************************************************/
 
 AND::AND(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+AND::~AND() {
+}
 
 int AND::execute(int op) {
 	int ac = cpu->getRegA();
@@ -219,6 +259,9 @@ int AND::execute(int op) {
 // AND_inmediate
 AND_inmediate::AND_inmediate(int operand, CPU* cpu) : AND(operand, cpu) {}
 
+AND_inmediate::~AND_inmediate() {
+}
+
 int AND_inmediate::execute() {
 	return AND::execute(operand);
 }
@@ -226,6 +269,9 @@ int AND_inmediate::execute() {
 
 // AND_zero
 AND_zero::AND_zero(int operand, CPU* cpu) : AND(operand, cpu) {}
+
+AND_zero::~AND_zero() {
+}
 
 int AND_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -237,6 +283,9 @@ int AND_zero::execute() {
 // AND_zerox
 AND_zerox::AND_zerox(int operand, CPU* cpu) : AND(operand, cpu) {}
 
+AND_zerox::~AND_zerox() {
+}
+
 int AND_zerox::execute() {
 	int addr = fetchIndexedZeroXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -246,6 +295,9 @@ int AND_zerox::execute() {
 
 // AND_abs
 AND_abs::AND_abs(int operand, CPU* cpu) : AND(operand, cpu) {}
+
+AND_abs::~AND_abs() {
+}
 
 int AND_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -257,6 +309,9 @@ int AND_abs::execute() {
 // AND_absx
 AND_absx::AND_absx(int operand, CPU* cpu) : AND(operand, cpu) {}
 
+AND_absx::~AND_absx() {
+}
+
 int AND_absx::execute() {
 	int addr = fetchIndexedAbsXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -266,6 +321,9 @@ int AND_absx::execute() {
 
 // AND_absy
 AND_absy::AND_absy(int operand, CPU* cpu) : AND(operand, cpu) {}
+
+AND_absy::~AND_absy() {
+}
 
 int AND_absy::execute() {
 	int addr = fetchIndexedAbsYAddrmode();
@@ -277,6 +335,9 @@ int AND_absy::execute() {
 // AND_preindexi
 AND_preindexi::AND_preindexi(int operand, CPU* cpu) : AND(operand, cpu) {}
 
+AND_preindexi::~AND_preindexi() {
+}
+
 int AND_preindexi::execute() {
 	int addr = fetchPreindexedAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -286,6 +347,9 @@ int AND_preindexi::execute() {
 
 // AND_postindexi
 AND_postindexi::AND_postindexi(int operand, CPU* cpu) : AND(operand, cpu) {}
+
+AND_postindexi::~AND_postindexi() {
+}
 
 int AND_postindexi::execute() {
 	int addr = fetchPostindexedAddrmode();
@@ -299,6 +363,9 @@ int AND_postindexi::execute() {
  *****************************************************************************/
 
 ASL::ASL(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+ASL::~ASL() {
+}
 
 int ASL::execute(int op) {
 	int result = op << 1;
@@ -317,6 +384,9 @@ int ASL::execute(int op) {
 // ASL_accumulator
 ASL_accumulator::ASL_accumulator(int operand, CPU* cpu) : ASL(operand, cpu) {}
 
+ASL_accumulator::~ASL_accumulator() {
+}
+
 int ASL_accumulator::execute() {
 	int result = ASL::execute(cpu->getRegA());
 	cpu->setRegA(result);
@@ -330,6 +400,9 @@ int ASL_accumulator::execute() {
 
 // ASL_zero
 ASL_zero::ASL_zero(int operand, CPU* cpu) : ASL(operand, cpu) {}
+
+ASL_zero::~ASL_zero() {
+}
 
 int ASL_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -347,6 +420,9 @@ int ASL_zero::execute() {
 // ASL_zerox
 ASL_zerox::ASL_zerox(int operand, CPU* cpu) : ASL(operand, cpu) {}
 
+ASL_zerox::~ASL_zerox() {
+}
+
 int ASL_zerox::execute() {
 	int addr = fetchIndexedZeroXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -363,6 +439,9 @@ int ASL_zerox::execute() {
 // ASL_abs
 ASL_abs::ASL_abs(int operand, CPU* cpu) : ASL(operand, cpu) {}
 
+ASL_abs::~ASL_abs() {
+}
+
 int ASL_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -378,6 +457,9 @@ int ASL_abs::execute() {
 
 // ASL_absx
 ASL_absx::ASL_absx(int operand, CPU* cpu) : ASL(operand, cpu) {}
+
+ASL_absx::~ASL_absx() {
+}
 
 int ASL_absx::execute() {
 	int addr = fetchIndexedAbsXAddrmode();
@@ -398,6 +480,9 @@ int ASL_absx::execute() {
 
 BCC::BCC(int operand, CPU* cpu) : Instruction(operand, cpu) {}
 
+BCC::~BCC() {
+}
+
 int BCC::execute() {
 	// Incrementa el registro contador (PC) de la CPU
 	cpu->incrPc(BYTES);
@@ -414,6 +499,9 @@ int BCC::execute() {
  *****************************************************************************/
 
 BCS::BCS(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+BCS::~BCS() {
+}
 
 int BCS::execute() {
 	// Incrementa el registro contador (PC) de la CPU
@@ -432,6 +520,9 @@ int BCS::execute() {
 
 BEQ::BEQ(int operand, CPU* cpu) : Instruction(operand, cpu) {}
 
+BEQ::~BEQ() {
+}
+
 int BEQ::execute() {
 	// Incrementa el registro contador (PC) de la CPU
 	cpu->incrPc(BYTES);
@@ -448,6 +539,9 @@ int BEQ::execute() {
  *****************************************************************************/
 
 BIT::BIT(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+BIT::~BIT() {
+}
 
 int BIT::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -489,6 +583,9 @@ BIT_abs::BIT_abs(int operand, CPU* cpu) : BIT(operand, cpu) {}
 
 BMI::BMI(int operand, CPU* cpu) : Instruction(operand, cpu) {}
 
+BMI::~BMI() {
+}
+
 int BMI::execute() {
 	// Incrementa el registro contador (PC) de la CPU
 	cpu->incrPc(BYTES);
@@ -505,6 +602,9 @@ int BMI::execute() {
  *****************************************************************************/
 
 BNE::BNE(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+BNE::~BNE() {
+}
 
 int BNE::execute() {
 	// Incrementa el registro contador (PC) de la CPU
@@ -523,6 +623,9 @@ int BNE::execute() {
 
 BPL::BPL(int operand, CPU* cpu) : Instruction(operand, cpu) {}
 
+BPL::~BPL() {
+}
+
 int BPL::execute() {
 	// Incrementa el registro contador (PC) de la CPU
 	cpu->incrPc(BYTES);
@@ -539,6 +642,9 @@ int BPL::execute() {
  *****************************************************************************/
 
 BRK::BRK(CPU* cpu) : Instruction(0, cpu) {}
+
+BRK::~BRK() {
+}
 
 int BRK::execute() {
 	// Incrementa el registro contador (PC) de la CPU
@@ -568,6 +674,9 @@ int BRK::execute() {
 
 BVC::BVC(int operand, CPU* cpu) : Instruction(operand, cpu) {}
 
+BVC::~BVC() {
+}
+
 int BVC::execute() {
 	// Incrementa el registro contador (PC) de la CPU
 	cpu->incrPc(BYTES);
@@ -584,6 +693,9 @@ int BVC::execute() {
  *****************************************************************************/
 
 BVS::BVS(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+BVS::~BVS() {
+}
 
 int BVS::execute() {
 	// Incrementa el registro contador (PC) de la CPU
@@ -602,6 +714,9 @@ int BVS::execute() {
 
 CLC::CLC(CPU* cpu) : Instruction(0, cpu) {}
 
+CLC::~CLC() {
+}
+
 int CLC::execute() {
 	cpu->setReg_p_c_bit(0);
 
@@ -617,6 +732,9 @@ int CLC::execute() {
  *****************************************************************************/
 
 CLD::CLD(CPU* cpu) : Instruction(0, cpu) {}
+
+CLD::~CLD() {
+}
 
 int CLD::execute() {
 	cpu->setReg_p_d_bit(0);
@@ -634,6 +752,9 @@ int CLD::execute() {
 
 CLI::CLI(CPU* cpu) : Instruction(0, cpu) {}
 
+CLI::~CLI() {
+}
+
 int CLI::execute() {
 	cpu->setReg_p_i_bit(0);
 
@@ -650,6 +771,9 @@ int CLI::execute() {
 
 CLV::CLV(CPU* cpu) : Instruction(0, cpu) {}
 
+CLV::~CLV() {
+}
+
 int CLV::execute() {
 	cpu->setReg_p_v_bit(0);
 
@@ -665,6 +789,9 @@ int CLV::execute() {
  *****************************************************************************/
 
 CMP::CMP(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+CMP::~CMP() {
+}
 
 int CMP::execute(int op) {
 	int ac = cpu->getRegA();
@@ -688,6 +815,9 @@ int CMP::execute(int op) {
 // CMP_inmediate
 CMP_inmediate::CMP_inmediate(int operand, CPU* cpu) : CMP(operand, cpu) {}
 
+CMP_inmediate::~CMP_inmediate() {
+}
+
 int CMP_inmediate::execute() {
 	return CMP::execute(operand);
 }
@@ -695,6 +825,9 @@ int CMP_inmediate::execute() {
 
 // CMP_zero
 CMP_zero::CMP_zero(int operand, CPU* cpu) : CMP(operand, cpu) {}
+
+CMP_zero::~CMP_zero() {
+}
 
 int CMP_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -706,6 +839,9 @@ int CMP_zero::execute() {
 // CMP_zerox
 CMP_zerox::CMP_zerox(int operand, CPU* cpu) : CMP(operand, cpu) {}
 
+CMP_zerox::~CMP_zerox() {
+}
+
 int CMP_zerox::execute() {
 	int addr = fetchIndexedZeroXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -715,6 +851,9 @@ int CMP_zerox::execute() {
 
 // CMP_abs
 CMP_abs::CMP_abs(int operand, CPU* cpu) : CMP(operand, cpu) {}
+
+CMP_abs::~CMP_abs() {
+}
 
 int CMP_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -726,6 +865,9 @@ int CMP_abs::execute() {
 // CMP_absx
 CMP_absx::CMP_absx(int operand, CPU* cpu) : CMP(operand, cpu) {}
 
+CMP_absx::~CMP_absx() {
+}
+
 int CMP_absx::execute() {
 	int addr = fetchIndexedAbsXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -735,6 +877,9 @@ int CMP_absx::execute() {
 
 // CMP_absy
 CMP_absy::CMP_absy(int operand, CPU* cpu) : CMP(operand, cpu) {}
+
+CMP_absy::~CMP_absy() {
+}
 
 int CMP_absy::execute() {
 	int addr = fetchIndexedAbsYAddrmode();
@@ -746,6 +891,9 @@ int CMP_absy::execute() {
 // CMP_preindexi
 CMP_preindexi::CMP_preindexi(int operand, CPU* cpu) : CMP(operand, cpu) {}
 
+CMP_preindexi::~CMP_preindexi() {
+}
+
 int CMP_preindexi::execute() {
 	int addr = fetchPreindexedAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -755,6 +903,9 @@ int CMP_preindexi::execute() {
 
 // CMP_postindexi
 CMP_postindexi::CMP_postindexi(int operand, CPU* cpu) : CMP(operand, cpu) {}
+
+CMP_postindexi::~CMP_postindexi() {
+}
 
 int CMP_postindexi::execute() {
 	int addr = fetchPostindexedAddrmode();
@@ -768,6 +919,9 @@ int CMP_postindexi::execute() {
  *****************************************************************************/
 
 CPX::CPX(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+CPX::~CPX() {
+}
 
 int CPX::execute(int op) {
 	int reg_x = cpu->getRegX();
@@ -791,6 +945,9 @@ int CPX::execute(int op) {
 // CPX_inmediate
 CPX_inmediate::CPX_inmediate(int operand, CPU* cpu) : CPX(operand, cpu) {}
 
+CPX_inmediate::~CPX_inmediate() {
+}
+
 int CPX_inmediate::execute() {
 	return CPX::execute(operand);
 }
@@ -798,6 +955,9 @@ int CPX_inmediate::execute() {
 
 // CPX_zero
 CPX_zero::CPX_zero(int operand, CPU* cpu) : CPX(operand, cpu) {}
+
+CPX_zero::~CPX_zero() {
+}
 
 int CPX_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -808,6 +968,9 @@ int CPX_zero::execute() {
 
 // CPX_abs
 CPX_abs::CPX_abs(int operand, CPU* cpu) : CPX(operand, cpu) {}
+
+CPX_abs::~CPX_abs() {
+}
 
 int CPX_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -821,6 +984,9 @@ int CPX_abs::execute() {
  *****************************************************************************/
 
 CPY::CPY(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+CPY::~CPY() {
+}
 
 int CPY::execute(int op) {
 	int reg_y = cpu->getRegY();
@@ -844,6 +1010,9 @@ int CPY::execute(int op) {
 // CPY_inmediate
 CPY_inmediate::CPY_inmediate(int operand, CPU* cpu) : CPY(operand, cpu) {}
 
+CPY_inmediate::~CPY_inmediate() {
+}
+
 int CPY_inmediate::execute() {
 	return CPY::execute(operand);
 }
@@ -851,6 +1020,9 @@ int CPY_inmediate::execute() {
 
 // CPY_zero
 CPY_zero::CPY_zero(int operand, CPU* cpu) : CPY(operand, cpu) {}
+
+CPY_zero::~CPY_zero() {
+}
 
 int CPY_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -861,6 +1033,9 @@ int CPY_zero::execute() {
 
 // CPY_abs
 CPY_abs::CPY_abs(int operand, CPU* cpu) : CPY(operand, cpu) {}
+
+CPY_abs::~CPY_abs() {
+}
 
 int CPY_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -875,6 +1050,9 @@ int CPY_abs::execute() {
 
 DEC::DEC(int operand, CPU* cpu) : Instruction(operand, cpu) {}
 
+DEC::~DEC() {
+}
+
 int DEC::execute(int op) {
 	int result = (op - 1) & 0xFF;
 
@@ -887,6 +1065,9 @@ int DEC::execute(int op) {
 
 // DEC_zero
 DEC_zero::DEC_zero(int operand, CPU* cpu) : DEC(operand, cpu) {}
+
+DEC_zero::~DEC_zero() {
+}
 
 int DEC_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -904,6 +1085,9 @@ int DEC_zero::execute() {
 // DEC_zerox
 DEC_zerox::DEC_zerox(int operand, CPU* cpu) : DEC(operand, cpu) {}
 
+DEC_zerox::~DEC_zerox() {
+}
+
 int DEC_zerox::execute() {
 	int addr = fetchIndexedZeroXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -920,6 +1104,9 @@ int DEC_zerox::execute() {
 // DEC_abs
 DEC_abs::DEC_abs(int operand, CPU* cpu) : DEC(operand, cpu) {}
 
+DEC_abs::~DEC_abs() {
+}
+
 int DEC_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -935,6 +1122,9 @@ int DEC_abs::execute() {
 
 // DEC_absx
 DEC_absx::DEC_absx(int operand, CPU* cpu) : DEC(operand, cpu) {}
+
+DEC_absx::~DEC_absx() {
+}
 
 int DEC_absx::execute() {
 	int addr = fetchIndexedAbsXAddrmode();
@@ -954,6 +1144,9 @@ int DEC_absx::execute() {
  *****************************************************************************/
 
 DEX::DEX(CPU* cpu) : Instruction(0, cpu) {}
+
+DEX::~DEX() {
+}
 
 int DEX::execute() {
 	int result = (cpu->getRegX() - 1) & 0xFF;
@@ -976,6 +1169,9 @@ int DEX::execute() {
 
 DEY::DEY(CPU* cpu) : Instruction(0, cpu) {}
 
+DEY::~DEY() {
+}
+
 int DEY::execute() {
 	int result = (cpu->getRegY() - 1) & 0xFF;
 
@@ -997,6 +1193,9 @@ int DEY::execute() {
 
 EOR::EOR(int operand, CPU* cpu) : Instruction(operand, cpu) {}
 
+EOR::~EOR() {
+}
+
 int EOR::execute(int op) {
 	int ac = cpu->getRegA();
 	int result = ac ^ op;
@@ -1016,6 +1215,9 @@ int EOR::execute(int op) {
 // EOR_inmediate
 EOR_inmediate::EOR_inmediate(int operand, CPU* cpu) : EOR(operand, cpu) {}
 
+EOR_inmediate::~EOR_inmediate() {
+}
+
 int EOR_inmediate::execute() {
 	return EOR::execute(operand);
 }
@@ -1023,6 +1225,9 @@ int EOR_inmediate::execute() {
 
 // EOR_zero
 EOR_zero::EOR_zero(int operand, CPU* cpu) : EOR(operand, cpu) {}
+
+EOR_zero::~EOR_zero() {
+}
 
 int EOR_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -1034,6 +1239,9 @@ int EOR_zero::execute() {
 // EOR_zerox
 EOR_zerox::EOR_zerox(int operand, CPU* cpu) : EOR(operand, cpu) {}
 
+EOR_zerox::~EOR_zerox() {
+}
+
 int EOR_zerox::execute() {
 	int addr = fetchIndexedZeroXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -1043,6 +1251,9 @@ int EOR_zerox::execute() {
 
 // EOR_abs
 EOR_abs::EOR_abs(int operand, CPU* cpu) : EOR(operand, cpu) {}
+
+EOR_abs::~EOR_abs() {
+}
 
 int EOR_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -1054,6 +1265,9 @@ int EOR_abs::execute() {
 // EOR_absx
 EOR_absx::EOR_absx(int operand, CPU* cpu) : EOR(operand, cpu) {}
 
+EOR_absx::~EOR_absx() {
+}
+
 int EOR_absx::execute() {
 	int addr = fetchIndexedAbsXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -1063,6 +1277,9 @@ int EOR_absx::execute() {
 
 // EOR_absy
 EOR_absy::EOR_absy(int operand, CPU* cpu) : EOR(operand, cpu) {}
+
+EOR_absy::~EOR_absy() {
+}
 
 int EOR_absy::execute() {
 	int addr = fetchIndexedAbsYAddrmode();
@@ -1074,6 +1291,9 @@ int EOR_absy::execute() {
 // EOR_preindexi
 EOR_preindexi::EOR_preindexi(int operand, CPU* cpu) : EOR(operand, cpu) {}
 
+EOR_preindexi::~EOR_preindexi() {
+}
+
 int EOR_preindexi::execute() {
 	int addr = fetchPreindexedAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -1083,6 +1303,9 @@ int EOR_preindexi::execute() {
 
 // EOR_postindexi
 EOR_postindexi::EOR_postindexi(int operand, CPU* cpu) : EOR(operand, cpu) {}
+
+EOR_postindexi::~EOR_postindexi() {
+}
 
 int EOR_postindexi::execute() {
 	int addr = fetchPostindexedAddrmode();
@@ -1097,6 +1320,9 @@ int EOR_postindexi::execute() {
 
 INC::INC(int operand, CPU* cpu) : Instruction(operand, cpu) {}
 
+INC::~INC() {
+}
+
 int INC::execute(int op) {
 	int result = (op + 1) & 0xFF;
 
@@ -1109,6 +1335,9 @@ int INC::execute(int op) {
 
 // INC_zero
 INC_zero::INC_zero(int operand, CPU* cpu) : INC(operand, cpu) {}
+
+INC_zero::~INC_zero() {
+}
 
 int INC_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -1126,6 +1355,9 @@ int INC_zero::execute() {
 // INC_zerox
 INC_zerox::INC_zerox(int operand, CPU* cpu) : INC(operand, cpu) {}
 
+INC_zerox::~INC_zerox() {
+}
+
 int INC_zerox::execute() {
 	int addr = fetchIndexedZeroXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -1142,6 +1374,9 @@ int INC_zerox::execute() {
 // INC_abs
 INC_abs::INC_abs(int operand, CPU* cpu) : INC(operand, cpu) {}
 
+INC_abs::~INC_abs() {
+}
+
 int INC_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -1157,6 +1392,9 @@ int INC_abs::execute() {
 
 // INC_absx
 INC_absx::INC_absx(int operand, CPU* cpu) : INC(operand, cpu) {}
+
+INC_absx::~INC_absx() {
+}
 
 int INC_absx::execute() {
 	int addr = fetchIndexedAbsXAddrmode();
@@ -1176,6 +1414,9 @@ int INC_absx::execute() {
  *****************************************************************************/
 
 INX::INX(CPU* cpu) : Instruction(0, cpu) {}
+
+INX::~INX() {
+}
 
 int INX::execute() {
 	int result = (cpu->getRegX() + 1) & 0xFF;
@@ -1198,6 +1439,9 @@ int INX::execute() {
 
 INY::INY(CPU* cpu) : Instruction(0, cpu) {}
 
+INY::~INY() {
+}
+
 int INY::execute() {
 	int result = (cpu->getRegY() + 1) & 0xFF;
 
@@ -1219,6 +1463,9 @@ int INY::execute() {
 
 JMP::JMP(int operand, CPU* cpu) : Instruction(operand, cpu) {}
 
+JMP::~JMP() {
+}
+
 int JMP::execute(int op) {
 	cpu->setRegPc(op);
     return CYCLES;
@@ -1227,6 +1474,9 @@ int JMP::execute(int op) {
 
 // JMP_abs
 JMP_abs::JMP_abs(int operand, CPU* cpu) : JMP(operand, cpu) {}
+
+JMP_abs::~JMP_abs() {
+}
 
 int JMP_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -1238,6 +1488,9 @@ int JMP_abs::execute() {
 
 // JMP_indirect
 JMP_indirect::JMP_indirect(int operand, CPU* cpu) : JMP(operand, cpu) {}
+
+JMP_indirect::~JMP_indirect() {
+}
 
 int JMP_indirect::execute() {
 	Memory* mem = cpu->getMem();
@@ -1261,6 +1514,9 @@ int JMP_indirect::execute() {
 
 JSR::JSR(int operand, CPU* cpu) : Instruction(operand, cpu) {}
 
+JSR::~JSR() {
+}
+
 int JSR::execute(int op) {
 	int pc = cpu->getRegPc() + BYTES - 1;
 	cpu->pushStack((pc >> 8) & 0xFF);
@@ -1277,6 +1533,9 @@ int JSR::execute(int op) {
  *****************************************************************************/
 
 LDA::LDA(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+LDA::~LDA() {
+}
 
 int LDA::execute(int op) {
 	// Establece el bit ZERO del registro P
@@ -1296,6 +1555,9 @@ int LDA::execute(int op) {
 // LDA_inmediate
 LDA_inmediate::LDA_inmediate(int operand, CPU* cpu) : LDA(operand, cpu) {}
 
+LDA_inmediate::~LDA_inmediate() {
+}
+
 int LDA_inmediate::execute() {
 	return LDA::execute(operand);
 }
@@ -1303,6 +1565,9 @@ int LDA_inmediate::execute() {
 
 // LDA_zero
 LDA_zero::LDA_zero(int operand, CPU* cpu) : LDA(operand, cpu) {}
+
+LDA_zero::~LDA_zero() {
+}
 
 int LDA_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -1314,6 +1579,9 @@ int LDA_zero::execute() {
 // LDA_zerox
 LDA_zerox::LDA_zerox(int operand, CPU* cpu) : LDA(operand, cpu) {}
 
+LDA_zerox::~LDA_zerox() {
+}
+
 int LDA_zerox::execute() {
 	int addr = fetchIndexedZeroXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -1323,6 +1591,9 @@ int LDA_zerox::execute() {
 
 // LDA_abs
 LDA_abs::LDA_abs(int operand, CPU* cpu) : LDA(operand, cpu) {}
+
+LDA_abs::~LDA_abs() {
+}
 
 int LDA_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -1334,6 +1605,9 @@ int LDA_abs::execute() {
 // LDA_absx
 LDA_absx::LDA_absx(int operand, CPU* cpu) : LDA(operand, cpu) {}
 
+LDA_absx::~LDA_absx() {
+}
+
 int LDA_absx::execute() {
 	int addr = fetchIndexedAbsXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -1343,6 +1617,9 @@ int LDA_absx::execute() {
 
 // LDA_absy
 LDA_absy::LDA_absy(int operand, CPU* cpu) : LDA(operand, cpu) {}
+
+LDA_absy::~LDA_absy() {
+}
 
 int LDA_absy::execute() {
 	int addr = fetchIndexedAbsYAddrmode();
@@ -1354,6 +1631,9 @@ int LDA_absy::execute() {
 // LDA_preindexi
 LDA_preindexi::LDA_preindexi(int operand, CPU* cpu) : LDA(operand, cpu) {}
 
+LDA_preindexi::~LDA_preindexi() {
+}
+
 int LDA_preindexi::execute() {
 	int addr = fetchPreindexedAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -1363,6 +1643,9 @@ int LDA_preindexi::execute() {
 
 // LDA_postindexi
 LDA_postindexi::LDA_postindexi(int operand, CPU* cpu) : LDA(operand, cpu) {}
+
+LDA_postindexi::~LDA_postindexi() {
+}
 
 int LDA_postindexi::execute() {
 	int addr = fetchPostindexedAddrmode();
@@ -1376,6 +1659,9 @@ int LDA_postindexi::execute() {
  *****************************************************************************/
 
 LDX::LDX(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+LDX::~LDX() {
+}
 
 int LDX::execute(int op) {
 	// Establece el bit ZERO del registro P
@@ -1395,6 +1681,9 @@ int LDX::execute(int op) {
 // LDX_inmediate
 LDX_inmediate::LDX_inmediate(int operand, CPU* cpu) : LDX(operand, cpu) {}
 
+LDX_inmediate::~LDX_inmediate() {
+}
+
 int LDX_inmediate::execute() {
 	return LDX::execute(operand);
 }
@@ -1402,6 +1691,9 @@ int LDX_inmediate::execute() {
 
 // LDX_zero
 LDX_zero::LDX_zero(int operand, CPU* cpu) : LDX(operand, cpu) {}
+
+LDX_zero::~LDX_zero() {
+}
 
 int LDX_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -1413,6 +1705,9 @@ int LDX_zero::execute() {
 // LDX_zerox
 LDX_zeroy::LDX_zeroy(int operand, CPU* cpu) : LDX(operand, cpu) {}
 
+LDX_zeroy::~LDX_zeroy() {
+}
+
 int LDX_zeroy::execute() {
 	int addr = fetchIndexedZeroYAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -1423,6 +1718,9 @@ int LDX_zeroy::execute() {
 // LDX_abs
 LDX_abs::LDX_abs(int operand, CPU* cpu) : LDX(operand, cpu) {}
 
+LDX_abs::~LDX_abs() {
+}
+
 int LDX_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -1432,6 +1730,9 @@ int LDX_abs::execute() {
 
 // LDX_absy
 LDX_absy::LDX_absy(int operand, CPU* cpu) : LDX(operand, cpu) {}
+
+LDX_absy::~LDX_absy() {
+}
 
 int LDX_absy::execute() {
 	int addr = fetchIndexedAbsYAddrmode();
@@ -1445,6 +1746,9 @@ int LDX_absy::execute() {
  *****************************************************************************/
 
 LDY::LDY(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+LDY::~LDY() {
+}
 
 int LDY::execute(int op) {
 	// Establece el bit ZERO del registro P
@@ -1464,6 +1768,9 @@ int LDY::execute(int op) {
 // LDY_inmediate
 LDY_inmediate::LDY_inmediate(int operand, CPU* cpu) : LDY(operand, cpu) {}
 
+LDY_inmediate::~LDY_inmediate() {
+}
+
 int LDY_inmediate::execute() {
 	return LDY::execute(operand);
 }
@@ -1471,6 +1778,9 @@ int LDY_inmediate::execute() {
 
 // LDY_zero
 LDY_zero::LDY_zero(int operand, CPU* cpu) : LDY(operand, cpu) {}
+
+LDY_zero::~LDY_zero() {
+}
 
 int LDY_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -1482,6 +1792,9 @@ int LDY_zero::execute() {
 // LDY_zerox
 LDY_zerox::LDY_zerox(int operand, CPU* cpu) : LDY(operand, cpu) {}
 
+LDY_zerox::~LDY_zerox() {
+}
+
 int LDY_zerox::execute() {
 	int addr = fetchIndexedZeroXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -1492,6 +1805,9 @@ int LDY_zerox::execute() {
 // LDY_abs
 LDY_abs::LDY_abs(int operand, CPU* cpu) : LDY(operand, cpu) {}
 
+LDY_abs::~LDY_abs() {
+}
+
 int LDY_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -1501,6 +1817,9 @@ int LDY_abs::execute() {
 
 // LDY_absy
 LDY_absx::LDY_absx(int operand, CPU* cpu) : LDY(operand, cpu) {}
+
+LDY_absx::~LDY_absx() {
+}
 
 int LDY_absx::execute() {
 	int addr = fetchIndexedAbsXAddrmode();
@@ -1514,6 +1833,9 @@ int LDY_absx::execute() {
  *****************************************************************************/
 
 LSR::LSR(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+LSR::~LSR() {
+}
 
 int LSR::execute(int op) {
 	int result = op >> 1;
@@ -1529,6 +1851,9 @@ int LSR::execute(int op) {
 // LSR_accumulator
 LSR_accumulator::LSR_accumulator(int operand, CPU* cpu) : LSR(operand, cpu) {}
 
+LSR_accumulator::~LSR_accumulator() {
+}
+
 int LSR_accumulator::execute() {
 	int result = LSR::execute(cpu->getRegA());
 	cpu->setRegA(result);
@@ -1542,6 +1867,9 @@ int LSR_accumulator::execute() {
 
 // LSR_zero
 LSR_zero::LSR_zero(int operand, CPU* cpu) : LSR(operand, cpu) {}
+
+LSR_zero::~LSR_zero() {
+}
 
 int LSR_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -1559,6 +1887,9 @@ int LSR_zero::execute() {
 // LSR_zerox
 LSR_zerox::LSR_zerox(int operand, CPU* cpu) : LSR(operand, cpu) {}
 
+LSR_zerox::~LSR_zerox() {
+}
+
 int LSR_zerox::execute() {
 	int addr = fetchIndexedZeroXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -1575,6 +1906,9 @@ int LSR_zerox::execute() {
 // LSR_abs
 LSR_abs::LSR_abs(int operand, CPU* cpu) : LSR(operand, cpu) {}
 
+LSR_abs::~LSR_abs() {
+}
+
 int LSR_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -1590,6 +1924,9 @@ int LSR_abs::execute() {
 
 // LSR_absx
 LSR_absx::LSR_absx(int operand, CPU* cpu) : LSR(operand, cpu) {}
+
+LSR_absx::~LSR_absx() {
+}
 
 int LSR_absx::execute() {
 	int addr = fetchIndexedAbsXAddrmode();
@@ -1610,6 +1947,9 @@ int LSR_absx::execute() {
 
 NOP::NOP(CPU* cpu) : Instruction(0, cpu) {}
 
+NOP::~NOP() {
+}
+
 int NOP::execute() {
 	// Incrementa el registro contador (PC) de la CPU
 	cpu->incrPc(BYTES);
@@ -1623,6 +1963,9 @@ int NOP::execute() {
  *****************************************************************************/
 
 ORA::ORA(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+ORA::~ORA() {
+}
 
 int ORA::execute(int op) {
 	int ac = cpu->getRegA();
@@ -1643,6 +1986,9 @@ int ORA::execute(int op) {
 // ORA_inmediate
 ORA_inmediate::ORA_inmediate(int operand, CPU* cpu) : ORA(operand, cpu) {}
 
+ORA_inmediate::~ORA_inmediate() {
+}
+
 int ORA_inmediate::execute() {
 	return ORA::execute(operand);
 }
@@ -1650,6 +1996,9 @@ int ORA_inmediate::execute() {
 
 // ORA_zero
 ORA_zero::ORA_zero(int operand, CPU* cpu) : ORA(operand, cpu) {}
+
+ORA_zero::~ORA_zero() {
+}
 
 int ORA_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -1661,6 +2010,9 @@ int ORA_zero::execute() {
 // ORA_zerox
 ORA_zerox::ORA_zerox(int operand, CPU* cpu) : ORA(operand, cpu) {}
 
+ORA_zerox::~ORA_zerox() {
+}
+
 int ORA_zerox::execute() {
 	int addr = fetchIndexedZeroXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -1670,6 +2022,9 @@ int ORA_zerox::execute() {
 
 // ORA_abs
 ORA_abs::ORA_abs(int operand, CPU* cpu) : ORA(operand, cpu) {}
+
+ORA_abs::~ORA_abs() {
+}
 
 int ORA_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -1681,6 +2036,9 @@ int ORA_abs::execute() {
 // ORA_absx
 ORA_absx::ORA_absx(int operand, CPU* cpu) : ORA(operand, cpu) {}
 
+ORA_absx::~ORA_absx() {
+}
+
 int ORA_absx::execute() {
 	int addr = fetchIndexedAbsXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -1690,6 +2048,9 @@ int ORA_absx::execute() {
 
 // ORA_absy
 ORA_absy::ORA_absy(int operand, CPU* cpu) : ORA(operand, cpu) {}
+
+ORA_absy::~ORA_absy() {
+}
 
 int ORA_absy::execute() {
 	int addr = fetchIndexedAbsYAddrmode();
@@ -1701,6 +2062,9 @@ int ORA_absy::execute() {
 // ORA_preindexi
 ORA_preindexi::ORA_preindexi(int operand, CPU* cpu) : ORA(operand, cpu) {}
 
+ORA_preindexi::~ORA_preindexi() {
+}
+
 int ORA_preindexi::execute() {
 	int addr = fetchPreindexedAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -1710,6 +2074,9 @@ int ORA_preindexi::execute() {
 
 // ORA_postindexi
 ORA_postindexi::ORA_postindexi(int operand, CPU* cpu) : ORA(operand, cpu) {}
+
+ORA_postindexi::~ORA_postindexi() {
+}
 
 int ORA_postindexi::execute() {
 	int addr = fetchPostindexedAddrmode();
@@ -1723,6 +2090,9 @@ int ORA_postindexi::execute() {
  *****************************************************************************/
 
 PHA::PHA(CPU* cpu) : Instruction(0, cpu) {}
+
+PHA::~PHA() {
+}
 
 int PHA::execute() {
 	cpu->pushStack(cpu->getRegA());
@@ -1740,6 +2110,9 @@ int PHA::execute() {
 
 PHP::PHP(CPU* cpu) : Instruction(0, cpu) {}
 
+PHP::~PHP() {
+}
+
 int PHP::execute() {
 	// Los bit 4 y 5 se ponen siempre a 1
 	cpu->pushStack(cpu->getRegP() | 0x30);
@@ -1756,6 +2129,9 @@ int PHP::execute() {
  *****************************************************************************/
 
 PLA::PLA(CPU* cpu) : Instruction(0, cpu) {}
+
+PLA::~PLA() {
+}
 
 int PLA::execute() {
 	int a = cpu->pullStack();
@@ -1776,6 +2152,9 @@ int PLA::execute() {
 
 PLP::PLP(CPU* cpu) : Instruction(0, cpu) {}
 
+PLP::~PLP() {
+}
+
 int PLP::execute() {
 	int p = cpu->pullStack();
 	cpu->setRegP(p);
@@ -1793,6 +2172,9 @@ int PLP::execute() {
 
 ROL::ROL(int operand, CPU* cpu) : Instruction(operand, cpu) {}
 
+ROL::~ROL() {
+}
+
 int ROL::execute(int op) {
 	int result = op << 1;
 	if (cpu->getReg_p_c_bit())
@@ -1809,6 +2191,9 @@ int ROL::execute(int op) {
 // ROL_accumulator
 ROL_accumulator::ROL_accumulator(int operand, CPU* cpu) : ROL(operand, cpu) {}
 
+ROL_accumulator::~ROL_accumulator() {
+}
+
 int ROL_accumulator::execute() {
 	int result = ROL::execute(cpu->getRegA());
 	cpu->setRegA(result);
@@ -1822,6 +2207,9 @@ int ROL_accumulator::execute() {
 
 // ROL_zero
 ROL_zero::ROL_zero(int operand, CPU* cpu) : ROL(operand, cpu) {}
+
+ROL_zero::~ROL_zero() {
+}
 
 int ROL_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -1839,6 +2227,9 @@ int ROL_zero::execute() {
 // ROL_zerox
 ROL_zerox::ROL_zerox(int operand, CPU* cpu) : ROL(operand, cpu) {}
 
+ROL_zerox::~ROL_zerox() {
+}
+
 int ROL_zerox::execute() {
 	int addr = fetchIndexedZeroXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -1855,6 +2246,9 @@ int ROL_zerox::execute() {
 // ROL_abs
 ROL_abs::ROL_abs(int operand, CPU* cpu) : ROL(operand, cpu) {}
 
+ROL_abs::~ROL_abs() {
+}
+
 int ROL_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -1870,6 +2264,9 @@ int ROL_abs::execute() {
 
 // ROL_absx
 ROL_absx::ROL_absx(int operand, CPU* cpu) : ROL(operand, cpu) {}
+
+ROL_absx::~ROL_absx() {
+}
 
 int ROL_absx::execute() {
 	int addr = fetchIndexedAbsXAddrmode();
@@ -1890,6 +2287,9 @@ int ROL_absx::execute() {
 
 ROR::ROR(int operand, CPU* cpu) : Instruction(operand, cpu) {}
 
+ROR::~ROR() {
+}
+
 int ROR::execute(int op) {
 	int result = op >> 1;
 
@@ -1907,6 +2307,9 @@ int ROR::execute(int op) {
 // ROR_accumulator
 ROR_accumulator::ROR_accumulator(int operand, CPU* cpu) : ROR(operand, cpu) {}
 
+ROR_accumulator::~ROR_accumulator() {
+}
+
 int ROR_accumulator::execute() {
 	int result = ROR::execute(cpu->getRegA());
 	cpu->setRegA(result);
@@ -1920,6 +2323,9 @@ int ROR_accumulator::execute() {
 
 // ROR_zero
 ROR_zero::ROR_zero(int operand, CPU* cpu) : ROR(operand, cpu) {}
+
+ROR_zero::~ROR_zero() {
+}
 
 int ROR_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -1937,6 +2343,9 @@ int ROR_zero::execute() {
 // ROR_zerox
 ROR_zerox::ROR_zerox(int operand, CPU* cpu) : ROR(operand, cpu) {}
 
+ROR_zerox::~ROR_zerox() {
+}
+
 int ROR_zerox::execute() {
 	int addr = fetchIndexedZeroXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -1953,6 +2362,9 @@ int ROR_zerox::execute() {
 // ROR_abs
 ROR_abs::ROR_abs(int operand, CPU* cpu) : ROR(operand, cpu) {}
 
+ROR_abs::~ROR_abs() {
+}
+
 int ROR_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -1968,6 +2380,9 @@ int ROR_abs::execute() {
 
 // ROR_absx
 ROR_absx::ROR_absx(int operand, CPU* cpu) : ROR(operand, cpu) {}
+
+ROR_absx::~ROR_absx() {
+}
 
 int ROR_absx::execute() {
 	int addr = fetchIndexedAbsXAddrmode();
@@ -1988,6 +2403,9 @@ int ROR_absx::execute() {
 
 RTI::RTI(CPU* cpu) : Instruction(0, cpu) {}
 
+RTI::~RTI() {
+}
+
 int RTI::execute() {
 	int p = cpu->pullStack();
 	cpu->setRegP(p);
@@ -2006,6 +2424,9 @@ int RTI::execute() {
 
 RTS::RTS(CPU* cpu) : Instruction(0, cpu) {}
 
+RTS::~RTS() {
+}
+
 int RTS::execute() {
 	int pc = cpu->pullStack();
 	pc = pc | (cpu->pullStack() << 8);
@@ -2021,6 +2442,9 @@ int RTS::execute() {
  *****************************************************************************/
 
 SBC::SBC(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+SBC::~SBC() {
+}
 
 int SBC::execute(int op) {
 	int ac = cpu->getRegA();
@@ -2058,6 +2482,9 @@ int SBC::execute(int op) {
 // SBC_inmediate
 SBC_inmediate::SBC_inmediate(int operand, CPU* cpu) : SBC(operand, cpu) {}
 
+SBC_inmediate::~SBC_inmediate() {
+}
+
 int SBC_inmediate::execute() {
 	return SBC::execute(operand);
 }
@@ -2065,6 +2492,9 @@ int SBC_inmediate::execute() {
 
 // SBC_zero
 SBC_zero::SBC_zero(int operand, CPU* cpu) : SBC(operand, cpu) {}
+
+SBC_zero::~SBC_zero() {
+}
 
 int SBC_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -2076,6 +2506,9 @@ int SBC_zero::execute() {
 // SBC_zerox
 SBC_zerox::SBC_zerox(int operand, CPU* cpu) : SBC(operand, cpu) {}
 
+SBC_zerox::~SBC_zerox() {
+}
+
 int SBC_zerox::execute() {
 	int addr = fetchIndexedZeroXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -2085,6 +2518,9 @@ int SBC_zerox::execute() {
 
 // SBC_abs
 SBC_abs::SBC_abs(int operand, CPU* cpu) : SBC(operand, cpu) {}
+
+SBC_abs::~SBC_abs() {
+}
 
 int SBC_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -2096,6 +2532,9 @@ int SBC_abs::execute() {
 // SBC_absx
 SBC_absx::SBC_absx(int operand, CPU* cpu) : SBC(operand, cpu) {}
 
+SBC_absx::~SBC_absx() {
+}
+
 int SBC_absx::execute() {
 	int addr = fetchIndexedAbsXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -2105,6 +2544,9 @@ int SBC_absx::execute() {
 
 // SBC_absy
 SBC_absy::SBC_absy(int operand, CPU* cpu) : SBC(operand, cpu) {}
+
+SBC_absy::~SBC_absy() {
+}
 
 int SBC_absy::execute() {
 	int addr = fetchIndexedAbsYAddrmode();
@@ -2116,6 +2558,9 @@ int SBC_absy::execute() {
 // SBC_preindexi
 SBC_preindexi::SBC_preindexi(int operand, CPU* cpu) : SBC(operand, cpu) {}
 
+SBC_preindexi::~SBC_preindexi() {
+}
+
 int SBC_preindexi::execute() {
 	int addr = fetchPreindexedAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -2125,6 +2570,9 @@ int SBC_preindexi::execute() {
 
 // SBC_postindexi
 SBC_postindexi::SBC_postindexi(int operand, CPU* cpu) : SBC(operand, cpu) {}
+
+SBC_postindexi::~SBC_postindexi() {
+}
 
 int SBC_postindexi::execute() {
 	int addr = fetchPostindexedAddrmode();
@@ -2138,6 +2586,9 @@ int SBC_postindexi::execute() {
  *****************************************************************************/
 
 SEC::SEC(CPU* cpu) : Instruction(0, cpu) {}
+
+SEC::~SEC() {
+}
 
 int SEC::execute() {
 	cpu->setReg_p_c_bit(1);
@@ -2155,6 +2606,9 @@ int SEC::execute() {
 
 SED::SED(CPU* cpu) : Instruction(0, cpu) {}
 
+SED::~SED() {
+}
+
 int SED::execute() {
 	cpu->setReg_p_d_bit(1);
 
@@ -2171,6 +2625,9 @@ int SED::execute() {
 
 SEI::SEI(CPU* cpu) : Instruction(0, cpu) {}
 
+SEI::~SEI() {
+}
+
 int SEI::execute() {
 	cpu->setReg_p_i_bit(1);
 
@@ -2186,6 +2643,9 @@ int SEI::execute() {
  *****************************************************************************/
 
 STA::STA(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+STA::~STA() {
+}
 
 int STA::execute(int addr) {
 	int ac = cpu->getRegA();
@@ -2204,6 +2664,9 @@ int STA::execute(int addr) {
 // STA_zero
 STA_zero::STA_zero(int operand, CPU* cpu) : STA(operand, cpu) {}
 
+STA_zero::~STA_zero() {
+}
+
 int STA_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -2213,6 +2676,9 @@ int STA_zero::execute() {
 
 // STA_zerox
 STA_zerox::STA_zerox(int operand, CPU* cpu) : STA(operand, cpu) {}
+
+STA_zerox::~STA_zerox() {
+}
 
 int STA_zerox::execute() {
 	int addr = fetchIndexedZeroXAddrmode();
@@ -2224,6 +2690,9 @@ int STA_zerox::execute() {
 // STA_abs
 STA_abs::STA_abs(int operand, CPU* cpu) : STA(operand, cpu) {}
 
+STA_abs::~STA_abs() {
+}
+
 int STA_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -2233,6 +2702,9 @@ int STA_abs::execute() {
 
 // STA_absx
 STA_absx::STA_absx(int operand, CPU* cpu) : STA(operand, cpu) {}
+
+STA_absx::~STA_absx() {
+}
 
 int STA_absx::execute() {
 	int addr = fetchIndexedAbsXAddrmode();
@@ -2244,6 +2716,9 @@ int STA_absx::execute() {
 // STA_absy
 STA_absy::STA_absy(int operand, CPU* cpu) : STA(operand, cpu) {}
 
+STA_absy::~STA_absy() {
+}
+
 int STA_absy::execute() {
 	int addr = fetchIndexedAbsYAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -2254,6 +2729,9 @@ int STA_absy::execute() {
 // STA_preindexi
 STA_preindexi::STA_preindexi(int operand, CPU* cpu) : STA(operand, cpu) {}
 
+STA_preindexi::~STA_preindexi() {
+}
+
 int STA_preindexi::execute() {
 	int addr = fetchPreindexedAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -2263,6 +2741,9 @@ int STA_preindexi::execute() {
 
 // STA_postindexi
 STA_postindexi::STA_postindexi(int operand, CPU* cpu) : STA(operand, cpu) {}
+
+STA_postindexi::~STA_postindexi() {
+}
 
 int STA_postindexi::execute() {
 	int addr = fetchPostindexedAddrmode();
@@ -2276,6 +2757,9 @@ int STA_postindexi::execute() {
  *****************************************************************************/
 
 STX::STX(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+STX::~STX() {
+}
 
 int STX::execute(int addr) {
 	int regX = cpu->getRegX();
@@ -2294,6 +2778,9 @@ int STX::execute(int addr) {
 // STX_zero
 STX_zero::STX_zero(int operand, CPU* cpu) : STX(operand, cpu) {}
 
+STX_zero::~STX_zero() {
+}
+
 int STX_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -2304,6 +2791,9 @@ int STX_zero::execute() {
 // STX_zerox
 STX_zeroy::STX_zeroy(int operand, CPU* cpu) : STX(operand, cpu) {}
 
+STX_zeroy::~STX_zeroy() {
+}
+
 int STX_zeroy::execute() {
 	int addr = fetchIndexedZeroYAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -2313,6 +2803,9 @@ int STX_zeroy::execute() {
 
 // STX_abs
 STX_abs::STX_abs(int operand, CPU* cpu) : STX(operand, cpu) {}
+
+STX_abs::~STX_abs() {
+}
 
 int STX_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -2326,6 +2819,9 @@ int STX_abs::execute() {
  *****************************************************************************/
 
 STY::STY(int operand, CPU* cpu) : Instruction(operand, cpu) {}
+
+STY::~STY() {
+}
 
 int STY::execute(int addr) {
 	int regY = cpu->getRegY();
@@ -2344,6 +2840,9 @@ int STY::execute(int addr) {
 // STY_zero
 STY_zero::STY_zero(int operand, CPU* cpu) : STY(operand, cpu) {}
 
+STY_zero::~STY_zero() {
+}
+
 int STY_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -2354,6 +2853,9 @@ int STY_zero::execute() {
 // STY_zerox
 STY_zerox::STY_zerox(int operand, CPU* cpu) : STY(operand, cpu) {}
 
+STY_zerox::~STY_zerox() {
+}
+
 int STY_zerox::execute() {
 	int addr = fetchIndexedZeroXAddrmode();
 	int op = cpu->getMem()->readData(addr);
@@ -2363,6 +2865,9 @@ int STY_zerox::execute() {
 
 // STY_abs
 STY_abs::STY_abs(int operand, CPU* cpu) : STY(operand, cpu) {}
+
+STY_abs::~STY_abs() {
+}
 
 int STY_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
@@ -2376,6 +2881,9 @@ int STY_abs::execute() {
  *****************************************************************************/
 
 TAX::TAX(CPU* cpu) : Instruction(0, cpu) {}
+
+TAX::~TAX() {
+}
 
 int TAX::execute() {
     int ac = cpu->getRegA();
@@ -2398,6 +2906,9 @@ int TAX::execute() {
 
 TAY::TAY(CPU* cpu) : Instruction(0, cpu) {}
 
+TAY::~TAY() {
+}
+
 int TAY::execute() {
     int ac = cpu->getRegA();
 
@@ -2418,6 +2929,9 @@ int TAY::execute() {
  *****************************************************************************/
 
 TSX::TSX(CPU* cpu) : Instruction(0, cpu) {}
+
+TSX::~TSX() {
+}
 
 int TSX::execute() {
     int sp = cpu->getRegSp();
@@ -2440,6 +2954,9 @@ int TSX::execute() {
 
 TXA::TXA(CPU* cpu) : Instruction(0, cpu) {}
 
+TXA::~TXA() {
+}
+
 int TXA::execute() {
     int regX = cpu->getRegX();
 
@@ -2461,6 +2978,9 @@ int TXA::execute() {
 
 TXS::TXS(CPU* cpu) : Instruction(0, cpu) {}
 
+TXS::~TXS() {
+}
+
 int TXS::execute() {
     int regX = cpu->getRegX();
 
@@ -2478,6 +2998,9 @@ int TXS::execute() {
  *****************************************************************************/
 
 TYA::TYA(CPU* cpu) : Instruction(0, cpu) {}
+
+TYA::~TYA() {
+}
 
 int TYA::execute() {
     int regY = cpu->getRegX();
@@ -2720,3 +3243,8 @@ InstructionsPool::~InstructionsPool() {
 	}
 }
 
+BIT_zero::~BIT_zero() {
+}
+
+BIT_abs::~BIT_abs() {
+}

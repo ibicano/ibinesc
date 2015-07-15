@@ -29,7 +29,7 @@ int setBits(int word, int mask, int value) {
 }
 
 
-int c2_to_int(int byte) {
+int c2ToInt(int byte) {
 	if (byte & 0x80)
         return -(0x100 - byte);
     else
