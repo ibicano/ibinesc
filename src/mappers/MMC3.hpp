@@ -10,9 +10,11 @@
 
 #include "Mapper.hpp"
 
+class ROM;
+
 class MMC3 : public Mapper {
 public:
-	MMC3();
+	MMC3(ROM* rom);
 	virtual ~MMC3();
 };
 

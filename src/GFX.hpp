@@ -8,6 +8,9 @@
 #ifndef GFX_HPP_
 #define GFX_HPP_
 
+#include <SDL2/SDL.h>
+
+struct RGB;
 
 // Clase base abstracta para el motor gráfico
 class GFX {

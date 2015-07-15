@@ -10,6 +10,8 @@
 
 #include "Mapper.hpp"
 
+class ROM;
+
 class NROM : public Mapper {
 public:
 	static const int MAPPER_CODE = 0;

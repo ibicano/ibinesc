@@ -6,12 +6,12 @@
  */
 
 #include "ROM.hpp"
+
 #include <fstream>
+#include <iostream>
 
 
 ROM::ROM(string fileName) {
-	rom = new vector();
-
 	prgCount = 0;
 	chrCount = 0;
 	control1 = 0x00;
@@ -43,7 +43,7 @@ int ROM::loadFile(string fileName) {
 	ifstream f(fileName);
 	char byte;
 	while (f.get(byte)) {
-		rom->push_back(byte);
+		rom.push_back(byte);
 	}
 	f.close();
 
@@ -136,7 +136,7 @@ int ROM::getMirroring() {
 
 int ROM::getMapperCode() {
 	int mapperCode = control1 >> 4;
-	int mapperCode = mapperCode | (control2 & 0xF0);
+	mapperCode = mapperCode | (control2 & 0xF0);
 
 	return mapperCode;
 }
@@ -164,9 +164,9 @@ int* ROM::getPrg8k(int n) {
 	int* bank;
 
 	if (part == 0)
-		bank = prgBanks[number][0];
+		bank = &prgBanks[number][0];
 	else
-		bank = prgBanks[number][8192];
+		bank = &prgBanks[number][8192];
 
 	return bank;
 }
@@ -183,9 +183,9 @@ int* ROM::getChr4k(int n) {
 
 	// Si es par es la primera mitad del banco de 8k
 	if (n & 0x01 == 0)
-		bank = chrBanks[number][0x0000];
+		bank = &chrBanks[number][0x0000];
 	else
-		bank = chrBanks[number][0x1000];
+		bank = &chrBanks[number][0x1000];
 
 	return bank;
 }
@@ -196,7 +196,7 @@ int* ROM::getChr1k(int n) {
 	int part = n & 0x07;
 	int addr = part * 1024;
 
-	int* bank = chrBanks[number][addr];
+	int* bank = &chrBanks[number][addr];
 
 	return bank;
 }

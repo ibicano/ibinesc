@@ -21,7 +21,7 @@ public:
 	virtual ~Joypad();
 
 	int readReg();			// Lee el registro del dispositivo
-	void writeReg();		// Escribe el registro del dispositivo
+	void writeReg(int data);		// Escribe el registro del dispositivo
 
 
 	// Lee y establece el valor de los botones

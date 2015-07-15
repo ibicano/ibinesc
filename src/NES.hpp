@@ -20,7 +20,7 @@ using namespace std;
 
 class NES {
 public:
-	NES();
+	NES(string fileName);
 	virtual ~NES();
 
 	// Ejecuta la NES

@@ -8,6 +8,11 @@
 #ifndef MEMORY_HPP_
 #define MEMORY_HPP_
 
+//Forwards de clases
+class PPU;
+class Mapper;
+class Joypad;
+
 class Memory {
 public:
 	static const int SIZE = 0x10000;

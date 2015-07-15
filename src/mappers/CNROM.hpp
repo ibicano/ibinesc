@@ -10,9 +10,11 @@
 
 #include "Mapper.hpp"
 
-class CNROM : public Mapper{
+class ROM;
+
+class CNROM : public Mapper {
 public:
-	CNROM();
+	CNROM(ROM* rom);
 	virtual ~CNROM();
 };
 

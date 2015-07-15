@@ -6,8 +6,9 @@
  */
 
 #include "MMC1.hpp"
+#include "../ROM.hpp"
 
-MMC1::MMC1() {
+MMC1::MMC1(ROM* rom) : Mapper(rom) {
 	// TODO Auto-generated constructor stub
 
 }

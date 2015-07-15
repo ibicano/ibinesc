@@ -9,6 +9,8 @@
 #define PPU_SPRITE_HPP_
 
 class SpriteMemory;
+class PPU;
+
 struct RGB;
 
 class Sprite {

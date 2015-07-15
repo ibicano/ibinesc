@@ -8,6 +8,8 @@
 #ifndef MAPPERS_MAPPER_HPP_
 #define MAPPERS_MAPPER_HPP_
 
+class ROM;
+
 class Mapper {
 public:
 	Mapper(ROM* rom);

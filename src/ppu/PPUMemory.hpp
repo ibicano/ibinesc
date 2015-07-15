@@ -8,6 +8,9 @@
 #ifndef PPU_PPUMEMORY_HPP_
 #define PPU_PPUMEMORY_HPP_
 
+class PPU;
+class Mapper;
+
 
 class PPUMemory {
 public:
@@ -38,7 +41,7 @@ private:
 	Mapper* mapper;
 
 	// Almacena los datos de la memoria
-	int memory[];
+	int* memory;
 
 	// Escribe un dato en una posición de memoria y en todos sus mirrors
 	void setMemory(int data, int addr);

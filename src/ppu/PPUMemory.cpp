@@ -5,7 +5,9 @@
  *      Author: ibon
  */
 
-//include "PPUMemory.hpp"
+#include "PPUMemory.hpp"
+#include "../mappers/Mapper.hpp"
+#include "PPU.hpp"
 
 
 PPUMemory::PPUMemory(PPU* ppu, Mapper* maper) {
@@ -26,7 +28,7 @@ int PPUMemory::readData(int addr) {
 
 	if (a < 0x2000)
 		d = mapper->readChr(a);
-	else if (0x2000 <= a < 0x4000)
+	else if (0x2000 <= a && a < 0x4000)
 		d = memory[a];
 	else
 		readData(a & 0x3FFF);

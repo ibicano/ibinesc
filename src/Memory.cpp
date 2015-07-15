@@ -7,6 +7,11 @@
 
 #include "Memory.hpp"
 
+#include "Input.hpp"
+#include "mappers/Mapper.hpp"
+#include "ppu/PPU.hpp"
+
+
 Memory::Memory(PPU* ppu, Mapper* mapper, Joypad* joypad1) {
 	// Inicializa el aray de memoria
 	for (int i = 0; i < Memory::SIZE; i++)

@@ -6,6 +6,7 @@
  */
 
 #include "NROM.hpp"
+#include "../ROM.hpp"
 
 NROM::NROM(ROM* rom) : Mapper(rom) {
 	// Cargamos los bancos PRG

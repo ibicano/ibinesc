@@ -6,11 +6,11 @@
  */
 
 #include "GFX.hpp"
-#include <SDL2/SDL.h>
+#include "ppu/PPU.hpp"
 
 GFX::GFX() {
-	viewWidth = 512;
-	viewHeight = 480;
+	viewWidth = 256;
+	viewHeight = 240;
 }
 
 GFX::~GFX() {
@@ -61,7 +61,7 @@ void GFX_Sdl2::drawPixel(int x, int y, RGB color) {
 	// Calcula la posición x,y del pixel en el array lineal de pixeles
 	int p = (y << 8) | x;
 
-	unsigned int v = 0xFF000000 | color[0] << 16 | color[1] << 8 | color[2];
+	unsigned int v = 0xFF000000 | color.r << 16 | color.g << 8 | color.b;
 
 	// Asigna el valos del pixel como un entero de 32 bits con formato ARGB
 	pixels[p] = v;
@@ -69,7 +69,7 @@ void GFX_Sdl2::drawPixel(int x, int y, RGB color) {
 
 
 void GFX_Sdl2::fill(RGB color) {
-    unsigned int v = 0xFF000000 | color[0] << 16 | color[1] << 8 | color[2];
+    unsigned int v = 0xFF000000 | color.r << 16 | color.g << 8 | color.b;
     for (int p = 0; p < 61440; p++)
     	pixels[p] = v;
 }//fill()

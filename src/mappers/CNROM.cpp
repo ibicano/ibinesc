@@ -6,8 +6,9 @@
  */
 
 #include "CNROM.hpp"
+#include "../ROM.hpp"
 
-CNROM::CNROM() {
+CNROM::CNROM(ROM* rom) : Mapper(rom) {
 	// TODO Auto-generated constructor stub
 
 }

@@ -61,7 +61,7 @@ public:
 
 private:
 	// Contenido de la ROM
-	vector<char>* rom;
+	vector<char> rom;
 
 	int prgCount;		// Número de bancos de 16KB de ROM de programa
 	int chrCount;		// Número de bancos de 8KB de ROM de patrones

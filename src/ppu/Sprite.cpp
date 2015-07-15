@@ -6,6 +6,9 @@
  */
 
 #include "Sprite.hpp"
+#include "PPUMemory.hpp"
+#include "PPU.hpp"
+#include "SpriteMemory.hpp"
 
 
 Sprite::Sprite(PPU* ppu) {

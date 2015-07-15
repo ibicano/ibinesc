@@ -6,6 +6,7 @@
  */
 
 #include "Mapper.hpp"
+#include "../ROM.hpp"
 
 
 Mapper::Mapper(ROM* rom) {

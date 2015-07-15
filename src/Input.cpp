@@ -31,3 +31,57 @@ Joypad::Joypad() {
 
 Joypad::~Joypad() {
 }
+
+int Joypad::readReg() {
+}
+
+void Joypad::writeReg(int data) {
+}
+
+bool Joypad::isA() {
+}
+
+void Joypad::setA(bool a) {
+}
+
+bool Joypad::isB() {
+}
+
+void Joypad::setB(bool b) {
+}
+
+bool Joypad::isDown() {
+}
+
+void Joypad::setDown(bool down) {
+}
+
+bool Joypad::isLeft() {
+}
+
+void Joypad::setLeft(bool left) {
+}
+
+bool Joypad::isRight() {
+}
+
+void Joypad::setRight(bool right) {
+}
+
+bool Joypad::isSelect() {
+}
+
+void Joypad::setSelect(bool select) {
+}
+
+bool Joypad::isStart() {
+}
+
+void Joypad::setStart(bool start) {
+}
+
+bool Joypad::isUp() {
+}
+
+void Joypad::setUp(bool up) {
+}
