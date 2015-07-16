@@ -129,7 +129,7 @@ void NES::run() {
 			time_t statsClock = time(NULL);
 
 			if (statsClock - statsTotalTime >= 1) {
-				cout << statsCycles << " ciclos por segundo";
+				cout << statsCycles << " ciclos por segundo\n";
 				statsCycles = 0;
 				statsTotalTime = statsClock;
 			}

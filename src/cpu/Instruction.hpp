@@ -14,11 +14,6 @@ class CPU;
 // Clase abstracte que sirve como base para las instrucciones
 class Instruction {
 public:
-	// Constantes
-	static const int OPCODE = 0;
-	static const int BYTES = 0;
-	static const int CYCLES = 0;
-
 	// Métodos públicos
 	Instruction(int operand, CPU* cpu);
 
@@ -27,8 +22,9 @@ public:
 	// Ejecuta la instrucción
 	virtual int execute();
 
-	// Devuelve el número de ciclos que consume la instrucción
-	virtual int getCycles();
+	virtual int getOpcode() = 0;
+	virtual int getBytes() = 0;
+	virtual int getCycles() = 0;
 
 	// Devuelve el operand de la instrucción
 	virtual int getOperand();
@@ -76,6 +72,10 @@ public:
 	virtual ~ADC_inmediate();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -90,6 +90,10 @@ public:
 	virtual ~ADC_zero();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -104,6 +108,10 @@ public:
 	virtual ~ADC_zerox();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -118,6 +126,10 @@ public:
 	virtual ~ADC_abs();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -132,6 +144,10 @@ public:
 	virtual ~ADC_absx();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -146,6 +162,10 @@ public:
 	virtual ~ADC_absy();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -160,6 +180,10 @@ public:
 	virtual ~ADC_preindexi();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -174,6 +198,10 @@ public:
 	virtual ~ADC_postindexi();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -201,6 +229,10 @@ public:
 	virtual ~AND_inmediate();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -215,6 +247,10 @@ public:
 	virtual ~AND_zero();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -229,6 +265,10 @@ public:
 	virtual ~AND_zerox();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -243,6 +283,10 @@ public:
 	virtual ~AND_abs();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -257,6 +301,10 @@ public:
 	virtual ~AND_absx();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -271,6 +319,10 @@ public:
 	virtual ~AND_absy();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -285,6 +337,10 @@ public:
 	virtual ~AND_preindexi();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -299,6 +355,10 @@ public:
 	virtual ~AND_postindexi();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -326,6 +386,10 @@ public:
 	virtual ~ASL_accumulator();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -340,6 +404,10 @@ public:
 	virtual ~ASL_zero();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -354,6 +422,10 @@ public:
 	virtual ~ASL_zerox();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -368,6 +440,10 @@ public:
 	virtual ~ASL_abs();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -382,6 +458,10 @@ public:
 	virtual ~ASL_absx();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -399,6 +479,10 @@ public:
 	~BCC();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class BCC
 
 
@@ -416,6 +500,10 @@ public:
 	~BCS();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class BCS
 
 
@@ -433,6 +521,10 @@ public:
 	~BEQ();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class BEQ
 
 
@@ -458,6 +550,10 @@ public:
 
 	BIT_zero(int operand, CPU* cpu);
 	virtual ~BIT_zero();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class BIT_zero
 
 
@@ -470,6 +566,10 @@ public:
 
 	BIT_abs(int operand, CPU* cpu);
 	virtual ~BIT_abs();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class BIT_abs
 
 
@@ -487,6 +587,10 @@ public:
 	~BMI();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class BMI
 
 
@@ -504,6 +608,10 @@ public:
 	~BNE();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class BNE
 
 
@@ -521,6 +629,10 @@ public:
 	~BPL();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class BPL
 
 
@@ -538,6 +650,10 @@ public:
 	~BRK();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class BRK
 
 
@@ -555,6 +671,10 @@ public:
 	~BVC();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class BVC
 
 
@@ -572,6 +692,10 @@ public:
 	~BVS();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class BVS
 
 
@@ -589,6 +713,10 @@ public:
 	~CLC();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class CLC
 
 
@@ -606,6 +734,10 @@ public:
 	~CLD();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class CLD
 
 
@@ -623,6 +755,10 @@ public:
 	~CLI();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class CLI
 
 
@@ -640,6 +776,10 @@ public:
 	~CLV();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class CLV
 
 
@@ -667,6 +807,10 @@ public:
 	virtual ~CMP_inmediate();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -681,6 +825,10 @@ public:
 	virtual ~CMP_zero();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -695,6 +843,10 @@ public:
 	virtual ~CMP_zerox();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -709,6 +861,10 @@ public:
 	virtual ~CMP_abs();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -723,6 +879,10 @@ public:
 	virtual ~CMP_absx();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -737,6 +897,10 @@ public:
 	virtual ~CMP_absy();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -751,6 +915,10 @@ public:
 	virtual ~CMP_preindexi();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -765,6 +933,10 @@ public:
 	virtual ~CMP_postindexi();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -792,6 +964,10 @@ public:
 	virtual ~CPX_inmediate();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -806,6 +982,10 @@ public:
 	virtual ~CPX_zero();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -820,6 +1000,10 @@ public:
 	virtual ~CPX_abs();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -847,6 +1031,10 @@ public:
 	virtual ~CPY_inmediate();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -861,6 +1049,10 @@ public:
 	virtual ~CPY_zero();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -875,6 +1067,10 @@ public:
 	virtual ~CPY_abs();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -903,6 +1099,10 @@ public:
 	virtual ~DEC_zero();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -917,6 +1117,10 @@ public:
 	virtual ~DEC_zerox();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -931,6 +1135,10 @@ public:
 	virtual ~DEC_abs();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -945,6 +1153,10 @@ public:
 	virtual ~DEC_absx();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -963,6 +1175,10 @@ public:
 	virtual ~DEX();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -981,6 +1197,10 @@ public:
 	virtual ~DEY();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1008,6 +1228,10 @@ public:
 	virtual ~EOR_inmediate();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1022,6 +1246,10 @@ public:
 	virtual ~EOR_zero();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1036,6 +1264,10 @@ public:
 	virtual ~EOR_zerox();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1050,6 +1282,10 @@ public:
 	virtual ~EOR_abs();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1064,6 +1300,10 @@ public:
 	virtual ~EOR_absx();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1078,6 +1318,10 @@ public:
 	virtual ~EOR_absy();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1092,6 +1336,10 @@ public:
 	virtual ~EOR_preindexi();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1106,6 +1354,10 @@ public:
 	virtual ~EOR_postindexi();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1134,6 +1386,10 @@ public:
 	virtual ~INC_zero();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1148,6 +1404,10 @@ public:
 	virtual ~INC_zerox();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1162,6 +1422,10 @@ public:
 	virtual ~INC_abs();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1176,6 +1440,10 @@ public:
 	virtual ~INC_absx();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1194,6 +1462,10 @@ public:
 	virtual ~INX();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1212,6 +1484,10 @@ public:
 	virtual ~INY();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1239,6 +1515,10 @@ public:
 	virtual ~JMP_abs();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1253,6 +1533,10 @@ public:
 	virtual ~JMP_indirect();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1270,6 +1554,10 @@ public:
 	virtual ~JSR();
 
 	virtual int execute(int op);
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 
 };//class JSR
 
@@ -1298,6 +1586,10 @@ public:
 	virtual ~LDA_inmediate();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1312,6 +1604,10 @@ public:
 	virtual ~LDA_zero();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1326,6 +1622,10 @@ public:
 	virtual ~LDA_zerox();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1340,6 +1640,10 @@ public:
 	virtual ~LDA_abs();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1354,6 +1658,10 @@ public:
 	virtual ~LDA_absx();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1368,6 +1676,10 @@ public:
 	virtual ~LDA_absy();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1382,6 +1694,10 @@ public:
 	virtual ~LDA_preindexi();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1396,6 +1712,10 @@ public:
 	virtual ~LDA_postindexi();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1423,6 +1743,10 @@ public:
 	virtual ~LDX_inmediate();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1437,6 +1761,10 @@ public:
 	virtual ~LDX_zero();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1451,6 +1779,10 @@ public:
 	virtual ~LDX_zeroy();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1465,6 +1797,10 @@ public:
 	virtual ~LDX_abs();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1479,6 +1815,10 @@ public:
 	virtual ~LDX_absy();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1506,6 +1846,10 @@ public:
 	virtual ~LDY_inmediate();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1520,6 +1864,10 @@ public:
 	virtual ~LDY_zero();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1534,6 +1882,10 @@ public:
 	virtual ~LDY_zerox();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1548,6 +1900,10 @@ public:
 	virtual ~LDY_abs();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1562,6 +1918,10 @@ public:
 	virtual ~LDY_absx();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1589,6 +1949,10 @@ public:
 	virtual ~LSR_accumulator();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1603,6 +1967,10 @@ public:
 	virtual ~LSR_zero();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1617,6 +1985,10 @@ public:
 	virtual ~LSR_zerox();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1631,6 +2003,10 @@ public:
 	virtual ~LSR_abs();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1645,6 +2021,10 @@ public:
 	virtual ~LSR_absx();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1662,6 +2042,10 @@ public:
 	virtual ~NOP();
 
 	virtual int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 
 };//class NOP
 
@@ -1690,6 +2074,10 @@ public:
 	virtual ~ORA_inmediate();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1704,6 +2092,10 @@ public:
 	virtual ~ORA_zero();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1718,6 +2110,10 @@ public:
 	virtual ~ORA_zerox();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1732,6 +2128,10 @@ public:
 	virtual ~ORA_abs();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1746,6 +2146,10 @@ public:
 	virtual ~ORA_absx();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1760,6 +2164,10 @@ public:
 	virtual ~ORA_absy();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1774,6 +2182,10 @@ public:
 	virtual ~ORA_preindexi();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1788,6 +2200,10 @@ public:
 	virtual ~ORA_postindexi();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1805,6 +2221,10 @@ public:
 	virtual ~PHA();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 
 };//class PHA
 
@@ -1824,6 +2244,10 @@ public:
 
 	int execute();
 
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
+
 };//class PHP
 
 
@@ -1842,6 +2266,10 @@ public:
 
 	int execute();
 
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
+
 };//class PLA
 
 
@@ -1859,6 +2287,10 @@ public:
 	virtual ~PLP();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 
 };//class PLP
 
@@ -1887,6 +2319,10 @@ public:
 	virtual ~ROL_accumulator();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1901,6 +2337,10 @@ public:
 	virtual ~ROL_zero();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1915,6 +2355,10 @@ public:
 	virtual ~ROL_zerox();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1929,6 +2373,10 @@ public:
 	virtual ~ROL_abs();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1943,6 +2391,10 @@ public:
 	virtual ~ROL_absx();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1970,6 +2422,10 @@ public:
 	virtual ~ROR_accumulator();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1984,6 +2440,10 @@ public:
 	virtual ~ROR_zero();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -1998,6 +2458,10 @@ public:
 	virtual ~ROR_zerox();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2012,6 +2476,10 @@ public:
 	virtual ~ROR_abs();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2026,6 +2494,10 @@ public:
 	virtual ~ROR_absx();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2044,6 +2516,10 @@ public:
 
 	int execute();
 
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
+
 };//class RTI
 
 
@@ -2061,6 +2537,10 @@ public:
 	virtual ~RTS();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 
 };//class RTS
 
@@ -2089,6 +2569,10 @@ public:
 	virtual ~SBC_inmediate();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2103,6 +2587,10 @@ public:
 	virtual ~SBC_zero();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2117,6 +2605,10 @@ public:
 	virtual ~SBC_zerox();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2131,6 +2623,10 @@ public:
 	virtual ~SBC_abs();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2145,6 +2641,10 @@ public:
 	virtual ~SBC_absx();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2159,6 +2659,10 @@ public:
 	virtual ~SBC_absy();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2173,6 +2677,10 @@ public:
 	virtual ~SBC_preindexi();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2187,6 +2695,10 @@ public:
 	virtual ~SBC_postindexi();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2204,6 +2716,10 @@ public:
 	~SEC();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class SEC
 
 
@@ -2221,6 +2737,10 @@ public:
 	~SED();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class SED
 
 
@@ -2238,6 +2758,10 @@ public:
 	~SEI();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class SEI
 
 
@@ -2265,6 +2789,10 @@ public:
 	virtual ~STA_zero();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2279,6 +2807,10 @@ public:
 	virtual ~STA_zerox();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2293,6 +2825,10 @@ public:
 	virtual ~STA_abs();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2307,6 +2843,10 @@ public:
 	virtual ~STA_absx();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2321,6 +2861,10 @@ public:
 	virtual ~STA_absy();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2335,6 +2879,10 @@ public:
 	virtual ~STA_preindexi();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2349,6 +2897,10 @@ public:
 	virtual ~STA_postindexi();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2376,6 +2928,10 @@ public:
 	virtual ~STX_zero();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2390,6 +2946,10 @@ public:
 	virtual ~STX_zeroy();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2404,6 +2964,10 @@ public:
 	virtual ~STX_abs();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2431,6 +2995,10 @@ public:
 	virtual ~STY_zero();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2445,6 +3013,10 @@ public:
 	virtual ~STY_zerox();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2459,6 +3031,10 @@ public:
 	virtual ~STY_abs();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };
 
 
@@ -2476,6 +3052,10 @@ public:
 	~TAX();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class TAX
 
 
@@ -2493,6 +3073,10 @@ public:
 	~TAY();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class TAY
 
 
@@ -2510,6 +3094,10 @@ public:
 	~TSX();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class TSX
 
 
@@ -2527,6 +3115,10 @@ public:
 	~TXA();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class TXA
 
 
@@ -2544,6 +3136,10 @@ public:
 	~TXS();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class TXS
 
 
@@ -2561,6 +3157,10 @@ public:
 	~TYA();
 
 	int execute();
+
+	virtual int getOpcode();
+	virtual int getBytes();
+	virtual int getCycles();
 };//class TYA
 
 

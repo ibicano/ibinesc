@@ -13,6 +13,7 @@
 #include "../nesutils.hpp"
 #include "CPU.hpp"
 
+
 Instruction::Instruction(int operand, CPU* cpu) {
 	this->operand = operand;
 	this->cpu = cpu;
@@ -30,11 +31,6 @@ int Instruction::getOperand() {
 
 void Instruction::setOperand(int op) {
 	operand = op;
-}
-
-
-int Instruction::getCycles() {
-	return CYCLES;
 }
 
 
@@ -121,9 +117,9 @@ int ADC::execute(int op) {
 	cpu->setRegA(rst);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -250,9 +246,9 @@ int AND::execute(int op) {
 	cpu->setRegA(rst);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -392,9 +388,9 @@ int ASL_accumulator::execute() {
 	cpu->setRegA(result);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -411,9 +407,9 @@ int ASL_zero::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -430,9 +426,9 @@ int ASL_zerox::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -449,9 +445,9 @@ int ASL_abs::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -468,9 +464,9 @@ int ASL_absx::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -485,12 +481,12 @@ BCC::~BCC() {
 
 int BCC::execute() {
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
 	if (!cpu->getReg_p_c_bit())
 		cpu->setRegPc(cpu->getRegPc() + c2ToInt(operand));
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -505,12 +501,12 @@ BCS::~BCS() {
 
 int BCS::execute() {
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
 	if (cpu->getReg_p_c_bit())
 		cpu->setRegPc(cpu->getRegPc() + c2ToInt(operand));
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -525,12 +521,12 @@ BEQ::~BEQ() {
 
 int BEQ::execute() {
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
 	if (cpu->getReg_p_z_bit())
 		cpu->setRegPc(cpu->getRegPc() + c2ToInt(operand));
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -566,9 +562,9 @@ int BIT::execute() {
 		cpu->setReg_p_z_bit(0);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -597,12 +593,12 @@ BMI::~BMI() {
 
 int BMI::execute() {
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
 	if (cpu->getReg_p_s_bit())
 		cpu->setRegPc(cpu->getRegPc() + c2ToInt(operand));
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -617,12 +613,12 @@ BNE::~BNE() {
 
 int BNE::execute() {
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
 	if (!cpu->getReg_p_z_bit())
 		cpu->setRegPc(cpu->getRegPc() + c2ToInt(operand));
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -637,12 +633,12 @@ BPL::~BPL() {
 
 int BPL::execute() {
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
 	if (!cpu->getReg_p_s_bit())
 		cpu->setRegPc(cpu->getRegPc() + c2ToInt(operand));
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -657,9 +653,9 @@ BRK::~BRK() {
 
 int BRK::execute() {
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 	int pc = cpu->getRegPc() + 1;
 	cpu->pushStack((pc >> 8) & 0xFF);
 	cpu->pushStack(pc & 0xFF);
@@ -673,7 +669,7 @@ int BRK::execute() {
 	pc = pc | (cpu->getMem()->readData(0xFFFF) << 8);
 	cpu->setRegPc(pc);
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -688,12 +684,12 @@ BVC::~BVC() {
 
 int BVC::execute() {
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
 	if (!cpu->getReg_p_v_bit())
 		cpu->setRegPc(cpu->getRegPc() + c2ToInt(operand));
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -708,12 +704,12 @@ BVS::~BVS() {
 
 int BVS::execute() {
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
 	if (cpu->getReg_p_v_bit())
 		cpu->setRegPc(cpu->getRegPc() + c2ToInt(operand));
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -730,9 +726,9 @@ int CLC::execute() {
 	cpu->setReg_p_c_bit(0);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -749,9 +745,9 @@ int CLD::execute() {
 	cpu->setReg_p_d_bit(0);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -768,9 +764,9 @@ int CLI::execute() {
 	cpu->setReg_p_i_bit(0);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -787,9 +783,9 @@ int CLV::execute() {
 	cpu->setReg_p_v_bit(0);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -815,9 +811,9 @@ int CMP::execute(int op) {
 	cpu->setZeroBit(result);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -945,9 +941,9 @@ int CPX::execute(int op) {
 	cpu->setZeroBit(result);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1010,9 +1006,9 @@ int CPY::execute(int op) {
 	cpu->setZeroBit(result);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1085,9 +1081,9 @@ int DEC_zero::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1104,9 +1100,9 @@ int DEC_zerox::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1123,9 +1119,9 @@ int DEC_abs::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1142,9 +1138,9 @@ int DEC_absx::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1166,9 +1162,9 @@ int DEX::execute() {
 	cpu->setRegX(result);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1190,9 +1186,9 @@ int DEY::execute() {
 	cpu->setRegY(result);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1215,9 +1211,9 @@ int EOR::execute(int op) {
 	cpu->setRegA(result);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1355,9 +1351,9 @@ int INC_zero::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1374,9 +1370,9 @@ int INC_zerox::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1393,9 +1389,9 @@ int INC_abs::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1412,9 +1408,9 @@ int INC_absx::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1436,9 +1432,9 @@ int INX::execute() {
 	cpu->setRegX(result);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1460,9 +1456,9 @@ int INY::execute() {
 	cpu->setRegY(result);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1477,7 +1473,7 @@ JMP::~JMP() {
 
 int JMP::execute(int op) {
 	cpu->setRegPc(op);
-    return CYCLES;
+    return getCycles();
 }
 
 
@@ -1491,7 +1487,7 @@ int JMP_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
 	JMP::execute(addr);
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1513,7 +1509,7 @@ int JMP_indirect::execute() {
 
 	JMP::execute(addr);
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1527,13 +1523,13 @@ JSR::~JSR() {
 }
 
 int JSR::execute(int op) {
-	int pc = cpu->getRegPc() + BYTES - 1;
+	int pc = cpu->getRegPc() + getBytes() - 1;
 	cpu->pushStack((pc >> 8) & 0xFF);
 	cpu->pushStack(pc & 0xFF);
 
 	cpu->setRegPc(operand);
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1555,9 +1551,9 @@ int LDA::execute(int op) {
 	cpu->setRegA(op);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1681,9 +1677,9 @@ int LDX::execute(int op) {
 	cpu->setRegX(op);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1768,9 +1764,9 @@ int LDY::execute(int op) {
 	cpu->setRegY(op);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1868,9 +1864,9 @@ int LSR_accumulator::execute() {
 	cpu->setRegA(result);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1887,9 +1883,9 @@ int LSR_zero::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1906,9 +1902,9 @@ int LSR_zerox::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1925,9 +1921,9 @@ int LSR_abs::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1944,9 +1940,9 @@ int LSR_absx::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1961,9 +1957,9 @@ NOP::~NOP() {
 
 int NOP::execute() {
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -1986,9 +1982,9 @@ int ORA::execute(int op) {
 	cpu->setRegA(result);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2107,9 +2103,9 @@ int PHA::execute() {
 	cpu->pushStack(cpu->getRegA());
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2127,9 +2123,9 @@ int PHP::execute() {
 	cpu->pushStack(cpu->getRegP() | 0x30);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2149,9 +2145,9 @@ int PLA::execute() {
 	cpu->setZeroBit(a);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2169,9 +2165,9 @@ int PLP::execute() {
 	cpu->setRegP(p);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2208,9 +2204,9 @@ int ROL_accumulator::execute() {
 	cpu->setRegA(result);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2227,9 +2223,9 @@ int ROL_zero::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2246,9 +2242,9 @@ int ROL_zerox::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2265,9 +2261,9 @@ int ROL_abs::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2284,9 +2280,9 @@ int ROL_absx::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2324,9 +2320,9 @@ int ROR_accumulator::execute() {
 	cpu->setRegA(result);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2343,9 +2339,9 @@ int ROR_zero::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2362,9 +2358,9 @@ int ROR_zerox::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2381,9 +2377,9 @@ int ROR_abs::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2400,9 +2396,9 @@ int ROR_absx::execute() {
 	cpu->getMem()->writeData(result, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2423,7 +2419,7 @@ int RTI::execute() {
 	pc = pc | (cpu->pullStack() << 8);
 	cpu->setRegPc(pc);
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2442,7 +2438,7 @@ int RTS::execute() {
 	pc = pc + 1;
 	cpu->setRegPc(pc);
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2482,9 +2478,9 @@ int SBC::execute(int op) {
 	cpu->setRegA(rst);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2603,9 +2599,9 @@ int SEC::execute() {
 	cpu->setReg_p_c_bit(1);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2622,9 +2618,9 @@ int SED::execute() {
 	cpu->setReg_p_d_bit(1);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2641,9 +2637,9 @@ int SEI::execute() {
 	cpu->setReg_p_i_bit(1);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2661,12 +2657,12 @@ int STA::execute(int addr) {
 	cpu->getMem()->writeData(ac, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
 	if (addr != 0x4014)
-		return CYCLES;
+		return getCycles();
 	else
-		return CYCLES + 512;
+		return getCycles() + 512;
 }
 
 
@@ -2775,12 +2771,12 @@ int STX::execute(int addr) {
 	cpu->getMem()->writeData(regX, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
 	if (addr != 0x4014)
-		return CYCLES;
+		return getCycles();
 	else
-		return CYCLES + 512;
+		return getCycles() + 512;
 }
 
 
@@ -2837,12 +2833,12 @@ int STY::execute(int addr) {
 	cpu->getMem()->writeData(regY, addr);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
 	if (addr != 0x4014)
-		return CYCLES;
+		return getCycles();
 	else
-		return CYCLES + 512;
+		return getCycles() + 512;
 }
 
 
@@ -2903,9 +2899,9 @@ int TAX::execute() {
 	cpu->setRegX(ac);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2927,9 +2923,9 @@ int TAY::execute() {
 	cpu->setRegY(ac);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2951,9 +2947,9 @@ int TSX::execute() {
 	cpu->setRegX(sp);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2975,9 +2971,9 @@ int TXA::execute() {
 	cpu->setRegA(regX);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -2996,9 +2992,9 @@ int TXS::execute() {
 	cpu->setRegSp(regX);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -3020,9 +3016,9 @@ int TYA::execute() {
 	cpu->setRegA(regY);
 
 	// Incrementa el registro contador (PC) de la CPU
-	cpu->incrPc(BYTES);
+	cpu->incrPc(getBytes());
 
-	return CYCLES;
+	return getCycles();
 }
 
 
@@ -3213,7 +3209,7 @@ InstructionsPool::InstructionsPool(CPU* cpu) {
 	// SED
 	pool[0xF8] = new SED(cpu);
 	// SEI
-	pool[0x78] = new RTS(cpu);
+	pool[0x78] = new SEI(cpu);
 	// STA
 	pool[0x85] = new STA_zero(0, cpu);
 	pool[0x95] = new STA_zerox(0, cpu);
@@ -3252,4 +3248,1361 @@ InstructionsPool::~InstructionsPool() {
 	}
 }
 
+int ADC_inmediate::getOpcode() {
+}
 
+int ADC_inmediate::getBytes() {
+}
+
+int ADC_inmediate::getCycles() {
+}
+
+int ADC_zero::getOpcode() {
+}
+
+int ADC_zero::getBytes() {
+}
+
+int ADC_zero::getCycles() {
+}
+
+int ADC_zerox::getOpcode() {
+}
+
+int ADC_zerox::getBytes() {
+}
+
+int ADC_zerox::getCycles() {
+}
+
+int ADC_abs::getOpcode() {
+}
+
+int ADC_abs::getBytes() {
+}
+
+int ADC_abs::getCycles() {
+}
+
+int ADC_absx::getOpcode() {
+}
+
+int ADC_absx::getBytes() {
+}
+
+int ADC_absx::getCycles() {
+}
+
+int ADC_absy::getOpcode() {
+}
+
+int ADC_absy::getBytes() {
+}
+
+int ADC_absy::getCycles() {
+}
+
+int ADC_preindexi::getOpcode() {
+}
+
+int ADC_preindexi::getBytes() {
+}
+
+int ADC_preindexi::getCycles() {
+}
+
+int ADC_postindexi::getOpcode() {
+}
+
+int ADC_postindexi::getBytes() {
+}
+
+int ADC_postindexi::getCycles() {
+}
+
+int AND_inmediate::getOpcode() {
+}
+
+int AND_inmediate::getBytes() {
+}
+
+int AND_inmediate::getCycles() {
+}
+
+int AND_zero::getOpcode() {
+}
+
+int AND_zero::getBytes() {
+}
+
+int AND_zero::getCycles() {
+}
+
+int AND_zerox::getOpcode() {
+}
+
+int AND_zerox::getBytes() {
+}
+
+int AND_zerox::getCycles() {
+}
+
+int AND_abs::getOpcode() {
+}
+
+int AND_abs::getBytes() {
+}
+
+int AND_abs::getCycles() {
+}
+
+int AND_absx::getOpcode() {
+}
+
+int AND_absx::getBytes() {
+}
+
+int AND_absx::getCycles() {
+}
+
+int AND_absy::getOpcode() {
+}
+
+int AND_absy::getBytes() {
+}
+
+int AND_absy::getCycles() {
+}
+
+int AND_preindexi::getOpcode() {
+}
+
+int AND_preindexi::getBytes() {
+}
+
+int AND_preindexi::getCycles() {
+}
+
+int AND_postindexi::getOpcode() {
+}
+
+int AND_postindexi::getBytes() {
+}
+
+int AND_postindexi::getCycles() {
+}
+
+int ASL_accumulator::getOpcode() {
+}
+
+int ASL_accumulator::getBytes() {
+}
+
+int ASL_accumulator::getCycles() {
+}
+
+int ASL_zero::getOpcode() {
+}
+
+int ASL_zero::getBytes() {
+}
+
+int ASL_zero::getCycles() {
+}
+
+int ASL_zerox::getOpcode() {
+}
+
+int ASL_zerox::getBytes() {
+}
+
+int ASL_zerox::getCycles() {
+}
+
+int ASL_abs::getOpcode() {
+}
+
+int ASL_abs::getBytes() {
+}
+
+int ASL_abs::getCycles() {
+}
+
+int ASL_absx::getOpcode() {
+}
+
+int ASL_absx::getBytes() {
+}
+
+int ASL_absx::getCycles() {
+}
+
+int BCC::getOpcode() {
+}
+
+int BCC::getBytes() {
+}
+
+int BCC::getCycles() {
+}
+
+int BCS::getOpcode() {
+}
+
+int BCS::getBytes() {
+}
+
+int BCS::getCycles() {
+}
+
+int BEQ::getOpcode() {
+}
+
+int BEQ::getBytes() {
+}
+
+int BEQ::getCycles() {
+}
+
+int BIT_zero::getOpcode() {
+}
+
+int BIT_zero::getBytes() {
+}
+
+int BIT_zero::getCycles() {
+}
+
+int BIT_abs::getOpcode() {
+}
+
+int BIT_abs::getBytes() {
+}
+
+int BIT_abs::getCycles() {
+}
+
+int BMI::getOpcode() {
+}
+
+int BMI::getBytes() {
+}
+
+int BMI::getCycles() {
+}
+
+int BNE::getOpcode() {
+}
+
+int BNE::getBytes() {
+}
+
+int BNE::getCycles() {
+}
+
+int BPL::getOpcode() {
+}
+
+int BPL::getBytes() {
+}
+
+int BPL::getCycles() {
+}
+
+int BRK::getOpcode() {
+}
+
+int BRK::getBytes() {
+}
+
+int BRK::getCycles() {
+}
+
+int BVC::getOpcode() {
+}
+
+int BVC::getBytes() {
+}
+
+int BVC::getCycles() {
+}
+
+int BVS::getOpcode() {
+}
+
+int BVS::getBytes() {
+}
+
+int BVS::getCycles() {
+}
+
+int CLC::getOpcode() {
+}
+
+int CLC::getBytes() {
+}
+
+int CLC::getCycles() {
+}
+
+int CLD::getOpcode() {
+}
+
+int CLD::getBytes() {
+}
+
+int CLD::getCycles() {
+}
+
+int CLI::getOpcode() {
+}
+
+int CLI::getBytes() {
+}
+
+int CLI::getCycles() {
+}
+
+int CLV::getOpcode() {
+}
+
+int CLV::getBytes() {
+}
+
+int CLV::getCycles() {
+}
+
+int CMP_inmediate::getOpcode() {
+}
+
+int CMP_inmediate::getBytes() {
+}
+
+int CMP_inmediate::getCycles() {
+}
+
+int CMP_zero::getOpcode() {
+}
+
+int CMP_zero::getBytes() {
+}
+
+int CMP_zero::getCycles() {
+}
+
+int CMP_zerox::getOpcode() {
+}
+
+int CMP_zerox::getBytes() {
+}
+
+int CMP_zerox::getCycles() {
+}
+
+int CMP_abs::getOpcode() {
+}
+
+int CMP_abs::getBytes() {
+}
+
+int CMP_abs::getCycles() {
+}
+
+int CMP_absx::getOpcode() {
+}
+
+int CMP_absx::getBytes() {
+}
+
+int CMP_absx::getCycles() {
+}
+
+int CMP_absy::getOpcode() {
+}
+
+int CMP_absy::getBytes() {
+}
+
+int CMP_absy::getCycles() {
+}
+
+int CMP_preindexi::getOpcode() {
+}
+
+int CMP_preindexi::getBytes() {
+}
+
+int CMP_preindexi::getCycles() {
+}
+
+int CMP_postindexi::getOpcode() {
+}
+
+int CMP_postindexi::getBytes() {
+}
+
+int CMP_postindexi::getCycles() {
+}
+
+int CPX_inmediate::getOpcode() {
+}
+
+int CPX_inmediate::getBytes() {
+}
+
+int CPX_inmediate::getCycles() {
+}
+
+int CPX_zero::getOpcode() {
+}
+
+int CPX_zero::getBytes() {
+}
+
+int CPX_zero::getCycles() {
+}
+
+int CPX_abs::getOpcode() {
+}
+
+int CPX_abs::getBytes() {
+}
+
+int CPX_abs::getCycles() {
+}
+
+int CPY_inmediate::getOpcode() {
+}
+
+int CPY_inmediate::getBytes() {
+}
+
+int CPY_inmediate::getCycles() {
+}
+
+int CPY_zero::getOpcode() {
+}
+
+int CPY_zero::getBytes() {
+}
+
+int CPY_zero::getCycles() {
+}
+
+int CPY_abs::getOpcode() {
+}
+
+int CPY_abs::getBytes() {
+}
+
+int CPY_abs::getCycles() {
+}
+
+int DEC_zero::getOpcode() {
+}
+
+int DEC_zero::getBytes() {
+}
+
+int DEC_zero::getCycles() {
+}
+
+int DEC_zerox::getOpcode() {
+}
+
+int DEC_zerox::getBytes() {
+}
+
+int DEC_zerox::getCycles() {
+}
+
+int DEC_abs::getOpcode() {
+}
+
+int DEC_abs::getBytes() {
+}
+
+int DEC_abs::getCycles() {
+}
+
+int DEC_absx::getOpcode() {
+}
+
+int DEC_absx::getBytes() {
+}
+
+int DEC_absx::getCycles() {
+}
+
+int DEX::getOpcode() {
+}
+
+int DEX::getBytes() {
+}
+
+int DEX::getCycles() {
+}
+
+int DEY::getOpcode() {
+}
+
+int DEY::getBytes() {
+}
+
+int DEY::getCycles() {
+}
+
+int EOR_inmediate::getOpcode() {
+}
+
+int EOR_inmediate::getBytes() {
+}
+
+int EOR_inmediate::getCycles() {
+}
+
+int EOR_zero::getOpcode() {
+}
+
+int EOR_zero::getBytes() {
+}
+
+int EOR_zero::getCycles() {
+}
+
+int EOR_zerox::getOpcode() {
+}
+
+int EOR_zerox::getBytes() {
+}
+
+int EOR_zerox::getCycles() {
+}
+
+int EOR_abs::getOpcode() {
+}
+
+int EOR_abs::getBytes() {
+}
+
+int EOR_abs::getCycles() {
+}
+
+int EOR_absx::getOpcode() {
+}
+
+int EOR_absx::getBytes() {
+}
+
+int EOR_absx::getCycles() {
+}
+
+int EOR_absy::getOpcode() {
+}
+
+int EOR_absy::getBytes() {
+}
+
+int EOR_absy::getCycles() {
+}
+
+int EOR_preindexi::getOpcode() {
+}
+
+int EOR_preindexi::getBytes() {
+}
+
+int EOR_preindexi::getCycles() {
+}
+
+int EOR_postindexi::getOpcode() {
+}
+
+int EOR_postindexi::getBytes() {
+}
+
+int EOR_postindexi::getCycles() {
+}
+
+int INC_zero::getOpcode() {
+}
+
+int INC_zero::getBytes() {
+}
+
+int INC_zero::getCycles() {
+}
+
+int INC_zerox::getOpcode() {
+}
+
+int INC_zerox::getBytes() {
+}
+
+int INC_zerox::getCycles() {
+}
+
+int INC_abs::getOpcode() {
+}
+
+int INC_abs::getBytes() {
+}
+
+int INC_abs::getCycles() {
+}
+
+int INC_absx::getOpcode() {
+}
+
+int INC_absx::getBytes() {
+}
+
+int INC_absx::getCycles() {
+}
+
+int INX::getOpcode() {
+}
+
+int INX::getBytes() {
+}
+
+int INX::getCycles() {
+}
+
+int INY::getOpcode() {
+}
+
+int INY::getBytes() {
+}
+
+int INY::getCycles() {
+}
+
+int JMP_abs::getOpcode() {
+}
+
+int JMP_abs::getBytes() {
+}
+
+int JMP_abs::getCycles() {
+}
+
+int JMP_indirect::getOpcode() {
+}
+
+int JMP_indirect::getBytes() {
+}
+
+int JMP_indirect::getCycles() {
+}
+
+int JSR::getOpcode() {
+}
+
+int JSR::getBytes() {
+}
+
+int JSR::getCycles() {
+}
+
+int LDA_inmediate::getOpcode() {
+}
+
+int LDA_inmediate::getBytes() {
+}
+
+int LDA_inmediate::getCycles() {
+}
+
+int LDA_zero::getOpcode() {
+}
+
+int LDA_zero::getBytes() {
+}
+
+int LDA_zero::getCycles() {
+}
+
+int LDA_zerox::getOpcode() {
+}
+
+int LDA_zerox::getBytes() {
+}
+
+int LDA_zerox::getCycles() {
+}
+
+int LDA_abs::getOpcode() {
+}
+
+int LDA_abs::getBytes() {
+}
+
+int LDA_abs::getCycles() {
+}
+
+int LDA_absx::getOpcode() {
+}
+
+int LDA_absx::getBytes() {
+}
+
+int LDA_absx::getCycles() {
+}
+
+int LDA_absy::getOpcode() {
+}
+
+int LDA_absy::getBytes() {
+}
+
+int LDA_absy::getCycles() {
+}
+
+int LDA_preindexi::getOpcode() {
+}
+
+int LDA_preindexi::getBytes() {
+}
+
+int LDA_preindexi::getCycles() {
+}
+
+int LDA_postindexi::getOpcode() {
+}
+
+int LDA_postindexi::getBytes() {
+}
+
+int LDA_postindexi::getCycles() {
+}
+
+int LDX_inmediate::getOpcode() {
+}
+
+int LDX_inmediate::getBytes() {
+}
+
+int LDX_inmediate::getCycles() {
+}
+
+int LDX_zero::getOpcode() {
+}
+
+int LDX_zero::getBytes() {
+}
+
+int LDX_zero::getCycles() {
+}
+
+int LDX_zeroy::getOpcode() {
+}
+
+int LDX_zeroy::getBytes() {
+}
+
+int LDX_zeroy::getCycles() {
+}
+
+int LDX_abs::getOpcode() {
+}
+
+int LDX_abs::getBytes() {
+}
+
+int LDX_abs::getCycles() {
+}
+
+int LDX_absy::getOpcode() {
+}
+
+int LDX_absy::getBytes() {
+}
+
+int LDX_absy::getCycles() {
+}
+
+int LDY_inmediate::getOpcode() {
+}
+
+int LDY_inmediate::getBytes() {
+}
+
+int LDY_inmediate::getCycles() {
+}
+
+int LDY_zero::getOpcode() {
+}
+
+int LDY_zero::getBytes() {
+}
+
+int LDY_zero::getCycles() {
+}
+
+int LDY_zerox::getOpcode() {
+}
+
+int LDY_zerox::getBytes() {
+}
+
+int LDY_zerox::getCycles() {
+}
+
+int LDY_abs::getOpcode() {
+}
+
+int LDY_abs::getBytes() {
+}
+
+int LDY_abs::getCycles() {
+}
+
+int LDY_absx::getOpcode() {
+}
+
+int LDY_absx::getBytes() {
+}
+
+int LDY_absx::getCycles() {
+}
+
+int LSR_accumulator::getOpcode() {
+}
+
+int LSR_accumulator::getBytes() {
+}
+
+int LSR_accumulator::getCycles() {
+}
+
+int LSR_zero::getOpcode() {
+}
+
+int LSR_zero::getBytes() {
+}
+
+int LSR_zero::getCycles() {
+}
+
+int LSR_zerox::getOpcode() {
+}
+
+int LSR_zerox::getBytes() {
+}
+
+int LSR_zerox::getCycles() {
+}
+
+int LSR_abs::getOpcode() {
+}
+
+int LSR_abs::getBytes() {
+}
+
+int LSR_abs::getCycles() {
+}
+
+int LSR_absx::getOpcode() {
+}
+
+int LSR_absx::getBytes() {
+}
+
+int LSR_absx::getCycles() {
+}
+
+int NOP::getOpcode() {
+}
+
+int NOP::getBytes() {
+}
+
+int NOP::getCycles() {
+}
+
+int ORA_inmediate::getOpcode() {
+}
+
+int ORA_inmediate::getBytes() {
+}
+
+int ORA_inmediate::getCycles() {
+}
+
+int ORA_zero::getOpcode() {
+}
+
+int ORA_zero::getBytes() {
+}
+
+int ORA_zero::getCycles() {
+}
+
+int ORA_zerox::getOpcode() {
+}
+
+int ORA_zerox::getBytes() {
+}
+
+int ORA_zerox::getCycles() {
+}
+
+int ORA_abs::getOpcode() {
+}
+
+int ORA_abs::getBytes() {
+}
+
+int ORA_abs::getCycles() {
+}
+
+int ORA_absx::getOpcode() {
+}
+
+int ORA_absx::getBytes() {
+}
+
+int ORA_absx::getCycles() {
+}
+
+int ORA_absy::getOpcode() {
+}
+
+int ORA_absy::getBytes() {
+}
+
+int ORA_absy::getCycles() {
+}
+
+int ORA_preindexi::getOpcode() {
+}
+
+int ORA_preindexi::getBytes() {
+}
+
+int ORA_preindexi::getCycles() {
+}
+
+int ORA_postindexi::getOpcode() {
+}
+
+int ORA_postindexi::getBytes() {
+}
+
+int ORA_postindexi::getCycles() {
+}
+
+int PHA::getOpcode() {
+}
+
+int PHA::getBytes() {
+}
+
+int PHA::getCycles() {
+}
+
+int PHP::getOpcode() {
+}
+
+int PHP::getBytes() {
+}
+
+int PHP::getCycles() {
+}
+
+int PLA::getOpcode() {
+}
+
+int PLA::getBytes() {
+}
+
+int PLA::getCycles() {
+}
+
+int PLP::getOpcode() {
+}
+
+int PLP::getBytes() {
+}
+
+int PLP::getCycles() {
+}
+
+int ROL_accumulator::getOpcode() {
+}
+
+int ROL_accumulator::getBytes() {
+}
+
+int ROL_accumulator::getCycles() {
+}
+
+int ROL_zero::getOpcode() {
+}
+
+int ROL_zero::getBytes() {
+}
+
+int ROL_zero::getCycles() {
+}
+
+int ROL_zerox::getOpcode() {
+}
+
+int ROL_zerox::getBytes() {
+}
+
+int ROL_zerox::getCycles() {
+}
+
+int ROL_abs::getOpcode() {
+}
+
+int ROL_abs::getBytes() {
+}
+
+int ROL_abs::getCycles() {
+}
+
+int ROL_absx::getOpcode() {
+}
+
+int ROL_absx::getBytes() {
+}
+
+int ROL_absx::getCycles() {
+}
+
+int ROR_accumulator::getOpcode() {
+}
+
+int ROR_accumulator::getBytes() {
+}
+
+int ROR_accumulator::getCycles() {
+}
+
+int ROR_zero::getOpcode() {
+}
+
+int ROR_zero::getBytes() {
+}
+
+int ROR_zero::getCycles() {
+}
+
+int ROR_zerox::getOpcode() {
+}
+
+int ROR_zerox::getBytes() {
+}
+
+int ROR_zerox::getCycles() {
+}
+
+int ROR_abs::getOpcode() {
+}
+
+int ROR_abs::getBytes() {
+}
+
+int ROR_abs::getCycles() {
+}
+
+int ROR_absx::getOpcode() {
+}
+
+int ROR_absx::getBytes() {
+}
+
+int ROR_absx::getCycles() {
+}
+
+int RTI::getOpcode() {
+}
+
+int RTI::getBytes() {
+}
+
+int RTI::getCycles() {
+}
+
+int RTS::getOpcode() {
+}
+
+int RTS::getBytes() {
+}
+
+int RTS::getCycles() {
+}
+
+int SBC_inmediate::getOpcode() {
+}
+
+int SBC_inmediate::getBytes() {
+}
+
+int SBC_inmediate::getCycles() {
+}
+
+int SBC_zero::getOpcode() {
+}
+
+int SBC_zero::getBytes() {
+}
+
+int SBC_zero::getCycles() {
+}
+
+int SBC_zerox::getOpcode() {
+}
+
+int SBC_zerox::getBytes() {
+}
+
+int SBC_zerox::getCycles() {
+}
+
+int SBC_abs::getOpcode() {
+}
+
+int SBC_abs::getBytes() {
+}
+
+int SBC_abs::getCycles() {
+}
+
+int SBC_absx::getOpcode() {
+}
+
+int SBC_absx::getBytes() {
+}
+
+int SBC_absx::getCycles() {
+}
+
+int SBC_absy::getOpcode() {
+}
+
+int SBC_absy::getBytes() {
+}
+
+int SBC_absy::getCycles() {
+}
+
+int SBC_preindexi::getOpcode() {
+}
+
+int SBC_preindexi::getBytes() {
+}
+
+int SBC_preindexi::getCycles() {
+}
+
+int SBC_postindexi::getOpcode() {
+}
+
+int SBC_postindexi::getBytes() {
+}
+
+int SBC_postindexi::getCycles() {
+}
+
+int SEC::getOpcode() {
+}
+
+int SEC::getBytes() {
+}
+
+int SEC::getCycles() {
+}
+
+int SED::getOpcode() {
+}
+
+int SED::getBytes() {
+}
+
+int SED::getCycles() {
+}
+
+int SEI::getOpcode() {
+}
+
+int SEI::getBytes() {
+}
+
+int SEI::getCycles() {
+}
+
+int STA_zero::getOpcode() {
+}
+
+int STA_zero::getBytes() {
+}
+
+int STA_zero::getCycles() {
+}
+
+int STA_zerox::getOpcode() {
+}
+
+int STA_zerox::getBytes() {
+}
+
+int STA_zerox::getCycles() {
+}
+
+int STA_abs::getOpcode() {
+}
+
+int STA_abs::getBytes() {
+}
+
+int STA_abs::getCycles() {
+}
+
+int STA_absx::getOpcode() {
+}
+
+int STA_absx::getBytes() {
+}
+
+int STA_absx::getCycles() {
+}
+
+int STA_absy::getOpcode() {
+}
+
+int STA_absy::getBytes() {
+}
+
+int STA_absy::getCycles() {
+}
+
+int STA_preindexi::getOpcode() {
+}
+
+int STA_preindexi::getBytes() {
+}
+
+int STA_preindexi::getCycles() {
+}
+
+int STA_postindexi::getOpcode() {
+}
+
+int STA_postindexi::getBytes() {
+}
+
+int STA_postindexi::getCycles() {
+}
+
+int STX_zero::getOpcode() {
+}
+
+int STX_zero::getBytes() {
+}
+
+int STX_zero::getCycles() {
+}
+
+int STX_zeroy::getOpcode() {
+}
+
+int STX_zeroy::getBytes() {
+}
+
+int STX_zeroy::getCycles() {
+}
+
+int STX_abs::getOpcode() {
+}
+
+int STX_abs::getBytes() {
+}
+
+int STX_abs::getCycles() {
+}
+
+int STY_zero::getOpcode() {
+}
+
+int STY_zero::getBytes() {
+}
+
+int STY_zero::getCycles() {
+}
+
+int STY_zerox::getOpcode() {
+}
+
+int STY_zerox::getBytes() {
+}
+
+int STY_zerox::getCycles() {
+}
+
+int STY_abs::getOpcode() {
+}
+
+int STY_abs::getBytes() {
+}
+
+int STY_abs::getCycles() {
+}
+
+int TAX::getOpcode() {
+}
+
+int TAX::getBytes() {
+}
+
+int TAX::getCycles() {
+}
+
+int TAY::getOpcode() {
+}
+
+int TAY::getBytes() {
+}
+
+int TAY::getCycles() {
+}
+
+int TSX::getOpcode() {
+}
+
+int TSX::getBytes() {
+}
+
+int TSX::getCycles() {
+}
+
+int TXA::getOpcode() {
+}
+
+int TXA::getBytes() {
+}
+
+int TXA::getCycles() {
+}
+
+int TXS::getOpcode() {
+}
+
+int TXS::getBytes() {
+}
+
+int TXS::getCycles() {
+}
+
+int TYA::getOpcode() {
+}
+
+int TYA::getBytes() {
+}
+
+int TYA::getCycles() {
+}

@@ -143,14 +143,15 @@ Instruction* CPU::fetchInst() {
 	// Los comentarios de a continuación son por rendimiento
 	Instruction* inst = instructionsPool->pool[opcode];
 
+	int bytes = inst->getBytes();
 	int operand;
 
-	if (inst->BYTES == 2)                  // Instrucciones con operando de 1 byte
+	if (bytes == 2)                  // Instrucciones con operando de 1 byte
 	{
 		operand = mem->readData(regPc + 1);
 		inst->setOperand(operand);
 	}
-	else if (inst->BYTES == 3) {                // Instrucciones con operando de 2 bytes
+	else if (bytes == 3) {                // Instrucciones con operando de 2 bytes
 		operand = mem->readData(regPc + 1);
 		operand = operand | (mem->readData(regPc + 2) << 8);
 		inst->setOperand(operand);
@@ -294,7 +295,7 @@ void CPU::interrupt(int vectorAddr) {
 	pushStack((regPc >> 8) & 0xFF);
 	pushStack(regPc & 0xFF);
 	// En las interrupciones el bit 4 se pone a 0 y el 5 a 1
-	pushStack(regP & 0xEF | 0x20);
+	pushStack((regP & 0xEF) | 0x20);
 	setReg_p_i_bit(1);
 	int addr = mem->readData(vectorAddr) & 0xFF;
 	addr = addr | (mem->readData(vectorAddr + 1) << 8);

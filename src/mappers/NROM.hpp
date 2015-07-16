@@ -28,11 +28,11 @@ public:
 	int mirrorMode();
 
 private:
-	int* prgRom0;
-	int* prgRom1;
+	unsigned int* prgRom0;
+	unsigned int* prgRom1;
 
-	int* chrRom0;
-	int* chrRom1;
+	unsigned int* chrRom0;
+	unsigned int* chrRom1;
 };
 
 #endif /* MAPPERS_NROM_HPP_ */

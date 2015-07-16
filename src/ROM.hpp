@@ -40,39 +40,39 @@ public:
 	int getChrCount();
 
 	// Devuelve el banco PRG número n
-	int* getPrg(int n);
+	unsigned int* getPrg(int n);
 
 	// Devuelve un banco PRG con direccionamiento como si fuesen de 8k en vez de 16k
-    int* getPrg8k(int n);
+	unsigned int* getPrg8k(int n);
 
 	// Devuelve el banco CHR número n
-	int* getChr(int n);
+    unsigned int* getChr(int n);
 
 	// Devuelve un banco CHR con direccionamiento como si fuesen de 4k en vez de 8k
-    int* getChr4k(int n);
+	unsigned int* getChr4k(int n);
 
     // Devuelve un banco CHR con direccionamiento como si fuesen de 1k en vez de 8k
-    int* getChr1k(int n);
+    unsigned int* getChr1k(int n);
 
 	//TODO: Acabar la especificación de las funciones
 
 private:
 	// Contenido de la ROM
-	vector<char> rom;
+	vector<unsigned char> rom;
 
-	int prgCount;		// Número de bancos de 16KB de ROM de programa
-	int chrCount;		// Número de bancos de 8KB de ROM de patrones
-	int control1;		// Byte de control 1
-	int control2;		// Byte de control 2
-	int ramCount;		// Bytes de memoria RAM
+	unsigned int prgCount;		// Número de bancos de 16KB de ROM de programa
+	unsigned int chrCount;		// Número de bancos de 8KB de ROM de patrones
+	unsigned int control1;		// Byte de control 1
+	unsigned int control2;		// Byte de control 2
+	unsigned int ramCount;		// Bytes de memoria RAM
 
 	// Array que almacena el trainer, en caso de que lo haya
-	int trainer[512];
+	unsigned int trainer[512];
 
 	// Arrays que almacenan los bancos de rom
-	int** prgBanks;
-	int** chrBanks;
-	int** ramBanks;
+	unsigned int** prgBanks;
+	unsigned int** chrBanks;
+	unsigned int** ramBanks;
 
 	//Indica si la ROM se ha cargado correctamente
 	bool loadOk;

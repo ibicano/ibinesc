@@ -28,12 +28,12 @@ ROM::ROM(string fileName) {
 }
 
 ROM::~ROM() {
-	for (int i = 0; i < prgCount; i++) {
+	for (unsigned int i = 0; i < prgCount; i++) {
 		if (prgBanks[i] != NULL) delete []prgBanks[i];
 	}
 	delete []prgBanks;
 
-	for (int i = 0; i < chrCount; i++) {
+	for (unsigned int i = 0; i < chrCount; i++) {
 		if (chrBanks[i] != NULL) delete []chrBanks[i];
 	}
 	delete []chrBanks;
@@ -48,13 +48,13 @@ int ROM::loadFile(string fileName) {
 
 	char byte;
 	while (f.get(byte)) {
-		rom.push_back(byte);
+		rom.push_back((unsigned char)byte);
 	}
 	f.close();
 
 	string s = "";
 	for (int i= 0; i < 3; i++) {
-		s = s + rom[i];
+		s = s + (char)rom[i];
 	}
 
 	if (s == "NES" && (unsigned int)rom[3] == 0x1A) {
@@ -85,10 +85,10 @@ int ROM::loadFile(string fileName) {
 			}//while
 		}//if
 
-		prgBanks = new int*[prgCount];
+		prgBanks = new unsigned int*[prgCount];
 		// Carga los bancos PRG
 		for (int n = 0; n < prgCount; n++) {
-			prgBanks[n] = new int[ROM::PRG_SIZE];
+			prgBanks[n] = new unsigned int[ROM::PRG_SIZE];
 
 			int j = 0;
 			while (j < 16384) {
@@ -98,14 +98,14 @@ int ROM::loadFile(string fileName) {
 			}//while
 		}//for
 
-		chrBanks = new int*[chrCount];
+		chrBanks = new unsigned int*[chrCount];
 		// Carga los bancos CHR
 		for (int n = 0; n < chrCount; n++) {
-			chrBanks[n] = new int[ROM::CHR_SIZE];
+			chrBanks[n] = new unsigned int[ROM::CHR_SIZE];
 
 			int j = 0;
 			while (j < 8192) {
-				prgBanks[n][j] = rom[i];
+				chrBanks[n][j] = rom[i];
 				i++;
 				j++;
 			}//while
@@ -149,16 +149,16 @@ int ROM::getChrCount() {
 }
 
 
-int* ROM::getPrg(int n) {
+unsigned int* ROM::getPrg(int n) {
 	return prgBanks[n];
 }
 
 
-int* ROM::getPrg8k(int n) {
+unsigned int* ROM::getPrg8k(int n) {
 	int number = n >> 1;
 	int part = n & 0x01;
 
-	int* bank;
+	unsigned int* bank;
 
 	if (part == 0)
 		bank = &prgBanks[number][0];
@@ -169,14 +169,14 @@ int* ROM::getPrg8k(int n) {
 }
 
 
-int* ROM::getChr(int n) {
+unsigned int* ROM::getChr(int n) {
 	return chrBanks[n];
 }
 
 
-int* ROM::getChr4k(int n) {
+unsigned int* ROM::getChr4k(int n) {
 	int number = n / 2;
-	int* bank;
+	unsigned int* bank;
 
 	// Si es par es la primera mitad del banco de 8k
 	if (n & 0x01 == 0)
@@ -188,12 +188,12 @@ int* ROM::getChr4k(int n) {
 }
 
 
-int* ROM::getChr1k(int n) {
+unsigned int* ROM::getChr1k(int n) {
 	int number = n >> 3;
 	int part = n & 0x07;
 	int addr = part * 1024;
 
-	int* bank = &chrBanks[number][addr];
+	unsigned int* bank = &chrBanks[number][addr];
 
 	return bank;
 }
@@ -205,10 +205,10 @@ int ROM::getControl1MirroringBit0() {
 
 
 int ROM::getControl1MirroringBit3() {
-	return control1 & 0x08 >> 3;
+	return (control1 & 0x08) >> 3;
 }
 
 
 int ROM::getControl1TrainerBit2() {
-	return control1 & 0x04 >> 2;
+	return (control1 & 0x04) >> 2;
 }
