@@ -44,7 +44,7 @@ int Memory::readData(int addr) {
 			d = joypad1->readReg();
 		else if (addr == 0x4017) {}
 	}
-	else if (0x6000 <= addr <= 0x7FFF)     			// Memoria de estado de la partida->
+	else if (0x6000 <= addr && addr <= 0x7FFF)     			// Memoria de estado de la partida->
 		d = memory[addr];
 }//readData()
 
@@ -68,14 +68,14 @@ void Memory::writeData(int data, int addr) {
 		n = 0x2000 + (addr & 0x07);
 		ppu->writeReg(d, n);
 	}
-	else if (addr >= 0x4000 and addr <= 0x401F) {    // Más registros I/O
+	else if (addr >= 0x4000 && addr <= 0x401F) {    // Más registros I/O
 		if (addr == 0x4014)      // Escritura de memoria de Sprites por DMA
 			ppu->writeSpriteDma(this, d);
 		else if (addr == 0x4016)        // Joypad 1
 			joypad1->writeReg(d);
 		else if (addr == 0x4017) {}        // Joypad 2
 	}
-	else if (0x6000 <= addr <= 0x7FFF)
+	else if (0x6000 <= addr && addr <= 0x7FFF)
 		memory[addr] = d;
 	else if (addr >= 0x8000) {           // Memoria de programa-> Escribe al mapper->
 		mapper->writePrg(d, addr);

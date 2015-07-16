@@ -22,10 +22,6 @@ ROM::ROM(string fileName) {
 	control2 = 0x00;
 	ramCount = 0;
 
-	prgBanks = new int*[prgCount];
-	chrBanks = new int*[chrCount];
-	chrBanks = new int*[ramCount];
-
 	loadOk = false;
 
 	loadFile(fileName);
@@ -35,16 +31,19 @@ ROM::~ROM() {
 	for (int i = 0; i < prgCount; i++) {
 		if (prgBanks[i] != NULL) delete []prgBanks[i];
 	}
+	delete []prgBanks;
 
 	for (int i = 0; i < chrCount; i++) {
 		if (chrBanks[i] != NULL) delete []chrBanks[i];
 	}
+	delete []chrBanks;
 }
 
 int ROM::loadFile(string fileName) {
 
 	// Lee el fichero de la ROM y lo almacena en un vector en memoria para poder parsearlo
 	// FIXME: NO CARGA BIEN LA ROM. ARREGLARLO
+
 	ifstream f(fileName.c_str());
 
 	char byte;
@@ -67,16 +66,6 @@ int ROM::loadFile(string fileName) {
 		ramCount = rom[8];
 		//reserved = rom[9:16]
 
-		// Reserva la memoria para almacenar los bancos en función del número de estos
-		for (int i = 0; i < prgCount; i++) {
-			if (prgBanks[i] != NULL) delete []prgBanks[i];
-			prgBanks[i] = new int[ROM::PRG_SIZE];
-		}
-
-		for (int i = 0; i < chrCount; i++) {
-			if (chrBanks[i] != NULL) delete []chrBanks[i];
-			chrBanks[i] = new int[ROM::CHR_SIZE];
-		}
 
 		// Carga el modo de mirroring
 		if (getControl1MirroringBit3() == 0)
@@ -96,9 +85,10 @@ int ROM::loadFile(string fileName) {
 			}//while
 		}//if
 
+		prgBanks = new int*[prgCount];
 		// Carga los bancos PRG
 		for (int n = 0; n < prgCount; n++) {
-			prgBanks[n] = new int[16384];
+			prgBanks[n] = new int[ROM::PRG_SIZE];
 
 			int j = 0;
 			while (j < 16384) {
@@ -108,9 +98,10 @@ int ROM::loadFile(string fileName) {
 			}//while
 		}//for
 
+		chrBanks = new int*[chrCount];
 		// Carga los bancos CHR
 		for (int n = 0; n < chrCount; n++) {
-			chrBanks[n] = new int[8192];
+			chrBanks[n] = new int[ROM::CHR_SIZE];
 
 			int j = 0;
 			while (j < 8192) {

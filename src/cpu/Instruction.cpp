@@ -574,7 +574,16 @@ int BIT::execute() {
 
 BIT_zero::BIT_zero(int operand, CPU* cpu) : BIT(operand, cpu) {}
 
+
+BIT_zero::~BIT_zero() {
+}
+
+
 BIT_abs::BIT_abs(int operand, CPU* cpu) : BIT(operand, cpu) {}
+
+
+BIT_abs::~BIT_abs() {
+}
 
 
 /******************************************************************************
@@ -3243,8 +3252,4 @@ InstructionsPool::~InstructionsPool() {
 	}
 }
 
-BIT_zero::~BIT_zero() {
-}
 
-BIT_abs::~BIT_abs() {
-}

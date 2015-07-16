@@ -36,11 +36,11 @@ int NROM::readPrg(int addr) {
 	int d = 0x00;
 	int a = 0x0000;
 
-	if (0x8000 <= addr < 0xC000) {
+	if (0x8000 <= addr && addr < 0xC000) {
 		a = (addr - 0x8000) % 0x4000;
 		d = prgRom0[a];
 	}
-	else if (0xC000 <= addr < 0x10000) {
+	else if (0xC000 <= addr && addr < 0x10000) {
 		a = (addr - 0x8000) % 0x4000;
 		if (rom->getPrgCount() == 1)
 			d = prgRom0[a];
@@ -59,7 +59,7 @@ void NROM::writePrg(int data, int addr) {
 int NROM::readChr(int addr) {
 	int a = addr % 0x4000;
 	int d = 0x00;
-	if (0x0000 <= a < 0x2000)
+	if (0x0000 <= a && a < 0x2000)
 		d = chrRom0[a];
 
 	return d;

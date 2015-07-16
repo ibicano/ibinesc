@@ -13,7 +13,7 @@
 using namespace std;
 
 int main() {
-	string fileName = "../roms/Super Mario Bros. (E).nes";
+	string fileName = "roms/Super Mario Bros. (E).nes";
     //string fileName = "../roms/Donkey Kong Classics (USA, Europe).nes";
 	//string fileName = "../roms/Super Mario Bros 3 (E).nes";
 	//string fileName = "../tests/nestest.nes";

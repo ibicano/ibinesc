@@ -10,7 +10,7 @@
 #include "PPU.hpp"
 
 
-PPUMemory::PPUMemory(PPU* ppu, Mapper* maper) {
+PPUMemory::PPUMemory(PPU* ppu, Mapper* mapper) {
 	this->ppu = ppu;
 	this->mapper = mapper;
 

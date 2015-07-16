@@ -21,9 +21,6 @@ public:
 	ROM(string fileName);
 	virtual ~ROM();
 
-	// Carga la ROM de un fichero
-	int loadFile(string fileName);
-
 	/*
 	 * Devuelve el modo de mirroring indicado en la ROM:
 	 * 0: horizontal
@@ -86,6 +83,9 @@ private:
 	// Funciones que devuelven los bits de mirroring del registro de control 1
 	int getControl1MirroringBit0();
 	int getControl1MirroringBit3();
+
+	// Carga la ROM de un fichero
+	int loadFile(string fileName);
 
 	// Devuelve el bit que indica si hay un trainer en el registro de control 1
 	int getControl1TrainerBit2();
