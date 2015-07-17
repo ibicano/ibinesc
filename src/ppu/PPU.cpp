@@ -86,9 +86,67 @@ bool PPU::getIntVblank() {
 }
 
 
+// Ejecuta un ciclo de reloj. Aquí va toda la chicha del dibujado y de
+// activación de cosas en función del ciclo del frame en el que nos
+// encontremos
 void PPU::execCycles(int cycles) {
-	//TODO
-}
+    if (cyclesFrame < cycles) {
+        endFrame = true;
+        cyclesFrame = (cyclesFrame  - cycles) % PPU::FRAME_CYCLES;
+    }
+    else
+        cyclesFrame = cyclesFrame  - cycles;
+
+
+    int scanlinesCycles = scanlineNumber * PPU::SCANLINE_CYCLES;
+
+    int pendingScanlines = (((PPU::FRAME_CYCLES - scanlinesCycles) - cyclesFrame) % PPU::FRAME_CYCLES) / PPU::SCANLINE_CYCLES;
+
+    while (pendingScanlines > 0) {
+        // Dibujamos el scanline
+        if (1 <= scanlineNumber && scanlineNumber <= 240) {
+            drawScanline();
+            mapper->scanlineTick();
+        }
+
+        scanlineNumber = (scanlineNumber + 1) % PPU::FRAME_SCANLINES;
+        pendingScanlines -= 1;
+    }//while
+
+    if (cyclesFrame < PPU::VBLANK_CYCLES && !startedVblank)     // Este es el ciclo en el que entramos en VBLANK
+            startVblank();    // Activamos el período VBLANK al inicio del período
+
+    // Cuando se termina el frame se hace todo ésto
+    if (endFrame) {
+        regStatus = 0;        // reseteamos el registro de estado
+        startedVblank = 0;    // En el nuevo frame indicamos que no se ha procesado el período VBLANK aún
+
+        // Dibujamos los sprites
+        if (control2SpritesBit4())
+            drawSprites();
+
+        if (control2BackgroundBit3()) {
+            regVramAddr = regVramTmp;     // Esto es así al principio de cada frame
+            gfx->update();
+        }
+
+        //Reseteamos la cache de tiles al principio del frame:
+        resetTilesCache();
+
+        // Cargamos los sprites para el siguiente frame
+        getSpritesList();
+        spriteZero = spritesList[0];
+        tileSpriteZeroIndex0 = spriteZero->getTileIndex0();
+        tileSpriteZeroRgb0 = spriteZero->getTileRgb0();
+        tileSpriteZeroIndex1 = spriteZero->getTileIndex1();
+        tileSpriteZeroRgb1 = spriteZero->getTileRgb1();
+
+        spriteHit = false;
+
+        // Indicamos que ha finalizado el frame
+        endFrame = false;
+    }//if
+}//execCycles()
 
 
 // Lee el registro indicado por su dirección en memoria

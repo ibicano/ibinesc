@@ -25,3 +25,6 @@ int Mapper::getPrgCount() {
 int Mapper::getChrCount() {
 	return rom->getChrCount();
 }
+
+void Mapper::scanlineTick() {
+}

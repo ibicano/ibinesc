@@ -24,6 +24,9 @@ public:
 	int getPrgCount();
 	int getChrCount();
 
+	// Se usa cada vez que se procesa un scanline
+	virtual void scanlineTick();
+
 	// Devuelve el modo de mirror activo (puede variar entre mappers)
 	virtual int mirrorMode() = 0;
 
