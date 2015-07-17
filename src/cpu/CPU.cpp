@@ -132,7 +132,7 @@ void CPU::setRegP(int v) {
 
 // Incrementa el registro PC en el valor indicado por n
 void CPU::incrPc(int n) {
-	regPc = (regPc + 1) & 0xFFFF;
+	regPc = (regPc + n) & 0xFFFF;
 }//incrPc()
 
 
@@ -143,18 +143,23 @@ Instruction* CPU::fetchInst() {
 	// Los comentarios de a continuación son por rendimiento
 	Instruction* inst = instructionsPool->pool[opcode];
 
-	int bytes = inst->getBytes();
-	int operand;
+	if (inst != NULL) {
+		int bytes = inst->getBytes();
+		int operand;
 
-	if (bytes == 2)                  // Instrucciones con operando de 1 byte
-	{
-		operand = mem->readData(regPc + 1);
-		inst->setOperand(operand);
+		if (bytes == 2)                  // Instrucciones con operando de 1 byte
+		{
+			operand = mem->readData(regPc + 1);
+			inst->setOperand(operand);
+		}
+		else if (bytes == 3) {                // Instrucciones con operando de 2 bytes
+			operand = mem->readData(regPc + 1);
+			operand = operand | (mem->readData(regPc + 2) << 8);
+			inst->setOperand(operand);
+		}
 	}
-	else if (bytes == 3) {                // Instrucciones con operando de 2 bytes
-		operand = mem->readData(regPc + 1);
-		operand = operand | (mem->readData(regPc + 2) << 8);
-		inst->setOperand(operand);
+	else {
+		cout << "OPCODE incorrecto";
 	}
 
 	return inst;

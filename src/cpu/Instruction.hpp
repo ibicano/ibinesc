@@ -2891,7 +2891,7 @@ public:
 	// Constantes
 	static const int OPCODE = 0x91;
 	static const int BYTES = 2;
-	static const int CYCLES = 5;
+	static const int CYCLES = 6;
 
 	STA_postindexi(int operand, CPU* cpu);
 	virtual ~STA_postindexi();

@@ -3249,1360 +3249,1814 @@ InstructionsPool::~InstructionsPool() {
 }
 
 int ADC_inmediate::getOpcode() {
+	return ADC_inmediate::OPCODE;
 }
 
 int ADC_inmediate::getBytes() {
+	return ADC_inmediate::BYTES;
 }
 
 int ADC_inmediate::getCycles() {
+	return ADC_inmediate::CYCLES;
 }
 
 int ADC_zero::getOpcode() {
+	return ADC_zero::OPCODE;
 }
 
 int ADC_zero::getBytes() {
+	return ADC_zero::BYTES;
 }
 
 int ADC_zero::getCycles() {
+	return ADC_zero::CYCLES;
 }
 
 int ADC_zerox::getOpcode() {
+	return ADC_zerox::OPCODE;
 }
 
 int ADC_zerox::getBytes() {
+	return ADC_zerox::BYTES;
 }
 
 int ADC_zerox::getCycles() {
+	return ADC_zerox::CYCLES;
 }
 
 int ADC_abs::getOpcode() {
+	return ADC_abs::OPCODE;
 }
 
 int ADC_abs::getBytes() {
+	return ADC_abs::BYTES;
 }
 
 int ADC_abs::getCycles() {
+	return ADC_abs::CYCLES;
 }
 
 int ADC_absx::getOpcode() {
+	return ADC_absx::OPCODE;
 }
 
 int ADC_absx::getBytes() {
+	return ADC_absx::BYTES;
 }
 
 int ADC_absx::getCycles() {
+	return ADC_absx::CYCLES;
 }
 
 int ADC_absy::getOpcode() {
+	return ADC_absy::OPCODE;
 }
 
 int ADC_absy::getBytes() {
+	return ADC_absy::BYTES;
 }
 
 int ADC_absy::getCycles() {
+	return ADC_absy::CYCLES;
 }
 
 int ADC_preindexi::getOpcode() {
+	return ADC_preindexi::OPCODE;
 }
 
 int ADC_preindexi::getBytes() {
+	return ADC_preindexi::BYTES;
 }
 
 int ADC_preindexi::getCycles() {
+	return ADC_preindexi::CYCLES;
 }
 
 int ADC_postindexi::getOpcode() {
+	return ADC_postindexi::OPCODE;
 }
 
 int ADC_postindexi::getBytes() {
+	return ADC_postindexi::BYTES;
 }
 
 int ADC_postindexi::getCycles() {
+	return ADC_postindexi::CYCLES;
 }
 
 int AND_inmediate::getOpcode() {
+	return AND_inmediate::OPCODE;
 }
 
 int AND_inmediate::getBytes() {
+	return AND_inmediate::BYTES;
 }
 
 int AND_inmediate::getCycles() {
+	return AND_inmediate::CYCLES;
 }
 
 int AND_zero::getOpcode() {
+	return AND_zero::OPCODE;
 }
 
 int AND_zero::getBytes() {
+	return AND_zero::BYTES;
 }
 
 int AND_zero::getCycles() {
+	return AND_zero::CYCLES;
 }
 
 int AND_zerox::getOpcode() {
+	return AND_zerox::OPCODE;
 }
 
 int AND_zerox::getBytes() {
+	return AND_zerox::BYTES;
 }
 
 int AND_zerox::getCycles() {
+	return AND_zerox::CYCLES;
 }
 
 int AND_abs::getOpcode() {
+	return AND_abs::OPCODE;
 }
 
 int AND_abs::getBytes() {
+	return AND_abs::BYTES;
 }
 
 int AND_abs::getCycles() {
+	return AND_abs::CYCLES;
 }
 
 int AND_absx::getOpcode() {
+	return AND_absx::OPCODE;
 }
 
 int AND_absx::getBytes() {
+	return AND_absx::BYTES;
 }
 
 int AND_absx::getCycles() {
+	return AND_absx::CYCLES;
 }
 
 int AND_absy::getOpcode() {
+	return AND_absy::OPCODE;
+	return AND_absy::OPCODE;
 }
 
 int AND_absy::getBytes() {
+	return AND_absy::BYTES;
 }
 
 int AND_absy::getCycles() {
+	return AND_absy::CYCLES;
 }
 
 int AND_preindexi::getOpcode() {
+	return AND_preindexi::OPCODE;
 }
 
 int AND_preindexi::getBytes() {
+	return AND_preindexi::BYTES;
 }
 
 int AND_preindexi::getCycles() {
+	return AND_preindexi::CYCLES;
 }
 
 int AND_postindexi::getOpcode() {
+	return AND_postindexi::OPCODE;
 }
 
 int AND_postindexi::getBytes() {
+	return AND_postindexi::BYTES;
 }
 
 int AND_postindexi::getCycles() {
+	return AND_postindexi::CYCLES;
 }
 
 int ASL_accumulator::getOpcode() {
+	return ASL_accumulator::OPCODE;
 }
 
 int ASL_accumulator::getBytes() {
+	return ASL_accumulator::BYTES;
 }
 
 int ASL_accumulator::getCycles() {
+	return ASL_accumulator::CYCLES;
 }
 
 int ASL_zero::getOpcode() {
+	return ASL_zero::OPCODE;
 }
 
 int ASL_zero::getBytes() {
+	return ASL_zero::BYTES;
 }
 
 int ASL_zero::getCycles() {
+	return ASL_zero::CYCLES;
 }
 
 int ASL_zerox::getOpcode() {
+	return ASL_zerox::OPCODE;
 }
 
 int ASL_zerox::getBytes() {
+	return ASL_zerox::BYTES;
 }
 
 int ASL_zerox::getCycles() {
+	return ASL_zerox::CYCLES;
 }
 
 int ASL_abs::getOpcode() {
+	return ASL_abs::OPCODE;
 }
 
 int ASL_abs::getBytes() {
+	return ASL_abs::BYTES;
 }
 
 int ASL_abs::getCycles() {
+	return ASL_abs::CYCLES;
 }
 
 int ASL_absx::getOpcode() {
+	return ASL_absx::OPCODE;
 }
 
 int ASL_absx::getBytes() {
+	return ASL_absx::BYTES;
 }
 
 int ASL_absx::getCycles() {
+	return ASL_absx::CYCLES;
 }
 
 int BCC::getOpcode() {
+	return BCC::OPCODE;
 }
 
 int BCC::getBytes() {
+	return BCC::BYTES;
 }
 
 int BCC::getCycles() {
+	return BCC::CYCLES;
 }
 
 int BCS::getOpcode() {
+	return BCS::OPCODE;
 }
 
 int BCS::getBytes() {
+	return BCS::BYTES;
 }
 
 int BCS::getCycles() {
+	return BCS::CYCLES;
 }
 
 int BEQ::getOpcode() {
+	return BEQ::OPCODE;
 }
 
 int BEQ::getBytes() {
+	return BEQ::BYTES;
 }
 
 int BEQ::getCycles() {
+	return BEQ::CYCLES;
 }
 
 int BIT_zero::getOpcode() {
+	return BIT_zero::OPCODE;
 }
 
 int BIT_zero::getBytes() {
+	return BIT_zero::BYTES;
 }
 
 int BIT_zero::getCycles() {
+	return BIT_zero::CYCLES;
 }
 
 int BIT_abs::getOpcode() {
+	return BIT_abs::OPCODE;
 }
 
 int BIT_abs::getBytes() {
+	return BIT_abs::BYTES;
 }
 
 int BIT_abs::getCycles() {
+	return BIT_abs::CYCLES;
 }
 
 int BMI::getOpcode() {
+	return BMI::OPCODE;
 }
 
 int BMI::getBytes() {
+	return BMI::BYTES;
 }
 
 int BMI::getCycles() {
+	return BMI::CYCLES;
 }
 
 int BNE::getOpcode() {
+	return BNE::OPCODE;
 }
 
 int BNE::getBytes() {
+	return BNE::BYTES;
 }
 
 int BNE::getCycles() {
+	return BNE::CYCLES;
 }
 
 int BPL::getOpcode() {
+	return BPL::OPCODE;
 }
 
 int BPL::getBytes() {
+	return BPL::BYTES;
 }
 
 int BPL::getCycles() {
+	return BPL::CYCLES;
 }
 
 int BRK::getOpcode() {
+	return BRK::OPCODE;
 }
 
 int BRK::getBytes() {
+	return BRK::BYTES;
 }
 
 int BRK::getCycles() {
+	return BRK::CYCLES;
 }
 
 int BVC::getOpcode() {
+	return BVC::OPCODE;
 }
 
 int BVC::getBytes() {
+	return BVC::BYTES;
 }
 
 int BVC::getCycles() {
+	return BVC::CYCLES;
 }
 
 int BVS::getOpcode() {
+	return BVS::OPCODE;
 }
 
 int BVS::getBytes() {
+	return BVS::BYTES;
 }
 
 int BVS::getCycles() {
+	return BVS::CYCLES;
 }
 
 int CLC::getOpcode() {
+	return CLC::OPCODE;
 }
 
 int CLC::getBytes() {
+	return CLC::BYTES;
 }
 
 int CLC::getCycles() {
+	return CLC::CYCLES;
 }
 
 int CLD::getOpcode() {
+	return CLD::OPCODE;
 }
 
 int CLD::getBytes() {
+	return CLD::BYTES;
 }
 
 int CLD::getCycles() {
+	return CLD::CYCLES;
 }
 
 int CLI::getOpcode() {
+	return CLI::OPCODE;
 }
 
 int CLI::getBytes() {
+	return CLI::BYTES;
 }
 
 int CLI::getCycles() {
+	return CLI::CYCLES;
 }
 
 int CLV::getOpcode() {
+	return CLV::OPCODE;
 }
 
 int CLV::getBytes() {
+	return CLV::BYTES;
 }
 
 int CLV::getCycles() {
+	return CLV::CYCLES;
 }
 
 int CMP_inmediate::getOpcode() {
+	return CMP_inmediate::OPCODE;
 }
 
 int CMP_inmediate::getBytes() {
+	return CMP_inmediate::BYTES;
 }
 
 int CMP_inmediate::getCycles() {
+	return CMP_inmediate::CYCLES;
 }
 
 int CMP_zero::getOpcode() {
+	return CMP_zero::OPCODE;
 }
 
 int CMP_zero::getBytes() {
+	return CMP_zero::BYTES;
 }
 
 int CMP_zero::getCycles() {
+	return CMP_zero::CYCLES;
 }
 
 int CMP_zerox::getOpcode() {
+	return CMP_zerox::OPCODE;
 }
 
 int CMP_zerox::getBytes() {
+	return CMP_zerox::BYTES;
 }
 
 int CMP_zerox::getCycles() {
+	return CMP_zerox::CYCLES;
 }
 
 int CMP_abs::getOpcode() {
+	return CMP_abs::OPCODE;
 }
 
 int CMP_abs::getBytes() {
+	return CMP_abs::BYTES;
 }
 
 int CMP_abs::getCycles() {
+	return CMP_abs::CYCLES;
 }
 
 int CMP_absx::getOpcode() {
+	return CMP_absx::OPCODE;
 }
 
 int CMP_absx::getBytes() {
+	return CMP_absx::BYTES;
 }
 
 int CMP_absx::getCycles() {
+	return CMP_absx::CYCLES;
 }
 
 int CMP_absy::getOpcode() {
+	return CMP_absy::OPCODE;
 }
 
 int CMP_absy::getBytes() {
+	return CMP_absy::BYTES;
 }
 
 int CMP_absy::getCycles() {
+	return CMP_absy::CYCLES;
 }
 
 int CMP_preindexi::getOpcode() {
+	return CMP_preindexi::OPCODE;
 }
 
 int CMP_preindexi::getBytes() {
+	return CMP_preindexi::BYTES;
 }
 
 int CMP_preindexi::getCycles() {
+	return CMP_preindexi::CYCLES;
 }
 
 int CMP_postindexi::getOpcode() {
+	return CMP_postindexi::OPCODE;
 }
 
 int CMP_postindexi::getBytes() {
+	return CMP_postindexi::BYTES;
 }
 
 int CMP_postindexi::getCycles() {
+	return CMP_postindexi::CYCLES;
 }
 
 int CPX_inmediate::getOpcode() {
+	return CPX_inmediate::OPCODE;
 }
 
 int CPX_inmediate::getBytes() {
+	return CPX_inmediate::BYTES;
 }
 
 int CPX_inmediate::getCycles() {
+	return CPX_inmediate::CYCLES;
 }
 
 int CPX_zero::getOpcode() {
+	return CPX_zero::OPCODE;
 }
 
 int CPX_zero::getBytes() {
+	return CPX_zero::BYTES;
 }
 
 int CPX_zero::getCycles() {
+	return CPX_zero::CYCLES;
 }
 
 int CPX_abs::getOpcode() {
+	return CPX_abs::OPCODE;
 }
 
 int CPX_abs::getBytes() {
+	return CPX_abs::BYTES;
 }
 
 int CPX_abs::getCycles() {
+	return CPX_abs::CYCLES;
 }
 
 int CPY_inmediate::getOpcode() {
+	return CPY_inmediate::OPCODE;
 }
 
 int CPY_inmediate::getBytes() {
+	return CPY_inmediate::BYTES;
 }
 
 int CPY_inmediate::getCycles() {
+	return CPY_inmediate::CYCLES;
 }
 
 int CPY_zero::getOpcode() {
+	return CPY_zero::OPCODE;
 }
 
 int CPY_zero::getBytes() {
+	return CPY_zero::BYTES;
 }
 
 int CPY_zero::getCycles() {
+	return CPY_zero::CYCLES;
 }
 
 int CPY_abs::getOpcode() {
+	return CPY_abs::OPCODE;
 }
 
 int CPY_abs::getBytes() {
+	return CPY_abs::BYTES;
 }
 
 int CPY_abs::getCycles() {
+	return CPY_abs::CYCLES;
 }
 
 int DEC_zero::getOpcode() {
+	return DEC_zero::OPCODE;
 }
 
 int DEC_zero::getBytes() {
+	return DEC_zero::BYTES;
 }
 
 int DEC_zero::getCycles() {
+	return DEC_zero::CYCLES;
 }
 
 int DEC_zerox::getOpcode() {
+	return DEC_zerox::OPCODE;
 }
 
 int DEC_zerox::getBytes() {
+	return DEC_zerox::BYTES;
 }
 
 int DEC_zerox::getCycles() {
+	return DEC_zerox::CYCLES;
 }
 
 int DEC_abs::getOpcode() {
+	return DEC_abs::OPCODE;
 }
 
 int DEC_abs::getBytes() {
+	return DEC_abs::BYTES;
 }
 
 int DEC_abs::getCycles() {
+	return DEC_abs::CYCLES;
 }
 
 int DEC_absx::getOpcode() {
+	return DEC_absx::OPCODE;
 }
 
 int DEC_absx::getBytes() {
+	return DEC_absx::BYTES;
 }
 
 int DEC_absx::getCycles() {
+	return DEC_absx::CYCLES;
 }
 
 int DEX::getOpcode() {
+	return DEX::OPCODE;
 }
 
 int DEX::getBytes() {
+	return DEX::BYTES;
 }
 
 int DEX::getCycles() {
+	return DEX::CYCLES;
 }
 
 int DEY::getOpcode() {
+	return DEY::OPCODE;
 }
 
 int DEY::getBytes() {
+	return DEY::BYTES;
 }
 
 int DEY::getCycles() {
+	return DEY::CYCLES;
 }
 
 int EOR_inmediate::getOpcode() {
+	return EOR_inmediate::OPCODE;
 }
 
 int EOR_inmediate::getBytes() {
+	return EOR_inmediate::BYTES;
 }
 
 int EOR_inmediate::getCycles() {
+	return EOR_inmediate::CYCLES;
 }
 
 int EOR_zero::getOpcode() {
+	return EOR_zero::OPCODE;
 }
 
 int EOR_zero::getBytes() {
+	return EOR_zero::BYTES;
 }
 
 int EOR_zero::getCycles() {
+	return EOR_zero::CYCLES;
 }
 
 int EOR_zerox::getOpcode() {
+	return EOR_zerox::OPCODE;
 }
 
 int EOR_zerox::getBytes() {
+	return EOR_zerox::BYTES;
 }
 
 int EOR_zerox::getCycles() {
+	return EOR_zerox::CYCLES;
 }
 
 int EOR_abs::getOpcode() {
+	return EOR_abs::OPCODE;
 }
 
 int EOR_abs::getBytes() {
+	return EOR_abs::BYTES;
 }
 
 int EOR_abs::getCycles() {
+	return EOR_abs::CYCLES;
 }
 
 int EOR_absx::getOpcode() {
+	return EOR_absx::OPCODE;
 }
 
 int EOR_absx::getBytes() {
+	return EOR_absx::BYTES;
 }
 
 int EOR_absx::getCycles() {
+	return EOR_absx::CYCLES;
 }
 
 int EOR_absy::getOpcode() {
+	return EOR_absy::OPCODE;
 }
 
 int EOR_absy::getBytes() {
+	return EOR_absy::BYTES;
 }
 
 int EOR_absy::getCycles() {
+	return EOR_absy::CYCLES;
 }
 
 int EOR_preindexi::getOpcode() {
+	return EOR_preindexi::OPCODE;
 }
 
 int EOR_preindexi::getBytes() {
+	return EOR_preindexi::BYTES;
 }
 
 int EOR_preindexi::getCycles() {
+	return EOR_preindexi::CYCLES;
 }
 
 int EOR_postindexi::getOpcode() {
+	return EOR_postindexi::OPCODE;
 }
 
 int EOR_postindexi::getBytes() {
+	return EOR_postindexi::BYTES;
 }
 
 int EOR_postindexi::getCycles() {
+	return EOR_postindexi::CYCLES;
 }
 
 int INC_zero::getOpcode() {
+	return INC_zero::OPCODE;
 }
 
 int INC_zero::getBytes() {
+	return INC_zero::BYTES;
 }
 
 int INC_zero::getCycles() {
+	return INC_zero::CYCLES;
 }
 
 int INC_zerox::getOpcode() {
+	return INC_zerox::OPCODE;
 }
 
 int INC_zerox::getBytes() {
+	return INC_zerox::BYTES;
 }
 
 int INC_zerox::getCycles() {
+	return INC_zerox::CYCLES;
 }
 
 int INC_abs::getOpcode() {
+	return INC_abs::OPCODE;
 }
 
 int INC_abs::getBytes() {
+	return INC_abs::BYTES;
 }
 
 int INC_abs::getCycles() {
+	return INC_abs::CYCLES;
 }
 
 int INC_absx::getOpcode() {
+	return INC_absx::OPCODE;
 }
 
 int INC_absx::getBytes() {
+	return INC_absx::BYTES;
 }
 
 int INC_absx::getCycles() {
+	return INC_absx::CYCLES;
 }
 
 int INX::getOpcode() {
+	return INX::OPCODE;
 }
 
 int INX::getBytes() {
+	return INX::BYTES;
 }
 
 int INX::getCycles() {
+	return INX::CYCLES;
 }
 
 int INY::getOpcode() {
+	return INY::OPCODE;
 }
 
 int INY::getBytes() {
+	return INY::BYTES;
 }
 
 int INY::getCycles() {
+	return INY::CYCLES;
 }
 
 int JMP_abs::getOpcode() {
+	return JMP_abs::OPCODE;
 }
 
 int JMP_abs::getBytes() {
+	return JMP_abs::BYTES;
 }
 
 int JMP_abs::getCycles() {
+	return JMP_abs::CYCLES;
 }
 
 int JMP_indirect::getOpcode() {
+	return JMP_indirect::OPCODE;
 }
 
 int JMP_indirect::getBytes() {
+	return JMP_indirect::BYTES;
 }
 
 int JMP_indirect::getCycles() {
+	return JMP_indirect::CYCLES;
 }
 
 int JSR::getOpcode() {
+	return JSR::OPCODE;
 }
 
 int JSR::getBytes() {
+	return JSR::BYTES;
 }
 
 int JSR::getCycles() {
+	return JSR::CYCLES;
 }
 
 int LDA_inmediate::getOpcode() {
+	return LDA_inmediate::OPCODE;
 }
 
 int LDA_inmediate::getBytes() {
+	return LDA_inmediate::BYTES;
 }
 
 int LDA_inmediate::getCycles() {
+	return LDA_inmediate::CYCLES;
 }
 
 int LDA_zero::getOpcode() {
+	return LDA_zero::OPCODE;
 }
 
 int LDA_zero::getBytes() {
+	return LDA_zero::BYTES;
 }
 
 int LDA_zero::getCycles() {
+	return LDA_zero::CYCLES;
 }
 
 int LDA_zerox::getOpcode() {
+	return LDA_zerox::OPCODE;
 }
 
 int LDA_zerox::getBytes() {
+	return LDA_zerox::BYTES;
 }
 
 int LDA_zerox::getCycles() {
+	return LDA_zerox::CYCLES;
 }
 
 int LDA_abs::getOpcode() {
+	return LDA_abs::OPCODE;
 }
 
 int LDA_abs::getBytes() {
+	return LDA_abs::BYTES;
 }
 
 int LDA_abs::getCycles() {
+	return LDA_abs::CYCLES;
 }
 
 int LDA_absx::getOpcode() {
+	return LDA_absx::OPCODE;
 }
 
 int LDA_absx::getBytes() {
+	return LDA_absx::BYTES;
 }
 
 int LDA_absx::getCycles() {
+	return LDA_absx::CYCLES;
 }
 
 int LDA_absy::getOpcode() {
+	return LDA_absy::OPCODE;
 }
 
 int LDA_absy::getBytes() {
+	return LDA_absy::BYTES;
 }
 
 int LDA_absy::getCycles() {
+	return LDA_absy::CYCLES;
 }
 
 int LDA_preindexi::getOpcode() {
+	return LDA_preindexi::OPCODE;
 }
 
 int LDA_preindexi::getBytes() {
+	return LDA_preindexi::BYTES;
 }
 
 int LDA_preindexi::getCycles() {
+	return LDA_preindexi::CYCLES;
 }
 
 int LDA_postindexi::getOpcode() {
+	return LDA_postindexi::OPCODE;
 }
 
 int LDA_postindexi::getBytes() {
+	return LDA_postindexi::BYTES;
 }
 
 int LDA_postindexi::getCycles() {
+	return LDA_postindexi::CYCLES;
 }
 
 int LDX_inmediate::getOpcode() {
+	return LDX_inmediate::OPCODE;
 }
 
 int LDX_inmediate::getBytes() {
+	return LDX_inmediate::BYTES;
 }
 
 int LDX_inmediate::getCycles() {
+	return LDX_inmediate::CYCLES;
 }
 
 int LDX_zero::getOpcode() {
+	return LDX_zero::OPCODE;
 }
 
 int LDX_zero::getBytes() {
+	return LDX_zero::BYTES;
 }
 
 int LDX_zero::getCycles() {
+	return LDX_zero::CYCLES;
 }
 
 int LDX_zeroy::getOpcode() {
+	return LDX_zeroy::OPCODE;
 }
 
 int LDX_zeroy::getBytes() {
+	return LDX_zeroy::BYTES;
 }
 
 int LDX_zeroy::getCycles() {
+	return LDX_zeroy::CYCLES;
 }
 
 int LDX_abs::getOpcode() {
+	return LDX_abs::OPCODE;
 }
 
 int LDX_abs::getBytes() {
+	return LDX_abs::BYTES;
 }
 
 int LDX_abs::getCycles() {
+	return LDX_abs::CYCLES;
 }
 
 int LDX_absy::getOpcode() {
+	return LDX_absy::OPCODE;
 }
 
 int LDX_absy::getBytes() {
+	return LDX_absy::BYTES;
 }
 
 int LDX_absy::getCycles() {
+	return LDX_absy::CYCLES;
 }
 
 int LDY_inmediate::getOpcode() {
+	return LDY_inmediate::OPCODE;
 }
 
 int LDY_inmediate::getBytes() {
+	return LDY_inmediate::BYTES;
 }
 
 int LDY_inmediate::getCycles() {
+	return LDY_inmediate::CYCLES;
 }
 
 int LDY_zero::getOpcode() {
+	return LDY_zero::OPCODE;
 }
 
 int LDY_zero::getBytes() {
+	return LDY_zero::BYTES;
 }
 
 int LDY_zero::getCycles() {
+	return LDY_zero::CYCLES;
 }
 
 int LDY_zerox::getOpcode() {
+	return LDY_zerox::OPCODE;
 }
 
 int LDY_zerox::getBytes() {
+	return LDY_zerox::BYTES;
 }
 
 int LDY_zerox::getCycles() {
+	return LDY_zerox::CYCLES;
 }
 
 int LDY_abs::getOpcode() {
+	return LDY_abs::OPCODE;
 }
 
 int LDY_abs::getBytes() {
+	return LDY_abs::BYTES;
 }
 
 int LDY_abs::getCycles() {
+	return LDY_abs::CYCLES;
 }
 
 int LDY_absx::getOpcode() {
+	return LDY_absx::OPCODE;
 }
 
 int LDY_absx::getBytes() {
+	return LDY_absx::BYTES;
 }
 
 int LDY_absx::getCycles() {
+	return LDY_absx::CYCLES;
 }
 
 int LSR_accumulator::getOpcode() {
+	return LSR_accumulator::OPCODE;
 }
 
 int LSR_accumulator::getBytes() {
+	return LSR_accumulator::BYTES;
 }
 
 int LSR_accumulator::getCycles() {
+	return LSR_accumulator::CYCLES;
 }
 
 int LSR_zero::getOpcode() {
+	return LSR_zero::OPCODE;
 }
 
 int LSR_zero::getBytes() {
+	return LSR_zero::BYTES;
 }
 
 int LSR_zero::getCycles() {
+	return LSR_zero::CYCLES;
 }
 
 int LSR_zerox::getOpcode() {
+	return LSR_zerox::OPCODE;
 }
 
 int LSR_zerox::getBytes() {
+	return LSR_zerox::BYTES;
 }
 
 int LSR_zerox::getCycles() {
+	return LSR_zerox::CYCLES;
 }
 
 int LSR_abs::getOpcode() {
+	return LSR_abs::OPCODE;
 }
 
 int LSR_abs::getBytes() {
+	return LSR_abs::BYTES;
 }
 
 int LSR_abs::getCycles() {
+	return LSR_abs::CYCLES;
 }
 
 int LSR_absx::getOpcode() {
+	return LSR_absx::OPCODE;
 }
 
 int LSR_absx::getBytes() {
+	return LSR_absx::BYTES;
 }
 
 int LSR_absx::getCycles() {
+	return LSR_absx::CYCLES;
 }
 
 int NOP::getOpcode() {
+	return NOP::OPCODE;
 }
 
 int NOP::getBytes() {
+	return NOP::BYTES;
 }
 
 int NOP::getCycles() {
+	return NOP::CYCLES;
 }
 
 int ORA_inmediate::getOpcode() {
+	return ORA_inmediate::OPCODE;
 }
 
 int ORA_inmediate::getBytes() {
+	return ORA_inmediate::BYTES;
 }
 
 int ORA_inmediate::getCycles() {
+	return ORA_inmediate::CYCLES;
 }
 
 int ORA_zero::getOpcode() {
+	return ORA_zero::OPCODE;
 }
 
 int ORA_zero::getBytes() {
+	return ORA_zero::BYTES;
 }
 
 int ORA_zero::getCycles() {
+	return ORA_zero::CYCLES;
 }
 
 int ORA_zerox::getOpcode() {
+	return ORA_zerox::OPCODE;
 }
 
 int ORA_zerox::getBytes() {
+	return ORA_zerox::BYTES;
 }
 
 int ORA_zerox::getCycles() {
+	return ORA_zerox::CYCLES;
 }
 
 int ORA_abs::getOpcode() {
+	return ORA_abs::OPCODE;
 }
 
 int ORA_abs::getBytes() {
+	return ORA_abs::BYTES;
 }
 
 int ORA_abs::getCycles() {
+	return ORA_abs::CYCLES;
 }
 
 int ORA_absx::getOpcode() {
+	return ORA_absx::OPCODE;
 }
 
 int ORA_absx::getBytes() {
+	return ORA_absx::BYTES;
 }
 
 int ORA_absx::getCycles() {
+	return ORA_absx::CYCLES;
 }
 
 int ORA_absy::getOpcode() {
+	return ORA_absy::OPCODE;
 }
 
 int ORA_absy::getBytes() {
+	return ORA_absy::BYTES;
 }
 
 int ORA_absy::getCycles() {
+	return ORA_absy::CYCLES;
 }
 
 int ORA_preindexi::getOpcode() {
+	return ORA_preindexi::OPCODE;
 }
 
 int ORA_preindexi::getBytes() {
+	return ORA_preindexi::BYTES;
 }
 
 int ORA_preindexi::getCycles() {
+	return ORA_preindexi::CYCLES;
 }
 
 int ORA_postindexi::getOpcode() {
+	return ORA_postindexi::OPCODE;
 }
 
 int ORA_postindexi::getBytes() {
+	return ORA_postindexi::BYTES;
 }
 
 int ORA_postindexi::getCycles() {
+	return ORA_postindexi::CYCLES;
 }
 
 int PHA::getOpcode() {
+	return PHA::OPCODE;
 }
 
 int PHA::getBytes() {
+	return PHA::BYTES;
 }
 
 int PHA::getCycles() {
+	return PHA::CYCLES;
 }
 
 int PHP::getOpcode() {
+	return PHP::OPCODE;
 }
 
 int PHP::getBytes() {
+	return PHP::BYTES;
 }
 
 int PHP::getCycles() {
+	return PHP::CYCLES;
 }
 
 int PLA::getOpcode() {
+	return PLA::OPCODE;
 }
 
 int PLA::getBytes() {
+	return PLA::BYTES;
 }
 
 int PLA::getCycles() {
+	return PLA::CYCLES;
 }
 
 int PLP::getOpcode() {
+	return PLP::OPCODE;
 }
 
 int PLP::getBytes() {
+	return PLP::BYTES;
 }
 
 int PLP::getCycles() {
+	return PLP::CYCLES;
 }
 
 int ROL_accumulator::getOpcode() {
+	return ROL_accumulator::OPCODE;
 }
 
 int ROL_accumulator::getBytes() {
+	return ROL_accumulator::BYTES;
 }
 
 int ROL_accumulator::getCycles() {
+	return ROL_accumulator::CYCLES;
 }
 
 int ROL_zero::getOpcode() {
+	return ROL_zero::OPCODE;
 }
 
 int ROL_zero::getBytes() {
+	return ROL_zero::BYTES;
 }
 
 int ROL_zero::getCycles() {
+	return ROL_zero::CYCLES;
 }
 
 int ROL_zerox::getOpcode() {
+	return ROL_zerox::OPCODE;
 }
 
 int ROL_zerox::getBytes() {
+	return ROL_zerox::BYTES;
 }
 
 int ROL_zerox::getCycles() {
+	return ROL_zerox::CYCLES;
 }
 
 int ROL_abs::getOpcode() {
+	return ROL_abs::OPCODE;
 }
 
 int ROL_abs::getBytes() {
+	return ROL_abs::BYTES;
 }
 
 int ROL_abs::getCycles() {
+	return ROL_abs::CYCLES;
 }
 
 int ROL_absx::getOpcode() {
+	return ROL_absx::OPCODE;
 }
 
 int ROL_absx::getBytes() {
+	return ROL_absx::BYTES;
 }
 
 int ROL_absx::getCycles() {
+	return ROL_absx::CYCLES;
 }
 
 int ROR_accumulator::getOpcode() {
+	return ROR_accumulator::OPCODE;
 }
 
 int ROR_accumulator::getBytes() {
+	return ROR_accumulator::BYTES;
 }
 
 int ROR_accumulator::getCycles() {
+	return ROR_accumulator::CYCLES;
 }
 
 int ROR_zero::getOpcode() {
+	return ROR_zero::OPCODE;
 }
 
 int ROR_zero::getBytes() {
+	return ROR_zero::BYTES;
 }
 
 int ROR_zero::getCycles() {
+	return ROR_zero::CYCLES;
 }
 
 int ROR_zerox::getOpcode() {
+	return ROR_zerox::OPCODE;
 }
 
 int ROR_zerox::getBytes() {
+	return ROR_zerox::BYTES;
 }
 
 int ROR_zerox::getCycles() {
+	return ROR_zerox::CYCLES;
 }
 
 int ROR_abs::getOpcode() {
+	return ROR_abs::OPCODE;
 }
 
 int ROR_abs::getBytes() {
+	return ROR_abs::BYTES;
 }
 
 int ROR_abs::getCycles() {
+	return ROR_abs::CYCLES;
 }
 
 int ROR_absx::getOpcode() {
+	return ROR_absx::OPCODE;
 }
 
 int ROR_absx::getBytes() {
+	return ROR_absx::BYTES;
 }
 
 int ROR_absx::getCycles() {
+	return ROR_absx::CYCLES;
 }
 
 int RTI::getOpcode() {
+	return RTI::OPCODE;
 }
 
 int RTI::getBytes() {
+	return RTI::BYTES;
 }
 
 int RTI::getCycles() {
+	return RTI::CYCLES;
 }
 
 int RTS::getOpcode() {
+	return RTS::OPCODE;
 }
 
 int RTS::getBytes() {
+	return RTS::BYTES;
 }
 
 int RTS::getCycles() {
+	return RTS::CYCLES;
 }
 
 int SBC_inmediate::getOpcode() {
+	return SBC_inmediate::OPCODE;
 }
 
 int SBC_inmediate::getBytes() {
+	return SBC_inmediate::BYTES;
 }
 
 int SBC_inmediate::getCycles() {
+	return SBC_inmediate::CYCLES;
 }
 
 int SBC_zero::getOpcode() {
+	return SBC_zero::OPCODE;
 }
 
 int SBC_zero::getBytes() {
+	return SBC_zero::BYTES;
 }
 
 int SBC_zero::getCycles() {
+	return SBC_zero::CYCLES;
 }
 
 int SBC_zerox::getOpcode() {
+	return SBC_zerox::OPCODE;
 }
 
 int SBC_zerox::getBytes() {
+	return SBC_zerox::BYTES;
 }
 
 int SBC_zerox::getCycles() {
+	return SBC_zerox::CYCLES;
 }
 
 int SBC_abs::getOpcode() {
+	return SBC_abs::OPCODE;
 }
 
 int SBC_abs::getBytes() {
+	return SBC_abs::BYTES;
 }
 
 int SBC_abs::getCycles() {
+	return SBC_abs::CYCLES;
 }
 
 int SBC_absx::getOpcode() {
+	return SBC_absx::OPCODE;
 }
 
 int SBC_absx::getBytes() {
+	return SBC_absx::BYTES;
 }
 
 int SBC_absx::getCycles() {
+	return SBC_absx::CYCLES;
 }
 
 int SBC_absy::getOpcode() {
+	return SBC_absy::OPCODE;
 }
 
 int SBC_absy::getBytes() {
+	return SBC_absy::BYTES;
 }
 
 int SBC_absy::getCycles() {
+	return SBC_absy::CYCLES;
 }
 
 int SBC_preindexi::getOpcode() {
+	return SBC_preindexi::OPCODE;
 }
 
 int SBC_preindexi::getBytes() {
+	return SBC_preindexi::BYTES;
 }
 
 int SBC_preindexi::getCycles() {
+	return SBC_preindexi::CYCLES;
 }
 
 int SBC_postindexi::getOpcode() {
+	return SBC_postindexi::OPCODE;
 }
 
 int SBC_postindexi::getBytes() {
+	return SBC_postindexi::BYTES;
 }
 
 int SBC_postindexi::getCycles() {
+	return SBC_postindexi::CYCLES;
 }
 
 int SEC::getOpcode() {
+	return SEC::OPCODE;
 }
 
 int SEC::getBytes() {
+	return SEC::BYTES;
 }
 
 int SEC::getCycles() {
+	return SEC::CYCLES;
 }
 
 int SED::getOpcode() {
+	return SED::OPCODE;
 }
 
 int SED::getBytes() {
+	return SED::BYTES;
 }
 
 int SED::getCycles() {
+	return SED::CYCLES;
 }
 
 int SEI::getOpcode() {
+	return SEI::OPCODE;
 }
 
 int SEI::getBytes() {
+	return SEI::BYTES;
 }
 
 int SEI::getCycles() {
+	return SEI::CYCLES;
 }
 
 int STA_zero::getOpcode() {
+	return STA_zero::OPCODE;
 }
 
 int STA_zero::getBytes() {
+	return STA_zero::BYTES;
 }
 
 int STA_zero::getCycles() {
+	return STA_zero::CYCLES;
 }
 
 int STA_zerox::getOpcode() {
+	return STA_zerox::OPCODE;
 }
 
 int STA_zerox::getBytes() {
+	return STA_zerox::BYTES;
 }
 
 int STA_zerox::getCycles() {
+	return STA_zerox::CYCLES;
 }
 
 int STA_abs::getOpcode() {
+	return STA_abs::OPCODE;
 }
 
 int STA_abs::getBytes() {
+	return STA_abs::BYTES;
 }
 
 int STA_abs::getCycles() {
+	return STA_abs::CYCLES;
 }
 
 int STA_absx::getOpcode() {
+	return STA_absx::OPCODE;
 }
 
 int STA_absx::getBytes() {
+	return STA_absx::BYTES;
 }
 
 int STA_absx::getCycles() {
+	return STA_absx::CYCLES;
 }
 
 int STA_absy::getOpcode() {
+	return STA_absy::OPCODE;
 }
 
 int STA_absy::getBytes() {
+	return STA_absy::BYTES;
 }
 
 int STA_absy::getCycles() {
+	return STA_absy::CYCLES;
 }
 
 int STA_preindexi::getOpcode() {
+	return STA_preindexi::OPCODE;
 }
 
 int STA_preindexi::getBytes() {
+	return STA_preindexi::BYTES;
 }
 
 int STA_preindexi::getCycles() {
+	return STA_preindexi::CYCLES;
 }
 
 int STA_postindexi::getOpcode() {
+	return STA_postindexi::OPCODE;
 }
 
 int STA_postindexi::getBytes() {
+	return STA_postindexi::BYTES;
 }
 
 int STA_postindexi::getCycles() {
+	return STA_postindexi::CYCLES;
 }
 
 int STX_zero::getOpcode() {
+	return STX_zero::OPCODE;
 }
 
 int STX_zero::getBytes() {
+	return STX_zero::BYTES;
 }
 
 int STX_zero::getCycles() {
+	return STX_zero::CYCLES;
 }
 
 int STX_zeroy::getOpcode() {
+	return STX_zeroy::OPCODE;
 }
 
 int STX_zeroy::getBytes() {
+	return STX_zeroy::BYTES;
 }
 
 int STX_zeroy::getCycles() {
+	return STX_zeroy::CYCLES;
 }
 
 int STX_abs::getOpcode() {
+	return STX_abs::OPCODE;
 }
 
 int STX_abs::getBytes() {
+	return STX_abs::BYTES;
 }
 
 int STX_abs::getCycles() {
+	return STX_abs::CYCLES;
 }
 
 int STY_zero::getOpcode() {
+	return STY_zero::OPCODE;
 }
 
 int STY_zero::getBytes() {
+	return STY_zero::BYTES;
 }
 
 int STY_zero::getCycles() {
+	return STY_zero::CYCLES;
 }
 
 int STY_zerox::getOpcode() {
+	return STY_zerox::OPCODE;
 }
 
 int STY_zerox::getBytes() {
+	return STY_zerox::BYTES;
 }
 
 int STY_zerox::getCycles() {
+	return STY_zerox::CYCLES;
 }
 
 int STY_abs::getOpcode() {
+	return STY_abs::OPCODE;
 }
 
 int STY_abs::getBytes() {
+	return STY_abs::BYTES;
 }
 
 int STY_abs::getCycles() {
+	return STY_abs::CYCLES;
 }
 
 int TAX::getOpcode() {
+	return TAX::OPCODE;
 }
 
 int TAX::getBytes() {
+	return TAX::BYTES;
 }
 
 int TAX::getCycles() {
+	return TAX::CYCLES;
 }
 
 int TAY::getOpcode() {
+	return TAY::OPCODE;
 }
 
 int TAY::getBytes() {
+	return TAY::BYTES;
 }
 
 int TAY::getCycles() {
+	return TAY::CYCLES;
 }
 
 int TSX::getOpcode() {
+	return TSX::OPCODE;
 }
 
 int TSX::getBytes() {
+	return TSX::BYTES;
 }
 
 int TSX::getCycles() {
+	return TSX::CYCLES;
 }
 
 int TXA::getOpcode() {
+	return TXA::OPCODE;
 }
 
 int TXA::getBytes() {
+	return TXA::BYTES;
 }
 
 int TXA::getCycles() {
+	return TXA::CYCLES;
 }
 
 int TXS::getOpcode() {
+	return TXS::OPCODE;
 }
 
 int TXS::getBytes() {
+	return TXS::BYTES;
 }
 
 int TXS::getCycles() {
+	return TXS::CYCLES;
 }
 
 int TYA::getOpcode() {
+	return TYA::OPCODE;
 }
 
 int TYA::getBytes() {
+	return TYA::BYTES;
 }
 
 int TYA::getCycles() {
+	return TYA::CYCLES;
 }
