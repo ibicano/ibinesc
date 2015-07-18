@@ -39,7 +39,7 @@ ROM::~ROM() {
 	delete []chrBanks;
 }
 
-int ROM::loadFile(string fileName) {
+void ROM::loadFile(string fileName) {
 
 	// Lee el fichero de la ROM y lo almacena en un vector en memoria para poder parsearlo
 	// FIXME: NO CARGA BIEN LA ROM. ARREGLARLO
@@ -87,7 +87,7 @@ int ROM::loadFile(string fileName) {
 
 		prgBanks = new unsigned int*[prgCount];
 		// Carga los bancos PRG
-		for (int n = 0; n < prgCount; n++) {
+		for (unsigned int n = 0; n < prgCount; n++) {
 			prgBanks[n] = new unsigned int[ROM::PRG_SIZE];
 
 			int j = 0;
@@ -100,7 +100,7 @@ int ROM::loadFile(string fileName) {
 
 		chrBanks = new unsigned int*[chrCount];
 		// Carga los bancos CHR
-		for (int n = 0; n < chrCount; n++) {
+		for (unsigned int n = 0; n < chrCount; n++) {
 			chrBanks[n] = new unsigned int[ROM::CHR_SIZE];
 
 			int j = 0;
@@ -179,7 +179,7 @@ unsigned int* ROM::getChr4k(int n) {
 	unsigned int* bank;
 
 	// Si es par es la primera mitad del banco de 8k
-	if (n & 0x01 == 0)
+	if ((n & 0x01) == 0)
 		bank = &chrBanks[number][0x0000];
 	else
 		bank = &chrBanks[number][0x1000];

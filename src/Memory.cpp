@@ -46,6 +46,8 @@ int Memory::readData(int addr) {
 	}
 	else if (0x6000 <= addr && addr <= 0x7FFF)     			// Memoria de estado de la partida->
 		d = memory[addr];
+
+	return d;
 }//readData()
 
 

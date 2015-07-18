@@ -48,7 +48,7 @@ void NES::run() {
 	int statsCycles = 0;		// Contador de ciclos de CPU para esyadísticas de rendimiento
 	time_t statsTotalTime = time(NULL);     // Tiempo de ejecución transcurrido para fines estadísticos
 	int totalCycles = 0;		// Número de ciclos de CPU totales desde que arranca el emulador
-	int keyCounter = 0;		// Contador de ciclos hasta el siguiente chequeo de pulsación del joypad
+	//int keyCounter = 0;		// Contador de ciclos hasta el siguiente chequeo de pulsación del joypad
 	int cycles = 0;				// Ciclo de CPU en una iteración del bucle
 
 	// Instrucción procesada

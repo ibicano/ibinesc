@@ -20,7 +20,7 @@ public:
 	virtual ~Instruction();
 
 	// Ejecuta la instrucción
-	virtual int execute();
+	virtual int execute() = 0;
 
 	virtual int getOpcode() = 0;
 	virtual int getBytes() = 0;
@@ -1553,7 +1553,7 @@ public:
 	JSR(int operand, CPU* cpu);
 	virtual ~JSR();
 
-	virtual int execute(int op);
+	virtual int execute();
 
 	virtual int getOpcode();
 	virtual int getBytes();

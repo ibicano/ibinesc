@@ -208,13 +208,13 @@ private:
     int activeNametableAddr();
 
 	// Inicia un período VBLANK
-    int startVblank();
+    void startVblank();
 
 	// Finaliza un período VBLANK
-    int endVblank();
+    void endVblank();
 
     // Establece el flag sprite hit del registro de status
-    int setSpriteHit(bool v);
+    void setSpriteHit(bool v);
 
 	// Indica si nos encontramos en un periodo VBLANK
     bool isVblank();

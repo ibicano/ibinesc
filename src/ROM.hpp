@@ -85,7 +85,7 @@ private:
 	int getControl1MirroringBit3();
 
 	// Carga la ROM de un fichero
-	int loadFile(string fileName);
+	void loadFile(string fileName);
 
 	// Devuelve el bit que indica si hay un trainer en el registro de control 1
 	int getControl1TrainerBit2();

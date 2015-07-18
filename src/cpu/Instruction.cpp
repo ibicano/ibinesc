@@ -71,8 +71,6 @@ int Instruction::fetchPreindexedAddrmode() {
 	return addr;
 }
 
-int Instruction::execute() {
-}
 
 int Instruction::fetchPostindexedAddrmode() {
 	/* Calcula el índice de la dirección donde se almacena la direccións
@@ -802,7 +800,7 @@ int CMP::execute(int op) {
 	int ac = cpu->getRegA();
 	int result = ac - op;
 
-	if (0 <= result < 0x100)
+	if (0 <= result && result < 0x100)
 		cpu->setReg_p_c_bit(1);
 	else
 		cpu->setReg_p_c_bit(0);
@@ -932,7 +930,7 @@ int CPX::execute(int op) {
 	int reg_x = cpu->getRegX();
 	int result = reg_x - op;
 
-	if (0 <= result < 0x100)
+	if (0 <= result && result < 0x100)
 		cpu->setReg_p_c_bit(1);
 	else
 		cpu->setReg_p_c_bit(0);
@@ -997,7 +995,7 @@ int CPY::execute(int op) {
 	int reg_y = cpu->getRegY();
 	int result = reg_y - op;
 
-	if (0 <= result < 0x100)
+	if (0 <= result && result < 0x100)
 		cpu->setReg_p_c_bit(1);
 	else
 		cpu->setReg_p_c_bit(0);
@@ -1502,7 +1500,7 @@ int JMP_indirect::execute() {
 
 	int addr = mem->readData(operand);
 
-	if (operand & 0xFF == 0xFF)
+	if ((operand & 0xFF) == 0xFF)
 		addr = addr | (mem->readData(operand & 0xFF00) << 8);
 	else
 		addr = addr | (mem->readData(operand + 1) << 8);
@@ -1522,7 +1520,7 @@ JSR::JSR(int operand, CPU* cpu) : Instruction(operand, cpu) {}
 JSR::~JSR() {
 }
 
-int JSR::execute(int op) {
+int JSR::execute() {
 	int pc = cpu->getRegPc() + getBytes() - 1;
 	cpu->pushStack((pc >> 8) & 0xFF);
 	cpu->pushStack(pc & 0xFF);
@@ -2458,7 +2456,7 @@ int SBC::execute(int op) {
 	int rst = ac - op - 1 + carry;
 
 	// Establece el bit CARRY del registro P
-	if (0 <= rst < 0x100)
+	if (0 <= rst && rst < 0x100)
 		cpu->setReg_p_c_bit(1);
 	else
 		cpu->setReg_p_c_bit(0);
@@ -3027,7 +3025,7 @@ int TYA::execute() {
 // INSTRUCTIONS POOL
 
 InstructionsPool::InstructionsPool(CPU* cpu) {
-	for (int i = 0; i++; i < 0x100) {
+	for (int i = 0; i < 0x100; i++) {
 		pool[i] = NULL;
 	}
 
@@ -3242,7 +3240,7 @@ InstructionsPool::InstructionsPool(CPU* cpu) {
 
 
 InstructionsPool::~InstructionsPool() {
-	for (int i = 0; i++; i < 0x100) {
+	for (int i = 0; i < 0x100; i++) {
 		if (pool[i] != NULL)
 			delete pool[i];
 	}

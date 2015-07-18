@@ -41,15 +41,15 @@ void PPUMemory::writeData(int data, int addr) {
 	int d = data & 0xFF;
 
 	// Pattern tables:
-	if ((0x0000 <= a <= 0x1FFF) && mapper->getChrCount() == 0) {
+	if ((0x0000 <= a && a <= 0x1FFF) && mapper->getChrCount() == 0) {
 		mapper->writeChr(d, a);
 		// reseteamos la cache de Tiles por si hay un cambio de banco en el Mapper
 		ppu->resetTilesCache();
 	}
 	// Name tables y attribute tables:
-	else if (0x2000 <= a < 0x4000) {
+	else if (0x2000 <= a && a < 0x4000) {
 		// Name Table 0
-		if (0x2000 <= a < 0x2400) {
+		if (0x2000 <= a && a < 0x2400) {
 			if (mapper->mirrorMode() == 0) {
 				setMemory(d, a + 0x0400);
 				// Mirrors
@@ -74,7 +74,7 @@ void PPUMemory::writeData(int data, int addr) {
 			setMemory(d, a);
 		}//if
 		// Name Table 1
-		else if (0x2400 <= a < 0x2800) {
+		else if (0x2400 <= a && a < 0x2800) {
 			if (mapper->mirrorMode() == 0) {
 				setMemory(d, a - 0x0400);
 				// Mirrors
@@ -101,7 +101,7 @@ void PPUMemory::writeData(int data, int addr) {
 			setMemory(d, a);
 		}//else if
 		// Name Table 2
-		else if (0x2800 <= a < 0x2C00) {
+		else if (0x2800 <= a && a < 0x2C00) {
 			if (mapper->mirrorMode() == 0) {
 				setMemory(d, a + 0x0400);
 				// Mirrors
@@ -128,7 +128,7 @@ void PPUMemory::writeData(int data, int addr) {
 			setMemory(d, a);
 		}//else if
 		// Name Table 3
-		else if (0x2C00 <= a < 0x3000) {
+		else if (0x2C00 <= a && a < 0x3000) {
 			if (mapper->mirrorMode() == 0) {
 				setMemory(d, a - 0x0400);
 				// Mirrors
@@ -156,11 +156,11 @@ void PPUMemory::writeData(int data, int addr) {
 			setMemory(d, a);
 		}
 		// Mirrors Name Tables y Attr Tables
-		else if (0x3000 <= a < 0x3F00) {
+		else if (0x3000 <= a && a < 0x3F00) {
 			writeData(d, a - 0x1000);
 		}
 		// Paletas
-		else if (0x3F00 <= a < 0x3F20) {
+		else if (0x3F00 <= a && a < 0x3F20) {
 			// Si se escribe en el elemento de background o su mirror se escribe el valor de background
 			// en todas las paletas mod 4 (pero no al contrario)
 			if (a == 0x3F00 or a == 0x3F10) {
@@ -168,7 +168,7 @@ void PPUMemory::writeData(int data, int addr) {
 					setMemory(d, x);
 			}
 			// Si no es un elemento de background escribimos normalmente la paleta
-			else if (a & 0x03 != 0) {
+			else if ((a & 0x03) != 0) {
 				// Escribe en mirrors
 				setMemory(d, a + 0x0020);
 				setMemory(d, a + 0x0040);
@@ -183,7 +183,7 @@ void PPUMemory::writeData(int data, int addr) {
 			}//else if
 		}
 		// Mirrors paletas
-		else if (0x3F20 <= a < 0x4000)
+		else if (0x3F20 <= a && a < 0x4000)
 			writeData(d, ((a - 0x3F20) % 0x0020) + 0x3F00);
 	}
 	// Mirrors generales

@@ -240,7 +240,7 @@ void CPU::setReg_p_s_bit(int v) {
 
 // Calcula y establece el valor del bit de carry en función del resultado de una instrucción
 int CPU::setCarryBit(int instResult) {
-	if (0 <= instResult < 0x100) {
+	if (0 <= instResult && instResult < 0x100) {
 		setReg_p_c_bit(0);
 		return 0;
 	}
@@ -298,7 +298,7 @@ int CPU::pullStack() {
 // Procesa una interrupción
 void CPU::interrupt(int vectorAddr) {
 	pushStack((regPc >> 8) & 0xFF);
-	pushStack(regPc & 0xFF);
+	pushStack((regPc & 0xFF));
 	// En las interrupciones el bit 4 se pone a 0 y el 5 a 1
 	pushStack((regP & 0xEF) | 0x20);
 	setReg_p_i_bit(1);

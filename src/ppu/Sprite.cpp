@@ -155,12 +155,12 @@ int Sprite::getVerticalFlip() {
 
 bool Sprite::isIn(int x, int y, int sizeBit) {
     int sizeY = sizeBit * 8 + 8;
-    return ((x >= offsetX & x < offsetX + 8) & (y >= offsetY & y < offsetY + sizeY));
+    return ((x >= offsetX && x < (offsetX + 8)) && (y >= offsetY && y < (offsetY + sizeY)));
 }//isIn()
 
 
 bool Sprite::isInScanline(int scanline, int sizeBit) {
     int sizeY = sizeBit * 8 + 8;
     int y = scanline - 1;
-    return (offsetY <= y < (offsetY + sizeY));
+    return (offsetY <= y && y < (offsetY + sizeY));
 }//isInScanline()
