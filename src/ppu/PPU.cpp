@@ -6,6 +6,9 @@
  */
 
 #include "PPU.hpp"
+
+#include <map>
+
 #include "Sprite.hpp"
 #include "PPUMemory.hpp"
 #include "SpriteMemory.hpp"
@@ -13,6 +16,8 @@
 #include "../Memory.hpp"
 #include "../mappers/Mapper.hpp"
 #include "../nesutils.hpp"
+#include "Tile.hpp"
+
 
 bool operator<(const TileCacheKey& key1, const TileCacheKey& key2) {
 	return (key1.tableNumber < key2.tableNumber) || (key1.index < key2.index) || (key1.color < key2.color);
@@ -136,10 +141,8 @@ void PPU::execCycles(int cycles) {
         // Cargamos los sprites para el siguiente frame
         getSpritesList();
         spriteZero = spritesList[0];
-        tileSpriteZeroIndex0 = spriteZero->getTileIndex0();
-        tileSpriteZeroRgb0 = spriteZero->getTileRgb0();
-        tileSpriteZeroIndex1 = spriteZero->getTileIndex1();
-        tileSpriteZeroRgb1 = spriteZero->getTileRgb1();
+        tileSpriteZero0 = spriteZero->getTile0();
+        tileSpriteZero1 = spriteZero->getTile1();
 
         spriteHit = false;
 
@@ -572,18 +575,13 @@ void PPU::drawPixel(int x, int y) {
         int attrColor = calcAttrColor(nametableAddr);
 
         TileCacheKey key = {patternTableNumber, patternIndex, attrColor};
-        TilePair tilePair;
 
         if (tilesCache.count(key) > 0) {
-            tilePair = tilesCache[key];
-        	tileBgIndex = tilePair.tileIndex;
-        	tileBgRgb = tilePair.tileRgb;
+            tileBg = tilesCache[key];
         }
         else {
-            fetchPattern(patternTableNumber, patternIndex, attrColor, PPUMemory::ADDR_IMAGE_PALETTE, tileBgIndex, tileBgRgb);
-            tilePair.tileIndex = tileBgIndex;
-            tilePair.tileRgb = tileBgRgb;
-            tilesCache[key] = tilePair;
+            tileBg = fetchPattern(patternTableNumber, patternIndex, attrColor, PPUMemory::ADDR_IMAGE_PALETTE);
+            tilesCache[key] = tileBg;
         }
 
         newPattern = false;
@@ -593,10 +591,10 @@ void PPU::drawPixel(int x, int y) {
     //if control2clipbackgroundbit1() or x >= 8:
 
     // Comprueba si el pixel actual es de background
-    if (tileBgIndex[patternPixelX][patternPixelY] & 0x03)
+    if (tileBg->getIndex(patternPixelX, patternPixelY) & 0x03)
         pixelBackground[x][y] = 1;
 
-    gfx->drawPixel(x, y, tileBgRgb[patternPixelX][patternPixelY]);
+    gfx->drawPixel(x, y, tileBg->getRgb(patternPixelX, patternPixelY));
 }
 
 
@@ -634,8 +632,7 @@ void PPU::drawSpritePixel(Sprite* sprite, int sprX, int sprY) {
 		// Si los sprites son 8x8
 		if (sizeBit == 0) {
 			// Obtenemos el tile
-			tileSpriteIndex = sprite->getTileIndex0();
-			tileSpriteRgb = sprite->getTileRgb0();
+			tileSprite = sprite->getTile0();
 
 			// Si está activado el flag de invertir horizontalmente
 			if (sprite->getHorizontalFlip())
@@ -652,22 +649,18 @@ void PPU::drawSpritePixel(Sprite* sprite, int sprX, int sprY) {
 			// Obtenemos los tiles
 			if (sprY < 8) {
 				if (verticalFlip == 0) {
-					tileSpriteIndex = sprite->getTileIndex0();
-					tileSpriteRgb = sprite->getTileRgb0();
-				}
+					tileSprite = sprite->getTile0();
+									}
 				else {
-					tileSpriteIndex = sprite->getTileIndex1();
-					tileSpriteRgb = sprite->getTileRgb1();
+					tileSprite= sprite->getTile1();
 				}
 			}
 			else {
 				if (verticalFlip == 0) {
-					tileSpriteIndex = sprite->getTileIndex1();
-					tileSpriteRgb = sprite->getTileRgb1();
+					tileSprite = sprite->getTile1();
 				}
 				else {
-					tileSpriteIndex = sprite->getTileIndex0();
-					tileSpriteRgb = sprite->getTileRgb0();
+					tileSprite = sprite->getTile0();
 				}
 				sprY = sprY & 0x07;
 			}
@@ -682,11 +675,11 @@ void PPU::drawSpritePixel(Sprite* sprite, int sprX, int sprY) {
 		}
 
 		// Si el pixel del sprite no es vacío
-		bool transparent = !(tileSpriteIndex[sprX][sprY] & 0x03);
+		bool transparent = !(tileSprite->getIndex(sprX, sprY) & 0x03);
 		if (!transparent) {
 			// Pinta el pixel si tiene prioridad sobre las nametables, o en caso contrario si el color de fondo es transparente
 			if ((pixelBck != 2) && (sprite->getPriority() == 0 || !pixelBck))
-				gfx->drawPixel(screenX, screenY, tileSpriteRgb[sprX][sprY]);
+				gfx->drawPixel(screenX, screenY, tileSprite->getRgb(sprX, sprY));
 
 			pixelBackground[screenX][screenY] = 2;
 		}//if
@@ -713,21 +706,17 @@ void PPU::calcSpriteHit() {
 		int offsetX = spriteZero->getOffsetX();
 		int sprY = y - spriteZero->getOffsetY();
 
-		int** tileIndex;
-		RGB** tileRgb;
+		Tile* tile;
 
 		if (spritesSizeBit == 0) {
-			tileIndex = spriteZero->getTileIndex0();
-			tileRgb = spriteZero->getTileRgb0();
+			tile = spriteZero->getTile0();
 		}
 		else {
 			if (sprY < 8) {
-				tileIndex = spriteZero->getTileIndex0();
-				tileRgb = spriteZero->getTileRgb0();
+				tile = spriteZero->getTile0();
 			}
 			else {
-				tileIndex = spriteZero->getTileIndex1();
-				tileRgb = spriteZero->getTileRgb1();
+				tile = spriteZero->getTile1();
 			}
 		}
 
@@ -738,7 +727,7 @@ void PPU::calcSpriteHit() {
 		for (int sprX = 0; sprX < 8; sprX++) {
 			screenX = offsetX + sprX;
 			if (screenX < 255) {
-				if ((tileIndex[sprX][sprY] & (0x03 != 0)) && (pixelBackground[screenX][y] == 1))
+				if ((tile->getIndex(sprX, sprY) & (0x03 != 0)) && (pixelBackground[screenX][y] == 1))
 					setSpriteHit(1);
 			}//if
 		}//for
@@ -789,8 +778,9 @@ RGB PPU::getColor(int index) {
 // Lee el patrón "pattern_index" de la tabla de patrones "pattern_table" con el color "attr_color" y la paleta
 // de colores ubicada en la dirección de memoria "palette_addr" y lo coloca en las variables de salida
 // "tile_palette_index" y "tile_rgb"
-void PPU::fetchPattern(int patternTable, int patternIndex, int attrColor,
-	int paletteAddr, int** tileIndex, RGB** tileRgb) {
+Tile* PPU::fetchPattern(int patternTable, int patternIndex, int attrColor, int paletteAddr) {
+
+	Tile* tile = new Tile();
 
 	int addr;
 	if (patternTable == 0)
@@ -814,21 +804,28 @@ void PPU::fetchPattern(int patternTable, int patternIndex, int attrColor,
 			paletteIndex = (0x00 | ((byte1 & (0x01 << x)) >> x) | (((byte2 & (0x01 << x)) >> x) << 1) | ((attrColor & 0x03) << 2));
 
 			// Asigna el índice de la paleta a la posición correspondiente:
-			tileIndex[7 - x][y] = paletteIndex;
+			tile->setIndex((7 - x), y, paletteIndex);
 
 			int colorIndex = memory->readData(paletteAddr + paletteIndex) & 0x3F;
 			RGB rgb = getColor(colorIndex);
-			tileRgb[7 - x][y] = rgb;
+			tile->setRgb((7 - x), y, rgb);
 		}
 
 		y = (y + 1) & 0x07;
 	}
+	return tile;
 }//fetchPattern()
 
 
 void PPU::resetTilesCache() {
-	// FIXME: probablemente esto no libere bien la memoria. Hay que hacerlo
-	// correctamente porque se reserva memoria para cada tile que se carga
+	map<TileCacheKey, Tile*>::iterator it;
+	Tile* tile;
+	for (it = tilesCache.begin(); it != tilesCache.end(); it++) {
+		tile = it->second;
+		delete tile;
+	}
+
+
 	tilesCache.clear();
 }
 

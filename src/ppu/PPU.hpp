@@ -19,6 +19,7 @@ class Memory;
 class SpriteMemory;
 class Mapper;
 class GFX;
+class Tile;
 
 
 // Estructura que almacena la información de color
@@ -36,12 +37,6 @@ struct TileCacheKey {
 	int color;
 };
 
-
-// Estructura para almacenar la información de un tile en sus dos formatos
-struct TilePair {
-	int** tileIndex;
-	RGB** tileRgb;
-};
 
 class PPU {
 public:
@@ -80,7 +75,7 @@ public:
 	// Lee el patrón "patternIndex" de la tabla de patrones "patternTable" con el color "attrColor" y la paleta
     // de colores ubicada en la dirección de memoria "paletteAddr" y lo coloca en las variables de salida
     // "tileIndex" y "tileRgb"
-    void fetchPattern(int patternTable, int patternIndex, int attrColor, int paletteAddr, int** tileIndex, RGB** tileRGB);
+    Tile* fetchPattern(int patternTable, int patternIndex, int attrColor, int paletteAddr);
 
 	// Borra y libera la memoria de la cache de tiles
 	void resetTilesCache();
@@ -134,11 +129,9 @@ private:
 	Sprite* spritesList[64];	// Lista de sprites en el frame actual
 	Sprite* spriteZero;		// Referencia al sprite zero
 
-	int** tileSpriteZeroIndex0;
-	RGB** tileSpriteZeroRgb0;
+	Tile* tileSpriteZero0;
 
-	int** tileSpriteZeroIndex1;
-	RGB** tileSpriteZeroRgb1;
+	Tile* tileSpriteZero1;
 
 	bool spriteHit;			// Indica si ha habido colisión de sprite en el frame actual
 
@@ -150,15 +143,13 @@ private:
 	int vramBuffer;
 
 	// Variables que almacenan el tile del fondo que se está procesando
-	int** tileBgIndex;
-	RGB** tileBgRgb;
+	Tile* tileBg;
 
 	// Variables que almacenan el tile del sprite que se está procesando
-    int** tileSpriteIndex;
-    RGB** tileSpriteRgb;
+    Tile* tileSprite;
 
     // Cache de tiles para mejorar rendimiento
-    map<TileCacheKey, TilePair> tilesCache;
+    map<TileCacheKey, Tile*> tilesCache;
 
 	// Registros I/O
 	int regControl1;            // Dirección 0x2000 - write

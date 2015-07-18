@@ -10,6 +10,7 @@
 
 class SpriteMemory;
 class PPU;
+class Tile;
 
 struct RGB;
 
@@ -25,11 +26,8 @@ public:
 	void loadByNumber(SpriteMemory* spriteMem, int number);
 
 	// Devuelve una referencia a la información de los tiles
-	int** getTileIndex0();
-	RGB** getTileRgb0();
-
-	int** getTileIndex1();
-	RGB** getTileRgb1();
+	Tile* getTile0();
+	Tile* getTile1();
 
 	// Devuelve la información del sprite
 	int getOffsetY();
@@ -60,11 +58,8 @@ private:
 	PPU* ppu;			// Referencia a la PPU
 
 	// Información de los tiles
-	int** tileIndex0;
-	RGB** tileRgb0;
-
-	int** tileIndex1;
-	RGB** tileRgb1;
+	Tile* tile0;
+	Tile* tile1;
 };
 
 #endif /* PPU_SPRITE_HPP_ */

@@ -6,9 +6,12 @@
  */
 
 #include "Sprite.hpp"
-#include "PPUMemory.hpp"
+
+#include <stddef.h>
 #include "PPU.hpp"
+#include "PPUMemory.hpp"
 #include "SpriteMemory.hpp"
+#include "Tile.hpp"
 
 
 Sprite::Sprite(PPU* ppu) {
@@ -20,34 +23,15 @@ Sprite::Sprite(PPU* ppu) {
 
     this->ppu = ppu;
 
-    // Estos sólo se usan de forma temporal si los srpites son de 16 bits
-    tileIndex0 = new int*[8];
-    tileRgb0 = new RGB*[8];
-
-    tileIndex1 = new int*[8];
-    tileRgb1 = new RGB*[8];
-
-    for (int i; i < 8; i++) {
-    	tileIndex0[i] = new int[8];
-    	tileRgb0[i] = new RGB[8];
-    	tileIndex1[i] = new int[8];
-    	tileRgb1[i] = new RGB[8];
-    }
+    tile0 = new Tile();
+    tile1 = new Tile();		// Estos sólo se usan de forma temporal si los sprites son de 8x16
 }//Sprite()
 
 
 // Destructor
 Sprite::~Sprite() {
-	for (int i; i < 8; i++) {
-		delete tileIndex0[i];
-		delete tileRgb0[i];
-		delete tileIndex1[i];
-		delete tileRgb1[i];
-	}
-	delete []tileIndex0;
-	delete []tileRgb0;
-	delete []tileIndex1;
-	delete []tileRgb1;
+	delete tile1;
+	delete tile0;
 }//~Sprite()
 
 
@@ -69,7 +53,8 @@ void Sprite::loadByAddr(SpriteMemory* spriteMem, int addr) {
         int patternTable = ppu->control1SpritesPatternBit3();
 
         // Obtenemos el tile
-        ppu->fetchPattern(patternTable, getIndex(), getAttrColor(), PPUMemory::ADDR_SPRITE_PALETTE, tileIndex0, tileRgb0);
+        delete tile0;
+        tile0 = ppu->fetchPattern(patternTable, getIndex(), getAttrColor(), PPUMemory::ADDR_SPRITE_PALETTE);
     }
     // Si los sprites son 8x16
     else {
@@ -77,8 +62,11 @@ void Sprite::loadByAddr(SpriteMemory* spriteMem, int addr) {
         index = index & 0xFE;
 
         // Obtenemos los tiles
-        ppu->fetchPattern(patternTable, index, getAttrColor(), PPUMemory::ADDR_SPRITE_PALETTE, tileIndex0, tileRgb0);
-        ppu->fetchPattern(patternTable, index + 1, getAttrColor(), PPUMemory::ADDR_SPRITE_PALETTE, tileIndex1, tileRgb1);
+        delete tile0;
+        tile0 = ppu->fetchPattern(patternTable, index, getAttrColor(), PPUMemory::ADDR_SPRITE_PALETTE);
+
+        delete tile1;
+        tile1 = ppu->fetchPattern(patternTable, index + 1, getAttrColor(), PPUMemory::ADDR_SPRITE_PALETTE);
     }
 }//loadByAddr()
 
@@ -88,23 +76,13 @@ void Sprite::loadByNumber(SpriteMemory* spriteMem, int number) {
 }//loadByNumber()
 
 
-int** Sprite::getTileIndex0() {
-	return tileIndex0;
+Tile* Sprite::getTile0() {
+	return tile0;
 }
 
 
-RGB** Sprite::getTileRgb0() {
-	return tileRgb0;
-}
-
-
-int** Sprite::getTileIndex1() {
-	return tileIndex1;
-}
-
-
-RGB** Sprite::getTileRgb1() {
-	return tileRgb0;
+Tile* Sprite::getTile1() {
+	return tile1;
 }
 
 
