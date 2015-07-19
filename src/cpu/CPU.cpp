@@ -101,32 +101,32 @@ int CPU::getRegP() {
 
 
 void CPU::setRegPc(int v) {
-	regPc = v;
+	regPc = v & 0xFFFF;
 }
 
 
 void CPU::setRegSp(int v) {
-	regSp = v;
+	regSp = v & 0xFF;
 }
 
 
 void CPU::setRegA(int v) {
-	regA = v;
+	regA = v & 0xFF;
 }
 
 
 void CPU::setRegX(int v) {
-	regX = v;
+	regX = v & 0xFF;
 }
 
 
 void CPU::setRegY(int v) {
-	regY = v;
+	regY = v & 0xFF;
 }
 
 
 void CPU::setRegP(int v) {
-	regP = v;
+	regP = v & 0xFF;
 }
 
 

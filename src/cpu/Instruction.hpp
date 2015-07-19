@@ -1369,7 +1369,7 @@ public:
 	INC(int operand, CPU* cpu);
 	virtual ~INC();
 
-	virtual int execute(int op);
+	int execute(int op);
 
 };//class INC
 
