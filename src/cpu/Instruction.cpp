@@ -2672,8 +2672,7 @@ STA_zero::~STA_zero() {
 
 int STA_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
-	int op = cpu->getMem()->readData(addr);
-	return STA::execute(op);
+	return STA::execute(addr);
 }
 
 
@@ -2685,8 +2684,7 @@ STA_zerox::~STA_zerox() {
 
 int STA_zerox::execute() {
 	int addr = fetchIndexedZeroXAddrmode();
-	int op = cpu->getMem()->readData(addr);
-	return STA::execute(op);
+	return STA::execute(addr);
 }
 
 
@@ -2698,8 +2696,7 @@ STA_abs::~STA_abs() {
 
 int STA_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
-	int op = cpu->getMem()->readData(addr);
-	return STA::execute(op);
+	return STA::execute(addr);
 }
 
 
@@ -2711,8 +2708,7 @@ STA_absx::~STA_absx() {
 
 int STA_absx::execute() {
 	int addr = fetchIndexedAbsXAddrmode();
-	int op = cpu->getMem()->readData(addr);
-	return STA::execute(op);
+	return STA::execute(addr);
 }
 
 
@@ -2724,8 +2720,7 @@ STA_absy::~STA_absy() {
 
 int STA_absy::execute() {
 	int addr = fetchIndexedAbsYAddrmode();
-	int op = cpu->getMem()->readData(addr);
-	return STA::execute(op);
+	return STA::execute(addr);
 }
 
 
@@ -2737,8 +2732,7 @@ STA_preindexi::~STA_preindexi() {
 
 int STA_preindexi::execute() {
 	int addr = fetchPreindexedAddrmode();
-	int op = cpu->getMem()->readData(addr);
-	return STA::execute(op);
+	return STA::execute(addr);
 }
 
 
@@ -2750,8 +2744,7 @@ STA_postindexi::~STA_postindexi() {
 
 int STA_postindexi::execute() {
 	int addr = fetchPostindexedAddrmode();
-	int op = cpu->getMem()->readData(addr);
-	return STA::execute(op);
+	return STA::execute(addr);
 }
 
 
@@ -2786,8 +2779,7 @@ STX_zero::~STX_zero() {
 
 int STX_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
-	int op = cpu->getMem()->readData(addr);
-	return STX::execute(op);
+	return STX::execute(addr);
 }
 
 
@@ -2799,8 +2791,7 @@ STX_zeroy::~STX_zeroy() {
 
 int STX_zeroy::execute() {
 	int addr = fetchIndexedZeroYAddrmode();
-	int op = cpu->getMem()->readData(addr);
-	return STX::execute(op);
+	return STX::execute(addr);
 }
 
 
@@ -2812,8 +2803,7 @@ STX_abs::~STX_abs() {
 
 int STX_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
-	int op = cpu->getMem()->readData(addr);
-	return STX::execute(op);
+	return STX::execute(addr);
 }
 
 
@@ -2848,8 +2838,7 @@ STY_zero::~STY_zero() {
 
 int STY_zero::execute() {
 	int addr = fetchAbsoluteAddrmode();
-	int op = cpu->getMem()->readData(addr);
-	return STY::execute(op);
+	return STY::execute(addr);
 }
 
 
@@ -2861,8 +2850,7 @@ STY_zerox::~STY_zerox() {
 
 int STY_zerox::execute() {
 	int addr = fetchIndexedZeroXAddrmode();
-	int op = cpu->getMem()->readData(addr);
-	return STY::execute(op);
+	return STY::execute(addr);
 }
 
 
@@ -2874,8 +2862,7 @@ STY_abs::~STY_abs() {
 
 int STY_abs::execute() {
 	int addr = fetchAbsoluteAddrmode();
-	int op = cpu->getMem()->readData(addr);
-	return STY::execute(op);
+	return STY::execute(addr);
 }
 
 

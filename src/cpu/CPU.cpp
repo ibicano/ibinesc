@@ -204,37 +204,37 @@ int CPU::getReg_p_s_bit() {
 
 // Métodos que establecen el valor de los bits delregistro de estado
 void CPU::setReg_p_c_bit(int v) {
-	setBit(regP, CPU::REG_P_BIT_C, v);
+	regP = setBit(regP, CPU::REG_P_BIT_C, v);
 }
 
 
 void CPU::setReg_p_z_bit(int v) {
-	setBit(regP, CPU::REG_P_BIT_Z, v);
+	regP = setBit(regP, CPU::REG_P_BIT_Z, v);
 }
 
 
 void CPU::setReg_p_i_bit(int v) {
-	setBit(regP, CPU::REG_P_BIT_I, v);
+	regP = setBit(regP, CPU::REG_P_BIT_I, v);
 }
 
 
 void CPU::setReg_p_d_bit(int v) {
-	setBit(regP, CPU::REG_P_BIT_D, v);
+	regP = setBit(regP, CPU::REG_P_BIT_D, v);
 }
 
 
 void CPU::setReg_p_b_bit(int v) {
-	setBit(regP, CPU::REG_P_BIT_B, v);
+	regP = setBit(regP, CPU::REG_P_BIT_B, v);
 }
 
 
 void CPU::setReg_p_v_bit(int v) {
-	setBit(regP, CPU::REG_P_BIT_V, v);
+	regP = setBit(regP, CPU::REG_P_BIT_V, v);
 }
 
 
 void CPU::setReg_p_s_bit(int v) {
-	setBit(regP, CPU::REG_P_BIT_S, v);
+	regP = setBit(regP, CPU::REG_P_BIT_S, v);
 }
 
 
