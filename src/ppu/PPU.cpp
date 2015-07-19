@@ -97,7 +97,7 @@ bool PPU::getIntVblank() {
 void PPU::execCycles(int cycles) {
     if (cyclesFrame < cycles) {
         endFrame = true;
-        cyclesFrame = (cyclesFrame  - cycles) % PPU::FRAME_CYCLES;
+        cyclesFrame = (cyclesFrame  - cycles + PPU::FRAME_CYCLES) % PPU::FRAME_CYCLES;
     }
     else
         cyclesFrame = cyclesFrame  - cycles;
