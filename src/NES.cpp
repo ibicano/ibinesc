@@ -53,6 +53,7 @@ void NES::run() {
 
 	// Instrucción procesada
 	Instruction* inst;
+	int instCount = 0;
 
 	// Bucle principal
 	while (1) {
@@ -69,6 +70,7 @@ void NES::run() {
 		// interrupción en el paso anterior será su rutina de interrupción)
 		inst = cpu->fetchInst();
 		cycles += inst->execute();
+		instCount += 1;
 
 		// Restamos los ciclos de ejecución a la PPU
 		ppu->execCycles(cycles);
