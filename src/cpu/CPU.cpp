@@ -20,11 +20,15 @@ CPU::CPU(Memory* mem, PPU* ppu) {
 	regPc = mem->readData(CPU::INT_ADDR_RESET);
 	regPc = regPc | (mem->readData(CPU::INT_ADDR_RESET + 1) << 8);
 
+	//regPc = 0xC000; //Debug CPU
+
 	regSp = 0xFF;
+	//regSp = 0xFD;	//debug CPU
 	regA = 0x00;
 	regX = 0x00;
 	regY = 0x00;
 	regP = 0x34;
+	//regP = 0x24;  //debug CPU
 
 	// Inicializa el flag de IRQ
 	irq = false;
@@ -159,7 +163,7 @@ Instruction* CPU::fetchInst() {
 		}
 	}
 	else {
-		cout << "OPCODE incorrecto";
+		cout << "OPCODE incorrecto\n";
 	}
 
 	return inst;

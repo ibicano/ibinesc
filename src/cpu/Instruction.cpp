@@ -14,8 +14,8 @@
 #include "CPU.hpp"
 
 
-Instruction::Instruction(int operand, CPU* cpu) {
-	this->operand = operand;
+Instruction::Instruction(int op, CPU* cpu) {
+	this->operand = op;
 	this->cpu = cpu;
 }
 
@@ -30,7 +30,7 @@ int Instruction::getOperand() {
 
 
 void Instruction::setOperand(int op) {
-	operand = op;
+	operand = op & 0xFFFF;
 }
 
 
@@ -78,7 +78,7 @@ int Instruction::fetchPostindexedAddrmode() {
 	int baseAddr = cpu->getMem()->readData(operand);
 	baseAddr = baseAddr | (cpu->getMem()->readData((operand + 1) & 0xFF) << 8);
 
-	return (baseAddr + cpu->getRegY()) & 0xFFFF;
+	return ((baseAddr + cpu->getRegY()) & 0xFFFF);
 }
 
 

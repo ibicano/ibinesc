@@ -40,8 +40,9 @@ int Memory::readData(int addr) {
 	else if (addr >= 0x2000 && addr < 0x4000)      // Direcciones de los registros PPU
 		d = ppu->readReg(0x2000 + (addr & 0x07));
 	else if (addr >= 0x4000 && addr < 0x4020) {		// Más registros I/O
-		if (addr == 0x4016)      					// Registro del Joypad 1
-			d = joypad1->readReg();
+		if (addr == 0x4016) {   					// Registro del Joypad 1
+			//d = joypad1->readReg();
+		}
 		else if (addr == 0x4017) {}
 	}
 	else if (0x6000 <= addr && addr <= 0x7FFF)     			// Memoria de estado de la partida->

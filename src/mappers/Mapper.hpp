@@ -21,8 +21,8 @@ public:
 	virtual int readChr(int addr) = 0;
 	virtual void writeChr(int data, int addr) = 0;
 
-	int getPrgCount();
-	int getChrCount();
+	virtual int getPrgCount();
+	virtual int getChrCount();
 
 	// Se usa cada vez que se procesa un scanline
 	virtual void scanlineTick();

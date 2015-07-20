@@ -7,24 +7,24 @@
 
 #include "NES.hpp"
 
-#include "mappers/CNROM.hpp"
-#include "mappers/MMC1.hpp"
-#include "mappers/MMC3.hpp"
+#include <ctime>
+#include <fstream>
+#include <string>
+
 #include "mappers/NROM.hpp"
-#include "ROM.hpp"
-#include "ppu/PPU.hpp"
+#include "mappers/MMC1.hpp"
 #include "Memory.hpp"
 
-#include <time.h>
+using namespace std;
 
 
 NES::NES(string fileName) {
 	rom = new ROM(fileName);
 
 	if (rom->getMapperCode() == 0) mapper = new NROM(rom);
+	else if (rom->getMapperCode() == 1) mapper = new MMC1(rom);
 	// TODO: implementar el resto de mappers
 	/*
-	else if (rom->getMapperCode() == 1) mapper = new MMC1(rom);
 	else if (rom->getMapperCode() == 3) mapper = new CNROM(rom);
 	else if (rom->getMapperCode() == 4) mapper = new MMC3(rom);
 	*/
@@ -45,6 +45,9 @@ NES::~NES() {
 
 
 void NES::run() {
+	// Esto para la depuración de las instrucciones
+	fstream fichLog("/home/ibon/tmp/ibitest.log", fstream::out);
+
 	int statsCycles = 0;		// Contador de ciclos de CPU para esyadísticas de rendimiento
 	time_t statsTotalTime = time(NULL);     // Tiempo de ejecución transcurrido para fines estadísticos
 	int totalCycles = 0;		// Número de ciclos de CPU totales desde que arranca el emulador
@@ -66,9 +69,39 @@ void NES::run() {
 		if ((!cpu->getReg_p_i_bit()) & cpu->getIrq())
 			cpu->interruptIrq();
 
+
 		// Fetch y Exec siguiente instrucción (si hemos ejecutado una
 		// interrupción en el paso anterior será su rutina de interrupción)
 		inst = cpu->fetchInst();
+
+		/*
+		// Escribimos en el log de instrucciones
+		int opLow = inst->getOperand() & 0xFF;
+		int opHigh = (inst->getOperand() >> 8) & 0xFF;
+
+		fichLog << hex << cpu->getRegPc();
+		fichLog << "\t";
+		fichLog << hex << inst->getOpcode();
+		fichLog << " ";
+		fichLog << hex << opLow;
+		fichLog << " ";
+		fichLog << hex << opHigh;
+		fichLog << "\t\t";
+		fichLog << hex << cpu->getRegA();
+		fichLog << " ";
+		fichLog << hex << cpu->getRegX();
+		fichLog << " ";
+		fichLog << hex << cpu->getRegY();
+		fichLog << " ";
+		fichLog << hex << cpu->getRegP();
+		fichLog << " ";
+		fichLog << hex << cpu->getRegSp();
+		fichLog << "\n";
+
+		fichLog.flush();
+		*/
+
+
 		cycles += inst->execute();
 		instCount += 1;
 
@@ -144,4 +177,5 @@ void NES::run() {
 		cycles = 0;
 
 	}// while
+	fichLog.close();
 }//run()
