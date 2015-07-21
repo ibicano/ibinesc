@@ -31,5 +31,8 @@ int c2ToInt(int byte);
 // Convierte un entero a complemento a 2
 int intToC2(int n);
 
+// Calcula el módulo "m" de un oprando "op"
+int mod(int op, int m);
+
 
 #endif /* NESUTILS_HPP_ */

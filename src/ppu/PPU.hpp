@@ -149,7 +149,7 @@ private:
     Tile* tileSprite;
 
     // Cache de tiles para mejorar rendimiento
-    map<TileCacheKey, Tile*> tilesCache;
+    map<TileCacheKey, Tile*>* tilesCache;
 
 	// Registros I/O
 	int regControl1;            // Dirección 0x2000 - write

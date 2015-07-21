@@ -18,14 +18,37 @@
 #include "../nesutils.hpp"
 #include "Tile.hpp"
 
+using namespace std;
+
 
 bool operator<(const TileCacheKey& key1, const TileCacheKey& key2) {
-	return (key1.tableNumber < key2.tableNumber) || (key1.index < key2.index) || (key1.color < key2.color);
+	bool result;
+
+	if (key1.tableNumber < key2.tableNumber)
+		result = true;
+	else if (key1.tableNumber > key2.tableNumber)
+		result = false;
+	else {
+		if (key1.index < key2.index)
+			result = true;
+		else if (key1.index > key2.index)
+			result = false;
+		else {
+			if (key1.color < key2.color)
+				result = true;
+			else
+				result = false;
+		}
+	}
+
+	return result;
 }
+
 
 bool operator==(const TileCacheKey& key1, const TileCacheKey& key2) {
 	return (key1.tableNumber == key2.tableNumber) && (key1.index == key2.index) && (key1.color == key2.color);
 }
+
 
 PPU::PPU(Mapper* mapper) {
 	memory = new PPUMemory(this, mapper);
@@ -72,7 +95,8 @@ PPU::PPU(Mapper* mapper) {
 	regVramSwitch = 0;
 
 	//Inicializa variable de cache de tiles
-	resetTilesCache();
+	tilesCache = new map<TileCacheKey, Tile*>;
+
 }//PPU()
 
 
@@ -83,6 +107,9 @@ PPU::~PPU() {
 	delete gfx;
 	delete spriteMemory;
 	delete memory;
+
+	resetTilesCache();
+	delete tilesCache;
 }
 
 
@@ -97,7 +124,7 @@ bool PPU::getIntVblank() {
 void PPU::execCycles(int cycles) {
     if (cyclesFrame < cycles) {
         endFrame = true;
-        cyclesFrame = (cyclesFrame  - cycles + PPU::FRAME_CYCLES) % PPU::FRAME_CYCLES;
+        cyclesFrame = mod((cyclesFrame  - cycles + PPU::FRAME_CYCLES), PPU::FRAME_CYCLES);
     }
     else
         cyclesFrame = cyclesFrame  - cycles;
@@ -105,7 +132,7 @@ void PPU::execCycles(int cycles) {
 
     int scanlinesCycles = scanlineNumber * PPU::SCANLINE_CYCLES;
 
-    int pendingScanlines = (((PPU::FRAME_CYCLES - scanlinesCycles) - cyclesFrame) % PPU::FRAME_CYCLES) / PPU::SCANLINE_CYCLES;
+    int pendingScanlines = mod(((PPU::FRAME_CYCLES - scanlinesCycles) - cyclesFrame), PPU::FRAME_CYCLES) / PPU::SCANLINE_CYCLES;
 
     while (pendingScanlines > 0) {
         // Dibujamos el scanline
@@ -576,12 +603,12 @@ void PPU::drawPixel(int x, int y) {
 
         TileCacheKey key = {patternTableNumber, patternIndex, attrColor};
 
-        if (tilesCache.count(key) > 0) {
-            tileBg = tilesCache[key];
+        if (tilesCache->count(key) > 0) {
+            tileBg = (*tilesCache)[key];
         }
         else {
             tileBg = fetchPattern(patternTableNumber, patternIndex, attrColor, PPUMemory::ADDR_IMAGE_PALETTE);
-            tilesCache[key] = tileBg;
+            (*tilesCache)[key] = tileBg;
         }
 
         newPattern = false;
@@ -813,20 +840,20 @@ Tile* PPU::fetchPattern(int patternTable, int patternIndex, int attrColor, int p
 
 		y = (y + 1) & 0x07;
 	}
+
 	return tile;
 }//fetchPattern()
 
 
 void PPU::resetTilesCache() {
 	map<TileCacheKey, Tile*>::iterator it;
-	Tile* tile;
-	for (it = tilesCache.begin(); it != tilesCache.end(); it++) {
-		tile = it->second;
-		delete tile;
+	for (it = tilesCache->begin(); it != tilesCache->end(); it++) {
+		delete it->second;
+		tilesCache->erase(it);
 	}
 
-
-	tilesCache.clear();
+	delete tilesCache;
+	tilesCache = new map<TileCacheKey, Tile*>;
 }
 
 

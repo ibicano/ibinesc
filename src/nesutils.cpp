@@ -53,3 +53,17 @@ int intToC2(int n) {
     return c2;
 }
 
+
+int mod(int op, int m) {
+	int result;
+
+	if (op < 0) {
+		int d = -op / m;
+		result = op + ((d + 1) * m);
+	}
+	else
+		result = op % m;
+
+	return result;
+}//modulus
+
