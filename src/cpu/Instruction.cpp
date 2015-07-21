@@ -2993,7 +2993,7 @@ TYA::~TYA() {
 }
 
 int TYA::execute() {
-    int regY = cpu->getRegX();
+    int regY = cpu->getRegY();
 
 	cpu->setZeroBit(regY);
 	cpu->setSignBit(regY);

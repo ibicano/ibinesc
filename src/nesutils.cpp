@@ -30,10 +30,15 @@ int setBits(int word, int mask, int value) {
 
 
 int c2ToInt(int byte) {
+	int result;
+	byte = byte & 0xFF;
+
 	if (byte & 0x80)
-        return -(0x100 - byte);
+        result = -(0x100 - byte);
     else
-        return byte;
+        result = byte;
+
+	return result;
 }
 
 
