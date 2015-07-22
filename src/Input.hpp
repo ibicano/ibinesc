@@ -12,6 +12,10 @@ class Input {
 public:
 	Input();
 	virtual ~Input();
+
+private:
+	int readCount;
+	int write;
 };
 
 
@@ -21,33 +25,33 @@ public:
 	virtual ~Joypad();
 
 	int readReg();			// Lee el registro del dispositivo
-	void writeReg(int data);		// Escribe el registro del dispositivo
+	void writeReg(int v);		// Escribe el registro del dispositivo
 
 
 	// Lee y establece el valor de los botones
-	bool isA();
-	void setA(bool a);
+	bool getA();
+	void setA(bool v);
 
-	bool isB();
-	void setB(bool b);
+	bool getB();
+	void setB(bool v);
 
-	bool isDown();
+	bool getDown();
 	void setDown(bool down);
 
-	bool isLeft();
-	void setLeft(bool left);
+	bool getLeft();
+	void setLeft(bool v);
 
-	bool isRight();
-	void setRight(bool right);
+	bool getRight();
+	void setRight(bool v);
 
-	bool isSelect();
-	void setSelect(bool select);
+	bool getSelect();
+	void setSelect(bool v);
 
-	bool isStart();
-	void setStart(bool start);
+	bool getStart();
+	void setStart(bool v);
 
-	bool isUp();
-	void setUp(bool up);
+	bool getUp();
+	void setUp(bool v);
 
 protected:
 	int readCount;			// Contador del número de lectura del dispositivo

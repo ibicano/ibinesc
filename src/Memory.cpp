@@ -41,7 +41,7 @@ int Memory::readData(int addr) {
 		d = ppu->readReg(0x2000 + (addr & 0x07));
 	else if (addr >= 0x4000 && addr < 0x4020) {		// Más registros I/O
 		if (addr == 0x4016) {   					// Registro del Joypad 1
-			//d = joypad1->readReg();
+			d = joypad1->readReg();
 		}
 		else if (addr == 0x4017) {}
 	}

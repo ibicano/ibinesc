@@ -8,14 +8,14 @@
 #include "Input.hpp"
 
 Input::Input() {
-
+	readCount = 0;
+	write = 0;
 }
 
 Input::~Input() {
-	// TODO Auto-generated destructor stub
 }
 
-Joypad::Joypad() {
+Joypad::Joypad() : Input(){
 	readCount = 0;
 	write = 0;
 
@@ -33,55 +33,100 @@ Joypad::~Joypad() {
 }
 
 int Joypad::readReg() {
+	bool v;
+
+    if (readCount == 0)
+        v = a;
+    else if (readCount == 1)
+        v = b;
+    else if (readCount == 2)
+        v = select;
+    else if (readCount == 3)
+        v = start;
+    else if (readCount == 4)
+        v = up;
+    else if (readCount == 5)
+        v = down;
+    else if (readCount == 6)
+        v = left;
+    else if (readCount == 7)
+        v = right;
+
+    readCount = (readCount + 1) % 8;
+
+    return v;
+}//readReg()
+
+
+void Joypad::writeReg(int v) {
+    v = v & 0x01;
+    if (v == 0 && write == 1)
+        readCount = 0;
+
+    write = v;
+}//writeReg()
+
+
+bool Joypad::getA() {
+	return a;
 }
 
-void Joypad::writeReg(int data) {
+void Joypad::setA(bool v) {
+	a = v;
 }
 
-bool Joypad::isA() {
+bool Joypad::getB() {
+	return b;
 }
 
-void Joypad::setA(bool a) {
+void Joypad::setB(bool v) {
+	b = v;
 }
 
-bool Joypad::isB() {
+bool Joypad::getDown() {
+	return down;
 }
 
-void Joypad::setB(bool b) {
+void Joypad::setDown(bool v) {
+	down = v;
 }
 
-bool Joypad::isDown() {
+bool Joypad::getLeft() {
+	return left;
 }
 
-void Joypad::setDown(bool down) {
+void Joypad::setLeft(bool v) {
+	left = v;
 }
 
-bool Joypad::isLeft() {
+bool Joypad::getRight() {
+	return right;
 }
 
-void Joypad::setLeft(bool left) {
+void Joypad::setRight(bool v) {
+	right = v;
 }
 
-bool Joypad::isRight() {
+bool Joypad::getSelect() {
+	return select;
 }
 
-void Joypad::setRight(bool right) {
+void Joypad::setSelect(bool v) {
+	select = v;
 }
 
-bool Joypad::isSelect() {
+bool Joypad::getStart() {
+	return start;
 }
 
-void Joypad::setSelect(bool select) {
+void Joypad::setStart(bool v) {
+	start = v;
 }
 
-bool Joypad::isStart() {
+bool Joypad::getUp() {
+	return up;
 }
 
-void Joypad::setStart(bool start) {
-}
-
-bool Joypad::isUp() {
-}
-
-void Joypad::setUp(bool up) {
+void Joypad::setUp(bool v) {
+	up = v;
 }

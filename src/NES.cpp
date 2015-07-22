@@ -15,10 +15,15 @@
 #include "mappers/MMC1.hpp"
 #include "Memory.hpp"
 
+#include <SDL2/SDL.h>
+
 using namespace std;
 
 
 NES::NES(string fileName) {
+	// Inicializamos SDL
+	SDL_Init(SDL_INIT_VIDEO);
+
 	rom = new ROM(fileName);
 
 	if (rom->getMapperCode() == 0) mapper = new NROM(rom);
@@ -33,6 +38,8 @@ NES::NES(string fileName) {
 	joypad = new Joypad();
 	mem = new Memory(ppu, mapper, joypad);
 	cpu = new CPU(mem, ppu);
+
+
 }//NES()
 
 
@@ -51,8 +58,11 @@ void NES::run() {
 	int statsCycles = 0;		// Contador de ciclos de CPU para esyadísticas de rendimiento
 	time_t statsTotalTime = time(NULL);     // Tiempo de ejecución transcurrido para fines estadísticos
 	int totalCycles = 0;		// Número de ciclos de CPU totales desde que arranca el emulador
-	//int keyCounter = 0;		// Contador de ciclos hasta el siguiente chequeo de pulsación del joypad
 	int cycles = 0;				// Ciclo de CPU en una iteración del bucle
+
+	// Procesa la entrada
+	int keyCounter = 0;		// Contador de ciclos hasta el siguiente chequeo de pulsación del joypad
+	SDL_Event event;
 
 	// Instrucción procesada
 	Instruction* inst;
@@ -110,49 +120,51 @@ void NES::run() {
 
 		// Aquí se detectan las pulsaciones en los dispositivos de entrada-> Por cuestiones de rendimiento, ya que
 		// es bastante caro comprobar en cada iteración del bucle, se hace solo cada 10000 ciclos de CPU
-		/*
-		keycounter += cycles;
-		if (keycounter > 10000) {
-			// Eventos SDL (entrada por ejemplo)
-			sdlevents = sdl2->ext->getevents()
-			for e in sdlevents:
-				if e->type == sdl2->SDLKEYDOWN:
-					if e->key->keysym->sym == sdl2->SDLKw:
-						joypad1->setup(1)
-					elif e->key->keysym->sym == sdl2->SDLKs:
-						joypad1->setdown(1)
-					elif e->key->keysym->sym == sdl2->SDLKa:
-						joypad1->setleft(1)
-					elif e->key->keysym->sym == sdl2->SDLKd:
-						joypad1->setright(1)
-					elif e->key->keysym->sym == sdl2->SDLKo:
-						joypad1->setb(1)
-					elif e->key->keysym->sym == sdl2->SDLKp:
-						joypad1->seta(1)
-					elif e->key->keysym->sym == sdl2->SDLKRETURN:
-						joypad1->setstart(1)
-					elif e->key->keysym->sym == sdl2->SDLKRSHIFT:
-						joypad1->setselect(1)
-				elif e->type == sdl2->SDLKEYUP:
-					if e->key->keysym->sym == sdl2->SDLKw:
-						joypad1->setup(0)
-					elif e->key->keysym->sym == sdl2->SDLKs:
-						joypad1->setdown(0)
-					elif e->key->keysym->sym == sdl2->SDLKa:
-						joypad1->setleft(0)
-					elif e->key->keysym->sym == sdl2->SDLKd:
-						joypad1->setright(0)
-					elif e->key->keysym->sym == sdl2->SDLKo:
-						joypad1->setb(0)
-					elif e->key->keysym->sym == sdl2->SDLKp:
-						joypad1->seta(0)
-					elif e->key->keysym->sym == sdl2->SDLKRETURN:
-						joypad1->setstart(0)
-					elif e->key->keysym->sym == sdl2->SDLKRSHIFT:
-						joypad1->setselect(0)
 
-			keycounter = 0
-		}*/
+		keyCounter += cycles;
+		if (keyCounter > 10000) {
+			// Eventos SDL (entrada por ejemplo)
+			while (SDL_PollEvent(&event)) {
+				if (event.type == SDL_KEYDOWN) {
+					if (event.key.keysym.sym  == SDLK_w)
+						joypad->setUp(1);
+					else if (event.key.keysym.sym == SDLK_s)
+						joypad->setDown(1);
+					else if (event.key.keysym.sym == SDLK_a)
+						joypad->setLeft(1);
+					else if (event.key.keysym.sym == SDLK_d)
+						joypad->setRight(1);
+					else if (event.key.keysym.sym == SDLK_o)
+						joypad->setB(1);
+					else if (event.key.keysym.sym == SDLK_p)
+						joypad->setA(1);
+					else if (event.key.keysym.sym == SDLK_RETURN)
+						joypad->setStart(1);
+					else if (event.key.keysym.sym == SDLK_RSHIFT)
+						joypad->setSelect(1);
+				}
+				else if (event.type == SDL_KEYUP) {
+					if (event.key.keysym.sym == SDLK_w)
+						joypad->setUp(0);
+					else if (event.key.keysym.sym == SDLK_s)
+						joypad->setDown(0);
+					else if (event.key.keysym.sym == SDLK_a)
+						joypad->setLeft(0);
+					else if (event.key.keysym.sym == SDLK_d)
+						joypad->setRight(0);
+					else if (event.key.keysym.sym == SDLK_o)
+						joypad->setB(0);
+					else if (event.key.keysym.sym == SDLK_p)
+						joypad->setA(0);
+					else if (event.key.keysym.sym == SDLK_RETURN)
+						joypad->setStart(0);
+					else if (event.key.keysym.sym == SDLK_RSHIFT)
+						joypad->setSelect(0);
+				}
+			}
+
+			keyCounter = 0;
+		}
 
 		totalCycles += cycles;              // Incrementamos el contador de ciclos totales
 
