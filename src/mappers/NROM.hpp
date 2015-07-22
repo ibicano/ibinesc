@@ -25,7 +25,7 @@ public:
 	int readChr(int addr);
 	void writeChr(int data, int addr);
 
-	int mirrorMode();
+	int getMirrorMode();
 
 private:
 	unsigned int* prgRom0;

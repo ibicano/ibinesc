@@ -66,6 +66,6 @@ void CNROM::writePrg(int data, int addr) {
 void CNROM::writeChr(int data, int addr) {}
 
 
-int CNROM::mirrorMode() {
+int CNROM::getMirrorMode() {
     return rom->getMirroring();
 }

@@ -70,6 +70,6 @@ void NROM::writeChr(int data, int addr) {
 }
 
 
-int NROM::mirrorMode() {
+int NROM::getMirrorMode() {
 	return rom->getMirroring();
 }

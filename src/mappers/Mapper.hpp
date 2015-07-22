@@ -28,7 +28,7 @@ public:
 	virtual void scanlineTick();
 
 	// Devuelve el modo de mirror activo (puede variar entre mappers)
-	virtual int mirrorMode() = 0;
+	virtual int getMirrorMode() = 0;
 
 protected:
 	ROM* rom;		// Puntero a la rom del juego

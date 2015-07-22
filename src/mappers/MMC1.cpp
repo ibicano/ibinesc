@@ -121,7 +121,7 @@ void MMC1::writeChr(int data, int addr) {
 }
 
 
-int MMC1::mirrorMode() {
+int MMC1::getMirrorMode() {
 	// Si el bit 1 del registro 0 es 0 se activa single mirroring (valor 2)
 	if (reg0 & 0x02 == 0)
 		return 2;

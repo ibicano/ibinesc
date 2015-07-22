@@ -50,19 +50,19 @@ void PPUMemory::writeData(int data, int addr) {
 	else if (0x2000 <= a && a < 0x4000) {
 		// Name Table 0
 		if (0x2000 <= a && a < 0x2400) {
-			if (mapper->mirrorMode() == 0) {
+			if (mapper->getMirrorMode() == 0) {
 				setMemory(d, a + 0x0400);
 				// Mirrors
 				setMemory(d, a + 0x1000);
 				setMemory(d, a + 0x1400);
 			}//if
-			else if (mapper->mirrorMode() == 1) {
+			else if (mapper->getMirrorMode() == 1) {
 				setMemory(d, a + 0x0800);
 				// Mirrors
 				setMemory(d, a + 0x1000);
 				setMemory(d, a + 0x1800);
 			}//else if
-			else if (mapper->mirrorMode() == 2) {
+			else if (mapper->getMirrorMode() == 2) {
 				setMemory(d, a + 0x0400);
 				setMemory(d, a + 0x0800);
 				// Mirrors
@@ -75,20 +75,20 @@ void PPUMemory::writeData(int data, int addr) {
 		}//if
 		// Name Table 1
 		else if (0x2400 <= a && a < 0x2800) {
-			if (mapper->mirrorMode() == 0) {
+			if (mapper->getMirrorMode() == 0) {
 				setMemory(d, a - 0x0400);
 				// Mirrors
 				setMemory(d, a + 0x1000);
 				setMemory(d, a + 0x0C00);
 			}
-			else if (mapper->mirrorMode() == 1) {
+			else if (mapper->getMirrorMode() == 1) {
 				setMemory(d, a + 0x0800);
 				// Mirrors
 				setMemory(d, a + 0x1000);
 				if (a < 0x2700)
 					setMemory(d, a + 0x1800);
 			}
-			else if (mapper->mirrorMode() == 2) {
+			else if (mapper->getMirrorMode() == 2) {
 				setMemory(d, a - 0x0400);
 				setMemory(d, a + 0x0800);
 				// Mirrors
@@ -102,20 +102,20 @@ void PPUMemory::writeData(int data, int addr) {
 		}//else if
 		// Name Table 2
 		else if (0x2800 <= a && a < 0x2C00) {
-			if (mapper->mirrorMode() == 0) {
+			if (mapper->getMirrorMode() == 0) {
 				setMemory(d, a + 0x0400);
 				// Mirrors
 				setMemory(d, a + 0x1000);
 				if (a < 0x2B00)
 					setMemory(d, a + 0x1400);
 			}
-			else if (mapper->mirrorMode() == 1) {
+			else if (mapper->getMirrorMode() == 1) {
 				setMemory(d, a - 0x0800);
 				// Mirrors
 				setMemory(d, a + 0x1000);
 				setMemory(d, a + 0x0800);
 			}
-			else if (mapper->mirrorMode() == 2) {
+			else if (mapper->getMirrorMode() == 2) {
 				setMemory(d, a + 0x0400);
 				setMemory(d, a - 0x0800);
 				// Mirrors
@@ -129,21 +129,21 @@ void PPUMemory::writeData(int data, int addr) {
 		}//else if
 		// Name Table 3
 		else if (0x2C00 <= a && a < 0x3000) {
-			if (mapper->mirrorMode() == 0) {
+			if (mapper->getMirrorMode() == 0) {
 				setMemory(d, a - 0x0400);
 				// Mirrors
 				if (a < 0x2F00)
 					setMemory(d, a + 0x1000);
 				setMemory(d, a + 0x0C00);
 			}
-			else if (mapper->mirrorMode() == 1) {
+			else if (mapper->getMirrorMode() == 1) {
 				setMemory(d, a - 0x0800);
 				// Mirrors
 				if (a < 0x2F00)
 					setMemory(d, a + 0x1000);
 				setMemory(d, a + 0x0800);
 			}
-			else if (mapper->mirrorMode() == 2) {
+			else if (mapper->getMirrorMode() == 2) {
 				setMemory(d, a - 0x0400);
 				setMemory(d, a - 0x0800);
 				// Mirrors

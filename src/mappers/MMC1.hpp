@@ -26,7 +26,7 @@ public:
 	virtual void writeChr(int data, int addr);
 
 	// Devuelve el modo de mirror activo (puede variar entre mappers)
-	virtual int mirrorMode();
+	virtual int getMirrorMode();
 
 private:
 	 // Bancos de CHR de 4K
