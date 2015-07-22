@@ -13,6 +13,7 @@
 
 #include "mappers/NROM.hpp"
 #include "mappers/MMC1.hpp"
+#include "mappers/CNROM.hpp"
 #include "Memory.hpp"
 
 #include <SDL2/SDL.h>
@@ -28,9 +29,9 @@ NES::NES(string fileName) {
 
 	if (rom->getMapperCode() == 0) mapper = new NROM(rom);
 	else if (rom->getMapperCode() == 1) mapper = new MMC1(rom);
+	else if (rom->getMapperCode() == 3) mapper = new CNROM(rom);
 	// TODO: implementar el resto de mappers
 	/*
-	else if (rom->getMapperCode() == 3) mapper = new CNROM(rom);
 	else if (rom->getMapperCode() == 4) mapper = new MMC3(rom);
 	*/
 
