@@ -93,10 +93,6 @@ PPU::PPU(Mapper* mapper) {
 	regXOffset = 0x0;             // Scroll patrón (3-bit)
 	tmpYOffset = 0x0;             // Alamcena el offset y de forma temporal para leerlo más rápido
 	regVramSwitch = 0;
-
-	//Inicializa variable de cache de tiles
-	tilesCache = new map<TileCacheKey, Tile*>;
-
 }//PPU()
 
 
@@ -109,7 +105,6 @@ PPU::~PPU() {
 	delete memory;
 
 	resetTilesCache();
-	delete tilesCache;
 }
 
 
@@ -603,12 +598,12 @@ void PPU::drawPixel(int x, int y) {
 
         TileCacheKey key = {patternTableNumber, patternIndex, attrColor};
 
-        if (tilesCache->count(key) > 0) {
-            tileBg = (*tilesCache)[key];
+        if (tilesCache.count(key) > 0) {
+            tileBg = tilesCache[key];
         }
         else {
             tileBg = fetchPattern(patternTableNumber, patternIndex, attrColor, PPUMemory::ADDR_IMAGE_PALETTE);
-            (*tilesCache)[key] = tileBg;
+            tilesCache[key] = tileBg;
         }
 
         newPattern = false;
@@ -847,13 +842,10 @@ Tile* PPU::fetchPattern(int patternTable, int patternIndex, int attrColor, int p
 
 void PPU::resetTilesCache() {
 	map<TileCacheKey, Tile*>::iterator it;
-	for (it = tilesCache->begin(); it != tilesCache->end(); it++) {
+	for (it = tilesCache.begin(); it != tilesCache.end(); it++) {
 		delete it->second;
-		tilesCache->erase(it);
+		tilesCache.erase(it);
 	}
-
-	delete tilesCache;
-	tilesCache = new map<TileCacheKey, Tile*>;
 }
 
 
