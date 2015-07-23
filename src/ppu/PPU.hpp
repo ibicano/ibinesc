@@ -45,7 +45,7 @@ public:
 	static const int VBLANK_CYCLES = 7420;
 	static const int FRAME_SCANLINES = 312;
 	static const int VBLANK_SCANLINES = 70;
-	static const int FRAME_PERIOD = 0.020;        // Periodo de frame en segundos
+	static const int FRAME_PERIOD = 20;        // Periodo de frame en milisegundos
 
 	static const int FRAME_WIDTH = 256;
 	static const int FRAME_HEIGHT = 240;
@@ -54,7 +54,7 @@ public:
 	virtual ~PPU();
 
 	// Ejecuta los ciclos indicados en la PPU
-	void execCycles(int cycles);
+	bool execCycles(int cycles);
 
 	// Devuelve el valor del registro indicado por su dirección mapeada en memoria
 	int readReg(int addr);
@@ -71,6 +71,7 @@ public:
 	// Lee y establece el valor del indicador de vblank
 	bool getIntVblank();
 	void setIntVblank(bool v);
+
 
 	// Lee el patrón "patternIndex" de la tabla de patrones "patternTable" con el color "attrColor" y la paleta
     // de colores ubicada en la dirección de memoria "paletteAddr" y lo coloca en las variables de salida
@@ -118,7 +119,6 @@ private:
 
 	int cyclesFrame;		// Ciclos restantes hasta el siguiente frame
 
-	bool endFrame;			// Indica si se ha terminado el frame
 	bool endScanline;		// Indica si se ha terminado el scanline
 
 	bool newPattern;		// Indica si tenemos que leer un nuevo tile de memoria o usamos el cacheado

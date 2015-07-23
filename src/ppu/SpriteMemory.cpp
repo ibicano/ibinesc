@@ -8,7 +8,7 @@
 #include "SpriteMemory.hpp"
 
 SpriteMemory::SpriteMemory() {
-	for (int i; i < SIZE; i++)
+	for (int i = 0; i < SIZE; i++)
 		memory[i] = 0x00;
 }
 

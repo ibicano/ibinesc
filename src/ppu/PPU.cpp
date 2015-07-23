@@ -58,7 +58,6 @@ PPU::PPU(Mapper* mapper) {
 
 	cyclesFrame = FRAME_CYCLES - 1;
 
-	endFrame = false;
 	endScanline = false;
 
 	newPattern = true;
@@ -116,7 +115,9 @@ bool PPU::getIntVblank() {
 // Ejecuta un ciclo de reloj. Aquí va toda la chicha del dibujado y de
 // activación de cosas en función del ciclo del frame en el que nos
 // encontremos
-void PPU::execCycles(int cycles) {
+bool PPU::execCycles(int cycles) {
+	bool endFrame = false;
+
     if (cyclesFrame < cycles) {
         endFrame = true;
         cyclesFrame = mod((cyclesFrame  - cycles + PPU::FRAME_CYCLES), PPU::FRAME_CYCLES);
@@ -167,10 +168,10 @@ void PPU::execCycles(int cycles) {
         tileSpriteZero1 = spriteZero->getTile1();
 
         spriteHit = false;
-
-        // Indicamos que ha finalizado el frame
-        endFrame = false;
     }//if
+
+    // Devolvemos si se ha finalizado un frame en esta ejecución
+    return endFrame;
 }//execCycles()
 
 

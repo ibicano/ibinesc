@@ -38,6 +38,9 @@ NES::NES(string fileName) {
 	mem = new Memory(ppu, mapper, joypad);
 	cpu = new CPU(mem, ppu);
 
+	if (rom->getMapperCode() == 4)
+        ((MMC3*)mapper)->setCpu(cpu);
+
 
 }//NES()
 
@@ -55,7 +58,7 @@ void NES::run() {
 	fstream fichLog("/home/ibon/tmp/ibitest.log", fstream::out);
 
 	int statsCycles = 0;		// Contador de ciclos de CPU para esyadísticas de rendimiento
-	time_t statsTotalTime = time(NULL);     // Tiempo de ejecución transcurrido para fines estadísticos
+	unsigned int statsTotalTime = SDL_GetTicks();     // Tiempo de ejecución transcurrido para fines estadísticos
 	int totalCycles = 0;		// Número de ciclos de CPU totales desde que arranca el emulador
 	int cycles = 0;				// Ciclo de CPU en una iteración del bucle
 
@@ -65,7 +68,11 @@ void NES::run() {
 
 	// Instrucción procesada
 	Instruction* inst;
-	int instCount = 0;
+	int totalInstCount = 0;
+
+	// Variables para emular la velocidad real de la NES por iteración del bucle
+	unsigned int emuFrameTime = SDL_GetTicks();
+	bool endFrame;
 
 	// Bucle principal
 	while (1) {
@@ -112,10 +119,10 @@ void NES::run() {
 
 
 		cycles += inst->execute();
-		instCount += 1;
+		totalInstCount += 1;
 
 		// Restamos los ciclos de ejecución a la PPU
-		ppu->execCycles(cycles);
+		endFrame = ppu->execCycles(cycles);
 
 		// Aquí se detectan las pulsaciones en los dispositivos de entrada-> Por cuestiones de rendimiento, ya que
 		// es bastante caro comprobar en cada iteración del bucle, se hace solo cada 10000 ciclos de CPU
@@ -167,14 +174,15 @@ void NES::run() {
 
 		totalCycles += cycles;              // Incrementamos el contador de ciclos totales
 
+
 		// Estadísticas
 		statsCycles += cycles;
 
 		// Hacemos la media de ciclos ejecutados por segundo para fines estadísticos
 		if (statsCycles > 20000) {
-			time_t statsClock = time(NULL);
+			unsigned int statsClock = SDL_GetTicks();
 
-			if (statsClock - statsTotalTime >= 1) {
+			if (statsClock - statsTotalTime >= 1000) {
 				cout << statsCycles << " ciclos por segundo\n";
 				statsCycles = 0;
 				statsTotalTime = statsClock;
@@ -182,9 +190,19 @@ void NES::run() {
 		}
 
 
-		// Emula la velocidad de la NES
+		// Ajusta a la velocidad real de la NES
+		if (endFrame) {
+			if (SDL_GetTicks() > emuFrameTime) {
+				// Esperamos el tiempo equivalente a la resta del período de un frame en la NES real
+				// menos el tiempo que ha tardado en dibujar ese frame el emulador
+				SDL_Delay(PPU::FRAME_PERIOD - (SDL_GetTicks() - emuFrameTime));
+			}
+			emuFrameTime = SDL_GetTicks();
+		}
+
 		//time->sleep(0->0000006)
 
+		// Resetea el contador de ciclos de la iteración
 		cycles = 0;
 
 	}// while
