@@ -55,7 +55,7 @@ NES::~NES() {
 
 void NES::run() {
 	// Esto para la depuración de las instrucciones
-	fstream fichLog("/home/ibon/tmp/ibitest.log", fstream::out);
+	//fstream fichLog("/home/ibon/tmp/ibitest.log", fstream::out);
 
 	int statsCycles = 0;		// Contador de ciclos de CPU para esyadísticas de rendimiento
 	unsigned int statsTotalTime = SDL_GetTicks();     // Tiempo de ejecución transcurrido para fines estadísticos
@@ -192,19 +192,19 @@ void NES::run() {
 
 		// Ajusta a la velocidad real de la NES
 		if (endFrame) {
-			if (SDL_GetTicks() > emuFrameTime) {
+			int delay= PPU::FRAME_PERIOD - (SDL_GetTicks() - emuFrameTime);
+			if (delay > 0) {
 				// Esperamos el tiempo equivalente a la resta del período de un frame en la NES real
 				// menos el tiempo que ha tardado en dibujar ese frame el emulador
-				SDL_Delay(PPU::FRAME_PERIOD - (SDL_GetTicks() - emuFrameTime));
+				SDL_Delay(delay);
 			}
 			emuFrameTime = SDL_GetTicks();
 		}
 
-		//time->sleep(0->0000006)
 
 		// Resetea el contador de ciclos de la iteración
 		cycles = 0;
 
 	}// while
-	fichLog.close();
+	//fichLog.close();
 }//run()
