@@ -9,10 +9,26 @@
 
 #include "NES.hpp"
 #include <iostream>
+#include "GUI.hpp"
+#include <SDL2/SDL.h>
 
 using namespace std;
 
+
+//TODO: mejorar la gestión del hilo del GUI
+// Función para ejecutar la GUI en otro hilo
+int threadGui(void* data) {
+	GUI* gui = new GUI(0, (char**)0);
+	return 0;
+}//threadGui()
+
+
 int main() {
+	// Inicializamos SDL
+	SDL_Init(SDL_INIT_VIDEO);
+
+	SDL_CreateThread(threadGui, "threadGui", (void*)NULL);
+
 	string fileName = "roms/Super Mario Bros. (E).nes";
     //string fileName = "roms/Donkey Kong Classics (USA, Europe).nes";
 	//string fileName = "roms/Super Mario Bros 3 (E).nes";
@@ -26,3 +42,6 @@ int main() {
 
 	return 0;
 }//main()
+
+
+

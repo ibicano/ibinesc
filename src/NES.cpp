@@ -23,9 +23,6 @@ using namespace std;
 
 
 NES::NES(string fileName) {
-	// Inicializamos SDL
-	SDL_Init(SDL_INIT_VIDEO);
-
 	rom = new ROM(fileName);
 
 	if (rom->getMapperCode() == 0) mapper = new NROM(rom);
