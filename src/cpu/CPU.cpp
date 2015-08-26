@@ -16,6 +16,19 @@ CPU::CPU(Memory* mem, PPU* ppu) {
 	this->mem = mem;
 	this->ppu = ppu;
 
+	reset();
+
+	// Pool de instrucciones
+	instructionsPool = new InstructionsPool(this);
+}//CPU()
+
+CPU::~CPU() {
+	delete instructionsPool;
+}//~CPU()
+
+
+// Resetea el estado de la CPU
+void CPU::reset() {
 	// Inicializa los registros
 	regPc = mem->readData(CPU::INT_ADDR_RESET);
 	regPc = regPc | (mem->readData(CPU::INT_ADDR_RESET + 1) << 8);
@@ -33,13 +46,7 @@ CPU::CPU(Memory* mem, PPU* ppu) {
 	// Inicializa el flag de IRQ
 	irq = false;
 
-	// Pool de instrucciones
-	instructionsPool = new InstructionsPool(this);
-}//CPU()
-
-CPU::~CPU() {
-	delete instructionsPool;
-}//~CPU()
+}//reset()
 
 
 // procesa una interrupción IRQ
@@ -310,3 +317,5 @@ void CPU::interrupt(int vectorAddr) {
 	addr = addr | (mem->readData(vectorAddr + 1) << 8);
 	regPc = addr;
 }
+
+

@@ -40,6 +40,8 @@ int main() {
 
 	nes->run();
 
+	delete nes;
+
 	return 0;
 }//main()
 

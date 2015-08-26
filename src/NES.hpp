@@ -26,6 +26,9 @@ public:
 	// Ejecuta la NES
 	void run();
 
+	// Resetea el estado de la NES
+	void reset();
+
 private:
 	ROM* rom;			// Rom del juego
 	Mapper* mapper;		// Mapper del cartucho
