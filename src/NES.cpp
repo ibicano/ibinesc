@@ -41,7 +41,6 @@ NES::NES(string fileName) {
 	if (rom->getMapperCode() == 4)
         ((MMC3*)mapper)->setCpu(cpu);
 
-
 }//NES()
 
 
@@ -208,3 +207,8 @@ void NES::run() {
 	}// while
 	//fichLog.close();
 }//run()
+
+
+void NES::reset() {
+	cpu->reset();
+}

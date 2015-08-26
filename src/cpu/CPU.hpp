@@ -48,6 +48,9 @@ public:
 	CPU(Memory* mem, PPU* ppu);
 	virtual ~CPU();
 
+	// Resetea el estado de la CPU
+	void reset();
+
 	// Devuelve un puntero a la memoria
 	Memory* getMem();
 
