@@ -9,7 +9,7 @@
 
 #include "NES.hpp"
 #include <iostream>
-#include "GUI.hpp"
+#include "gui/GUI.hpp"
 #include <SDL2/SDL.h>
 
 using namespace std;
