@@ -13,10 +13,11 @@
 class GUI {
 
 public:
-	GUI(int argc, char** argv);
+	GUI(int argc, char** argv, Config* config);
 	virtual ~GUI();
 
 protected:
+	Config* config;				// Configuración y ajustes del emulador
 	QApplication* app;			// Aplicación
 	MainWindow* mainWindow;
 

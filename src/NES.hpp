@@ -15,12 +15,13 @@
 #include "Input.hpp"
 #include <iostream>
 #include "mappers/Mapper.hpp"
+#include "Config.hpp"
 
 using namespace std;
 
 class NES {
 public:
-	NES(string fileName);
+	NES(string fileName, Config* config);
 	virtual ~NES();
 
 	// Ejecuta la NES
@@ -30,6 +31,7 @@ public:
 	void reset();
 
 private:
+	Config* config;		// Configuración del emulador
 	ROM* rom;			// Rom del juego
 	Mapper* mapper;		// Mapper del cartucho
 	Memory* mem;

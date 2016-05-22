@@ -7,7 +7,8 @@
 
 #include "MainWindow.hpp"
 
-MainWindow::MainWindow() {
+MainWindow::MainWindow(Config* config) {
+	this->config = config;
 	this->createMenus();
 }
 
@@ -43,7 +44,7 @@ void MainWindow::destroyMenus() {
 
 
 void MainWindow::loadFile() {
-	QFileDialog::getOpenFileName();
+	QFileDialog::getOpenFileName(this, "Open ROM file");
 }
 
 

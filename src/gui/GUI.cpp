@@ -7,10 +7,12 @@
 
 #include "GUI.hpp"
 
-GUI::GUI(int argc, char** argv) {
+GUI::GUI(int argc, char** argv, Config* config) {
+	this->config = config;
+
 	app = new QApplication(argc, argv);
 
-	mainWindow = new MainWindow();
+	mainWindow = new MainWindow(config);
 	mainWindow->show();
 	app->exec();
 }//GUI()

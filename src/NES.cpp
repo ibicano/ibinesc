@@ -22,7 +22,9 @@
 using namespace std;
 
 
-NES::NES(string fileName) {
+NES::NES(string fileName, Config* config) {
+	this->config = config;
+
 	rom = new ROM(fileName);
 
 	if (rom->getMapperCode() == 0) mapper = new NROM(rom);

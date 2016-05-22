@@ -10,18 +10,20 @@
 
 #include <QtWidgets/QtWidgets>
 
+class Config;
+
 class MainWindow : public QMainWindow {
 
-// TODO: investigar para integrar las herramientas de QT en el proyecto
-// en especial es necesario ejecutar la herramienta "moc" para que expanda
-// las macros propias de QT
 Q_OBJECT
 
 public:
-	MainWindow();
+	MainWindow(Config* config);
 	virtual ~MainWindow();
 
 protected:
+	// Configuración del emulador
+	Config* config;
+
 	// Menús
 	QMenu* menuFile;
 	QAction* actionLoadRom;
@@ -39,7 +41,7 @@ protected:
 	void destroyMenus();
 
 
-public slots:
+protected slots:
 	void loadFile();
 
 };
