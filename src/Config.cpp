@@ -9,17 +9,35 @@
 
 Config::Config() {
 	romFile = "Prueba inicial";
+	pause = false;
 }
 
 Config::~Config() {
-	// TODO Auto-generated destructor stub
+
 }
 
 void Config::setRomFile(string romFile) {
 	this->romFile = romFile;
+	updated = true;
 }
 
 string Config::getRomFile() {
 	return this->romFile;
 }
 
+void Config::setPause(bool p) {
+	pause = p;
+	updated = true;
+}
+
+bool Config::getUpdated() {
+	return updated;
+}
+
+void Config::setUpdated(bool u) {
+	updated = u;
+}
+
+bool Config::getPause() {
+	return pause;
+}

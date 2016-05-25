@@ -43,6 +43,7 @@ protected:
 
 protected slots:
 	void loadFile();
+	void pause();
 
 };
 

@@ -22,11 +22,22 @@ public:
 	Config();
 	virtual ~Config();
 
+	bool getUpdated();
+	void setUpdated(bool u);
+
 	void setRomFile(string romFile);
 	string getRomFile();
 
+	void setPause(bool p);
+	bool getPause();
+
 protected:
+	bool updated;		// Indica si la configuración se ha modificado (se opne a true cuando se ejecuta cualquier función que modifique algo)
+
 	string romFile;
+
+	// Estados de ejecución
+	bool pause;
 };
 
 #endif /* CONFIG_HPP_ */

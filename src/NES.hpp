@@ -30,8 +30,12 @@ public:
 	// Resetea el estado de la NES
 	void reset();
 
+	// Aplica y actualiza la configuración y el estado del objeto "config"
+	void refreshConfig();
+
 private:
 	Config* config;		// Configuración del emulador
+	bool pause;			// Indica si la emulación está en pausa
 	ROM* rom;			// Rom del juego
 	Mapper* mapper;		// Mapper del cartucho
 	Memory* mem;

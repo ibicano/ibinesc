@@ -25,6 +25,8 @@ using namespace std;
 NES::NES(string fileName, Config* config) {
 	this->config = config;
 
+	pause = false;
+
 	rom = new ROM(fileName);
 
 	if (rom->getMapperCode() == 0) mapper = new NROM(rom);
@@ -74,134 +76,145 @@ void NES::run() {
 
 	// Bucle principal
 	while (1) {
-		// Si hay interrupciones y la CPU no está ocupada, las lanzamos
-		if (ppu->getIntVblank()) {
-			cpu->interruptVblank()  ;      // Procesamos VBLANK
-			cycles += CPU::INT_LATENCY;
-		}
+		if (!pause) {
+			// Si hay interrupciones y la CPU no está ocupada, las lanzamos
+			if (ppu->getIntVblank()) {
+				cpu->interruptVblank()  ;      // Procesamos VBLANK
+				cycles += CPU::INT_LATENCY;
+			}
 
-		if ((!cpu->getReg_p_i_bit()) & cpu->getIrq())
-			cpu->interruptIrq();
-
-
-		// Fetch y Exec siguiente instrucción (si hemos ejecutado una
-		// interrupción en el paso anterior será su rutina de interrupción)
-		inst = cpu->fetchInst();
-
-		/*
-		// Escribimos en el log de instrucciones
-		int opLow = inst->getOperand() & 0xFF;
-		int opHigh = (inst->getOperand() >> 8) & 0xFF;
-
-		fichLog << hex << cpu->getRegPc();
-		fichLog << "\t";
-		fichLog << hex << inst->getOpcode();
-		fichLog << " ";
-		fichLog << hex << opLow;
-		fichLog << " ";
-		fichLog << hex << opHigh;
-		fichLog << "\t\t";
-		fichLog << hex << cpu->getRegA();
-		fichLog << " ";
-		fichLog << hex << cpu->getRegX();
-		fichLog << " ";
-		fichLog << hex << cpu->getRegY();
-		fichLog << " ";
-		fichLog << hex << cpu->getRegP();
-		fichLog << " ";
-		fichLog << hex << cpu->getRegSp();
-		fichLog << "\n";
-
-		fichLog.flush();
-		*/
+			if ((!cpu->getReg_p_i_bit()) & cpu->getIrq())
+				cpu->interruptIrq();
 
 
-		cycles += inst->execute();
-		totalInstCount += 1;
+			// Fetch y Exec siguiente instrucción (si hemos ejecutado una
+			// interrupción en el paso anterior será su rutina de interrupción)
+			inst = cpu->fetchInst();
 
-		// Restamos los ciclos de ejecución a la PPU
-		endFrame = ppu->execCycles(cycles);
+			/*
+			// Escribimos en el log de instrucciones
+			int opLow = inst->getOperand() & 0xFF;
+			int opHigh = (inst->getOperand() >> 8) & 0xFF;
 
-		// Aquí se detectan las pulsaciones en los dispositivos de entrada-> Por cuestiones de rendimiento, ya que
-		// es bastante caro comprobar en cada iteración del bucle, se hace solo cada 10000 ciclos de CPU
+			fichLog << hex << cpu->getRegPc();
+			fichLog << "\t";
+			fichLog << hex << inst->getOpcode();
+			fichLog << " ";
+			fichLog << hex << opLow;
+			fichLog << " ";
+			fichLog << hex << opHigh;
+			fichLog << "\t\t";
+			fichLog << hex << cpu->getRegA();
+			fichLog << " ";
+			fichLog << hex << cpu->getRegX();
+			fichLog << " ";
+			fichLog << hex << cpu->getRegY();
+			fichLog << " ";
+			fichLog << hex << cpu->getRegP();
+			fichLog << " ";
+			fichLog << hex << cpu->getRegSp();
+			fichLog << "\n";
 
-		keyCounter += cycles;
-		if (keyCounter > 10000) {
-			// Eventos SDL (entrada por ejemplo)
-			while (SDL_PollEvent(&event)) {
-				if (event.type == SDL_KEYDOWN) {
-					if (event.key.keysym.sym  == SDLK_w)
-						joypad->setUp(1);
-					else if (event.key.keysym.sym == SDLK_s)
-						joypad->setDown(1);
-					else if (event.key.keysym.sym == SDLK_a)
-						joypad->setLeft(1);
-					else if (event.key.keysym.sym == SDLK_d)
-						joypad->setRight(1);
-					else if (event.key.keysym.sym == SDLK_o)
-						joypad->setB(1);
-					else if (event.key.keysym.sym == SDLK_p)
-						joypad->setA(1);
-					else if (event.key.keysym.sym == SDLK_RETURN)
-						joypad->setStart(1);
-					else if (event.key.keysym.sym == SDLK_RSHIFT)
-						joypad->setSelect(1);
+			fichLog.flush();
+			*/
+
+
+			cycles += inst->execute();
+			totalInstCount += 1;
+
+			// Restamos los ciclos de ejecución a la PPU
+			endFrame = ppu->execCycles(cycles);
+
+			// Aquí se detectan las pulsaciones en los dispositivos de entrada-> Por cuestiones de rendimiento, ya que
+			// es bastante caro comprobar en cada iteración del bucle, se hace solo cada 10000 ciclos de CPU
+
+			keyCounter += cycles;
+			if (keyCounter > 10000) {
+				// Eventos SDL (entrada por ejemplo)
+				while (SDL_PollEvent(&event)) {
+					if (event.type == SDL_KEYDOWN) {
+						if (event.key.keysym.sym  == SDLK_w)
+							joypad->setUp(1);
+						else if (event.key.keysym.sym == SDLK_s)
+							joypad->setDown(1);
+						else if (event.key.keysym.sym == SDLK_a)
+							joypad->setLeft(1);
+						else if (event.key.keysym.sym == SDLK_d)
+							joypad->setRight(1);
+						else if (event.key.keysym.sym == SDLK_o)
+							joypad->setB(1);
+						else if (event.key.keysym.sym == SDLK_p)
+							joypad->setA(1);
+						else if (event.key.keysym.sym == SDLK_RETURN)
+							joypad->setStart(1);
+						else if (event.key.keysym.sym == SDLK_RSHIFT)
+							joypad->setSelect(1);
+					}
+					else if (event.type == SDL_KEYUP) {
+						if (event.key.keysym.sym == SDLK_w)
+							joypad->setUp(0);
+						else if (event.key.keysym.sym == SDLK_s)
+							joypad->setDown(0);
+						else if (event.key.keysym.sym == SDLK_a)
+							joypad->setLeft(0);
+						else if (event.key.keysym.sym == SDLK_d)
+							joypad->setRight(0);
+						else if (event.key.keysym.sym == SDLK_o)
+							joypad->setB(0);
+						else if (event.key.keysym.sym == SDLK_p)
+							joypad->setA(0);
+						else if (event.key.keysym.sym == SDLK_RETURN)
+							joypad->setStart(0);
+						else if (event.key.keysym.sym == SDLK_RSHIFT)
+							joypad->setSelect(0);
+					}
 				}
-				else if (event.type == SDL_KEYUP) {
-					if (event.key.keysym.sym == SDLK_w)
-						joypad->setUp(0);
-					else if (event.key.keysym.sym == SDLK_s)
-						joypad->setDown(0);
-					else if (event.key.keysym.sym == SDLK_a)
-						joypad->setLeft(0);
-					else if (event.key.keysym.sym == SDLK_d)
-						joypad->setRight(0);
-					else if (event.key.keysym.sym == SDLK_o)
-						joypad->setB(0);
-					else if (event.key.keysym.sym == SDLK_p)
-						joypad->setA(0);
-					else if (event.key.keysym.sym == SDLK_RETURN)
-						joypad->setStart(0);
-					else if (event.key.keysym.sym == SDLK_RSHIFT)
-						joypad->setSelect(0);
+
+				keyCounter = 0;
+			}
+
+			totalCycles += cycles;              // Incrementamos el contador de ciclos totales
+
+
+			// Estadísticas
+			statsCycles += cycles;
+
+			// Hacemos la media de ciclos ejecutados por segundo para fines estadísticos
+			if (statsCycles > 20000) {
+				unsigned int statsClock = SDL_GetTicks();
+
+				if (statsClock - statsTotalTime >= 1000) {
+					cout << statsCycles << " ciclos por segundo\n";
+					statsCycles = 0;
+					statsTotalTime = statsClock;
 				}
 			}
 
-			keyCounter = 0;
-		}
 
-		totalCycles += cycles;              // Incrementamos el contador de ciclos totales
-
-
-		// Estadísticas
-		statsCycles += cycles;
-
-		// Hacemos la media de ciclos ejecutados por segundo para fines estadísticos
-		if (statsCycles > 20000) {
-			unsigned int statsClock = SDL_GetTicks();
-
-			if (statsClock - statsTotalTime >= 1000) {
-				cout << statsCycles << " ciclos por segundo\n";
-				statsCycles = 0;
-				statsTotalTime = statsClock;
+			// Ajusta a la velocidad real de la NES
+			if (endFrame) {
+				int delay= PPU::FRAME_PERIOD - (SDL_GetTicks() - emuFrameTime);
+				if (delay > 0) {
+					// Esperamos el tiempo equivalente a la resta del período de un frame en la NES real
+					// menos el tiempo que ha tardado en dibujar ese frame el emulador
+					SDL_Delay(delay);
+				}
+				emuFrameTime = SDL_GetTicks();
 			}
+
+
+			// Resetea el contador de ciclos de la iteración
+			cycles = 0;
+		}// if (!pause)
+
+
+		// TODO: modificar esto para que no se compruebe en cada iteración del bucle principal, sino cada 500ms por ejemplo
+		// y así no consuma tanto tiempo de CPU (aunque bien pensado como sólo comprueba si está actualizada la configuración
+		// ya el mero hecho de comprobar si han pasado los 500ms sería igual de costoso, por lo que tal vez no sea una buena idea)
+		if (config->getUpdated()) {
+			refreshConfig();				// Aplicamos la configuración del objeto config
+			config->setUpdated(false);		// Una vez aplicada la configuración indicamos que ya no está actualizada
 		}
-
-
-		// Ajusta a la velocidad real de la NES
-		if (endFrame) {
-			int delay= PPU::FRAME_PERIOD - (SDL_GetTicks() - emuFrameTime);
-			if (delay > 0) {
-				// Esperamos el tiempo equivalente a la resta del período de un frame en la NES real
-				// menos el tiempo que ha tardado en dibujar ese frame el emulador
-				SDL_Delay(delay);
-			}
-			emuFrameTime = SDL_GetTicks();
-		}
-
-
-		// Resetea el contador de ciclos de la iteración
-		cycles = 0;
 
 	}// while
 	//fichLog.close();
@@ -210,4 +223,9 @@ void NES::run() {
 
 void NES::reset() {
 	cpu->reset();
+}
+
+
+void NES::refreshConfig() {
+	pause = config->getPause();
 }
