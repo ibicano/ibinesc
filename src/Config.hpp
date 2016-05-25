@@ -31,6 +31,9 @@ public:
 	void setPause(bool p);
 	bool getPause();
 
+	void setReset(bool r);		// Resetea el emulador
+	bool getReset();
+
 protected:
 	bool updated;		// Indica si la configuración se ha modificado (se opne a true cuando se ejecuta cualquier función que modifique algo)
 
@@ -38,6 +41,7 @@ protected:
 
 	// Estados de ejecución
 	bool pause;
+	bool reset;
 };
 
 #endif /* CONFIG_HPP_ */

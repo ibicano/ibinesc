@@ -12,8 +12,8 @@
 #include "ppu/PPU.hpp"
 
 GFX::GFX() {
-	viewWidth = 256;
-	viewHeight = 240;
+	viewWidth = 1024;
+	viewHeight = 960;
 }
 
 GFX::~GFX() {

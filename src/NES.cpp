@@ -227,5 +227,9 @@ void NES::reset() {
 
 
 void NES::refreshConfig() {
+	if (config->getReset()) {
+		this->reset();
+		config->setReset(false);
+	}
 	pause = config->getPause();
 }

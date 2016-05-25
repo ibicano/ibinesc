@@ -10,6 +10,7 @@
 Config::Config() {
 	romFile = "Prueba inicial";
 	pause = false;
+	reset = false;
 }
 
 Config::~Config() {
@@ -40,4 +41,13 @@ void Config::setUpdated(bool u) {
 
 bool Config::getPause() {
 	return pause;
+}
+
+void Config::setReset(bool r) {
+	reset = r;
+	updated = true;
+}
+
+bool Config::getReset() {
+	return reset;
 }

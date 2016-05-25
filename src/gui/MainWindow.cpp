@@ -29,9 +29,12 @@ void MainWindow::createMenus() {
 	// Crea el menú "Emulator"
 	menuEmulator = this->menuBar()->addMenu("Emulator");
 
-	// TODO: hacer que cuando se pulse el botón de pausa se quede marcado como activado con un asterisco o algo
 	actionPause = menuEmulator->addAction("Pause");
+	actionPause->setCheckable(true);
 	connect(actionPause, SIGNAL(triggered()), this, SLOT(pause()));
+
+	actionReset = menuEmulator->addAction("Reset");
+	connect(actionReset, SIGNAL(triggered()), this, SLOT(reset()));
 
 	menuEmulator->addSeparator();
 	actionOptions = menuEmulator->addAction("Options...");
@@ -39,6 +42,7 @@ void MainWindow::createMenus() {
 	// Crea el menú "Help"
 	menuHelp = this->menuBar()->addMenu("Help");
 	actionAbout = menuHelp->addAction("About...");
+	connect(actionAbout, SIGNAL(triggered()), this, SLOT(about()));
 }//createMenus()
 
 
@@ -58,6 +62,15 @@ void MainWindow::loadFile() {
 // Pone el emulador en pause
 void MainWindow::pause() {
 	config->setPause(!config->getPause());
+}
+
+// Resetea el emulador
+void MainWindow::reset() {
+	config->setReset(true);
+}
+
+void MainWindow::about() {
+	QMessageBox::about(this, "About...", "IBINES v0.1 beta");
 }
 
 

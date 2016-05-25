@@ -34,6 +34,7 @@ protected:
 
 	QMenu* menuEmulator;
 	QAction* actionPause;
+	QAction* actionReset;
 	QAction* actionOptions;
 
 	// Crea los menús de la ventana principal
@@ -44,6 +45,8 @@ protected:
 protected slots:
 	void loadFile();
 	void pause();
+	void reset();
+	void about();
 
 };
 
