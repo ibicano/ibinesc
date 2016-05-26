@@ -56,7 +56,7 @@ void MainWindow::destroyMenus() {
 
 // Abre un menú de diálogo para cargar un fichero
 void MainWindow::loadFile() {
-	QFileDialog::getOpenFileName(this, "Open ROM file");
+	config->setRomFile(qPrintable(QFileDialog::getOpenFileName(this, "Open ROM file")));
 }
 
 // Pone el emulador en pause

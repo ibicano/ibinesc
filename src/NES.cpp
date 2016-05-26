@@ -27,20 +27,7 @@ NES::NES(string fileName, Config* config) {
 
 	pause = false;
 
-	rom = new ROM(fileName);
-
-	if (rom->getMapperCode() == 0) mapper = new NROM(rom);
-	else if (rom->getMapperCode() == 1) mapper = new MMC1(rom);
-	else if (rom->getMapperCode() == 3) mapper = new CNROM(rom);
-	else if (rom->getMapperCode() == 4) mapper = new MMC3(rom);
-
-	ppu = new PPU(mapper);
-	joypad = new Joypad();
-	mem = new Memory(ppu, mapper, joypad);
-	cpu = new CPU(mem, ppu);
-
-	if (rom->getMapperCode() == 4)
-        ((MMC3*)mapper)->setCpu(cpu);
+	init(fileName);
 
 }//NES()
 
@@ -52,12 +39,43 @@ NES::~NES() {
 	delete rom;
 }
 
+// Carga una ROM de un fichero
+void NES::init(string fileName) {
+	if (this->rom != NULL) delete rom;
+
+	rom = new ROM(fileName);
+
+	if (this->mapper != NULL) delete mapper;
+
+	if (rom->getMapperCode() == 0) mapper = new NROM(rom);
+	else if (rom->getMapperCode() == 1) mapper = new MMC1(rom);
+	else if (rom->getMapperCode() == 3) mapper = new CNROM(rom);
+	else if (rom->getMapperCode() == 4) mapper = new MMC3(rom);
+
+	if (this->ppu != NULL) delete ppu;
+	ppu = new PPU(mapper);
+
+	if (this->joypad != NULL) delete joypad;
+	joypad = new Joypad();
+
+	if (this->mem != NULL) delete mem;
+	mem = new Memory(ppu, mapper, joypad);
+
+	if (this->cpu != NULL) delete cpu;
+	cpu = new CPU(mem, ppu);
+
+	if (rom->getMapperCode() == 4)
+		((MMC3*)mapper)->setCpu(cpu);
+
+	reset();
+}
+
 
 void NES::run() {
 	// Esto para la depuración de las instrucciones
 	//fstream fichLog("/home/ibon/tmp/ibitest.log", fstream::out);
 
-	int statsCycles = 0;		// Contador de ciclos de CPU para esyadísticas de rendimiento
+	int statsCycles = 0;		// Contador de ciclos de CPU para estadísticas de rendimiento
 	unsigned int statsTotalTime = SDL_GetTicks();     // Tiempo de ejecución transcurrido para fines estadísticos
 	int totalCycles = 0;		// Número de ciclos de CPU totales desde que arranca el emulador
 	int cycles = 0;				// Ciclo de CPU en una iteración del bucle
@@ -221,12 +239,18 @@ void NES::run() {
 }//run()
 
 
+// TODO: darle una vuelta para ver si también se pueden resetear los contadores del bucle principal.
 void NES::reset() {
 	cpu->reset();
 }
 
 
 void NES::refreshConfig() {
+	if (config->getUpdatedRomFile()) {
+		init(config->getRomFile());
+		config->setUpdatedRomFile(false);
+	}
+
 	if (config->getReset()) {
 		this->reset();
 		config->setReset(false);

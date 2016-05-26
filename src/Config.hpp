@@ -25,6 +25,8 @@ public:
 	bool getUpdated();
 	void setUpdated(bool u);
 
+	void setUpdatedRomFile(bool u);
+	bool getUpdatedRomFile();
 	void setRomFile(string romFile);
 	string getRomFile();
 
@@ -35,9 +37,10 @@ public:
 	bool getReset();
 
 protected:
-	bool updated;		// Indica si la configuración se ha modificado (se opne a true cuando se ejecuta cualquier función que modifique algo)
+	bool updated;		// Indica si la configuración se ha modificado (se pone a true cuando se ejecuta cualquier función que modifique algo)
 
 	string romFile;
+	bool updatedRomFile;
 
 	// Estados de ejecución
 	bool pause;

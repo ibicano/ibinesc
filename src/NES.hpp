@@ -24,6 +24,8 @@ public:
 	NES(string fileName, Config* config);
 	virtual ~NES();
 
+	void init(string fileName);
+
 	// Ejecuta la NES
 	void run();
 
@@ -34,14 +36,14 @@ public:
 	void refreshConfig();
 
 private:
-	Config* config;		// Configuración del emulador
+	Config* config = NULL;		// Configuración del emulador
 	bool pause;			// Indica si la emulación está en pausa
-	ROM* rom;			// Rom del juego
-	Mapper* mapper;		// Mapper del cartucho
-	Memory* mem;
-	CPU* cpu;			// CPU de la NES
-	PPU* ppu;			// PPU de la NES
-	Joypad* joypad;
+	ROM* rom = NULL;			// Rom del juego
+	Mapper* mapper = NULL;		// Mapper del cartucho
+	Memory* mem = NULL;
+	CPU* cpu = NULL;			// CPU de la NES
+	PPU* ppu = NULL;			// PPU de la NES
+	Joypad* joypad = NULL;
 };
 
 #endif /* NES_HPP_ */

@@ -57,6 +57,10 @@ GFX_Sdl2::GFX_Sdl2() : GFX() {
 
 GFX_Sdl2::~GFX_Sdl2() {
 	delete []pixels;
+	SDL_DestroyTexture(texture);
+	SDL_DestroyRenderer(renderer);
+	SDL_FreeSurface(surface);
+	SDL_DestroyWindow(window);
 }//~GFX_Sdl2()
 
 
