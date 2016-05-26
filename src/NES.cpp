@@ -186,7 +186,12 @@ void NES::run() {
 						else if (event.key.keysym.sym == SDLK_RSHIFT)
 							joypad->setSelect(0);
 					}
-				}
+					else if (event.type == SDL_WINDOWEVENT) {
+						if (event.window.event == SDL_WINDOWEVENT_CLOSE) {
+							exit(0);
+						}
+					}
+				}//while
 
 				keyCounter = 0;
 			}

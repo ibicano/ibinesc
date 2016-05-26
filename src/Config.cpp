@@ -31,12 +31,12 @@ void Config::setUpdatedRomFile(bool u) {
 }
 
 
-bool Config::getUpdatedRomFile() {
+bool Config::getUpdatedRomFile() const {
 	return updatedRomFile;
 }
 
 
-string Config::getRomFile() {
+string Config::getRomFile() const {
 	return this->romFile;
 }
 
@@ -47,7 +47,7 @@ void Config::setPause(bool p) {
 }
 
 
-bool Config::getUpdated() {
+bool Config::getUpdated() const {
 	return updated;
 }
 
@@ -61,7 +61,7 @@ void Config::setUpdated(bool u) {
 }
 
 
-bool Config::getPause() {
+bool Config::getPause() const {
 	return pause;
 }
 
@@ -72,6 +72,6 @@ void Config::setReset(bool r) {
 }
 
 
-bool Config::getReset() {
+bool Config::getReset() const {
 	return reset;
 }

@@ -35,11 +35,14 @@ protected:
 	QMenu* menuEmulator;
 	QAction* actionPause;
 	QAction* actionReset;
+	QMenu* subVideo;
 	QAction* actionOptions;
 
 	// Crea los menús de la ventana principal
 	void createMenus();
 	void destroyMenus();
+
+	virtual void closeEvent(QCloseEvent* event);
 
 
 protected slots:
@@ -47,7 +50,7 @@ protected slots:
 	void pause();
 	void reset();
 	void about();
-
+	void quit();
 };
 
 #endif /* GUI_MAINWINDOW_HPP_ */

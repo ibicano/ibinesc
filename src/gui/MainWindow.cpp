@@ -25,6 +25,7 @@ void MainWindow::createMenus() {
 
 	menuFile->addSeparator();
 	actionQuit = menuFile->addAction("Quit");
+	connect(actionQuit, SIGNAL(triggered()), this, SLOT(quit()));
 
 	// Crea el menú "Emulator"
 	menuEmulator = this->menuBar()->addMenu("Emulator");
@@ -35,6 +36,8 @@ void MainWindow::createMenus() {
 
 	actionReset = menuEmulator->addAction("Reset");
 	connect(actionReset, SIGNAL(triggered()), this, SLOT(reset()));
+
+	subVideo = menuEmulator->addMenu("Video");
 
 	menuEmulator->addSeparator();
 	actionOptions = menuEmulator->addAction("Options...");
@@ -71,6 +74,18 @@ void MainWindow::reset() {
 
 void MainWindow::about() {
 	QMessageBox::about(this, "About...", "IBINES v0.1 beta");
+}
+
+void MainWindow::quit() {
+	exit(0);
+}
+
+
+//EVENTS
+
+// Reimplemento la función closeEvent para que cierre la aplicación cuando secierra la ventana QT
+void MainWindow::closeEvent(QCloseEvent* event) {
+	exit(0);
 }
 
 

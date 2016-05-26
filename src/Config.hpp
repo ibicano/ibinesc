@@ -22,19 +22,19 @@ public:
 	Config();
 	virtual ~Config();
 
-	bool getUpdated();
+	bool getUpdated() const;
 	void setUpdated(bool u);
 
 	void setUpdatedRomFile(bool u);
-	bool getUpdatedRomFile();
+	bool getUpdatedRomFile() const;
 	void setRomFile(string romFile);
-	string getRomFile();
+	string getRomFile() const;
 
 	void setPause(bool p);
-	bool getPause();
+	bool getPause() const;
 
 	void setReset(bool r);		// Resetea el emulador
-	bool getReset();
+	bool getReset() const;
 
 protected:
 	bool updated;		// Indica si la configuración se ha modificado (se pone a true cuando se ejecuta cualquier función que modifique algo)
