@@ -12,8 +12,6 @@
 #include "ppu/PPU.hpp"
 
 GFX::GFX() {
-	viewWidth = 1024;
-	viewHeight = 960;
 }
 
 GFX::~GFX() {
@@ -44,7 +42,7 @@ GFX_Sdl2::GFX_Sdl2() : GFX() {
     pixels = new unsigned int[61440];
 
     // Actualiza la textura con el array de pixeles-> El último parámetro es el número
-    // de bytes que tiene una lñínea hortizontal (256*4=1024)
+    // de bytes que tiene una línea hortizontal (256*4=1024)
     SDL_UpdateTexture(texture, NULL, pixels, 1024);
 
     // Copia la textura al renderizador
@@ -92,3 +90,11 @@ void GFX_Sdl2::update() {
     SDL_RenderCopy(renderer, texture, NULL, NULL);
     SDL_RenderPresent(renderer);
 }//update()
+
+void GFX_Sdl2::setViewSize(int w, int h) {
+	SDL_SetWindowSize(window, w, h);
+}
+
+void GFX_Sdl2::setZoomView(int zoom) {
+	setViewSize(zoom * NATIVE_WIDTH, zoom * NATIVE_HEIGHT);
+}

@@ -16,6 +16,7 @@
 #include "mappers/CNROM.hpp"
 #include "mappers/MMC3.hpp"
 #include "Memory.hpp"
+#include "GFX.hpp"
 
 #include <SDL2/SDL.h>
 
@@ -261,4 +262,6 @@ void NES::refreshConfig() {
 		config->setReset(false);
 	}
 	pause = config->getPause();
+
+	ppu->getGfx()->setZoomView(config->getResolution());
 }

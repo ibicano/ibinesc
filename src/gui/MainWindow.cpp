@@ -37,7 +37,30 @@ void MainWindow::createMenus() {
 	actionReset = menuEmulator->addAction("Reset");
 	connect(actionReset, SIGNAL(triggered()), this, SLOT(reset()));
 
+	// Submenú con opciones de vídeo
+	QSignalMapper* signalMapper = new QSignalMapper(this);
+
 	subVideo = menuEmulator->addMenu("Video");
+	actionRes1x = subVideo->addAction("1x");
+	connect(actionRes1x, SIGNAL(triggered()), signalMapper, SLOT(map()));
+	actionRes2x = subVideo->addAction("2x");
+	connect(actionRes2x, SIGNAL(triggered()), signalMapper, SLOT(map()));
+	actionRes3x = subVideo->addAction("3x");
+	connect(actionRes3x, SIGNAL(triggered()), signalMapper, SLOT(map()));
+	actionRes4x = subVideo->addAction("4x");
+	connect(actionRes4x, SIGNAL(triggered()), signalMapper, SLOT(map()));
+
+	signalMapper->setMapping(actionRes1x, 1);
+	signalMapper->setMapping(actionRes2x, 2);
+	signalMapper->setMapping(actionRes3x, 3);
+	signalMapper->setMapping(actionRes4x, 4);
+
+	connect(signalMapper, SIGNAL(mapped(int)), this, SLOT(resolution(int)));
+
+	subVideo->addSeparator();
+
+	// TODO: implementar la funcionalidad de pantalla completa
+	actionFullscreen = subVideo->addAction("Fullscreen");
 
 	menuEmulator->addSeparator();
 	actionOptions = menuEmulator->addAction("Options...");
@@ -78,6 +101,10 @@ void MainWindow::about() {
 
 void MainWindow::quit() {
 	exit(0);
+}
+
+void MainWindow::resolution(int r) {
+	config->setResolution(r);
 }
 
 

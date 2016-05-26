@@ -19,6 +19,9 @@ struct RGB;
 // Clase base abstracta para el motor gráfico
 class GFX {
 public:
+	static const int NATIVE_WIDTH = 256;
+	static const int NATIVE_HEIGHT = 240;
+
 	GFX();
 	virtual ~GFX();
 
@@ -27,9 +30,13 @@ public:
 	virtual void clear() = 0;
 	virtual void update() = 0;
 
+	// Funciones para cambiar la resolución de la ventana
+	virtual void setViewSize(int w = NATIVE_WIDTH, int h = NATIVE_HEIGHT) = 0;
+	virtual void setZoomView(int zoom = 1) = 0;
+
 protected:
-	int viewWidth;
-	int viewHeight;
+	int viewWidth = NATIVE_WIDTH;
+	int viewHeight = NATIVE_HEIGHT;
 };
 
 
@@ -43,6 +50,9 @@ public:
 	virtual void fill(RGB color);
 	virtual void clear();
 	virtual void update();
+
+	virtual void setViewSize(int w = NATIVE_WIDTH, int h = NATIVE_HEIGHT);
+	virtual void setZoomView(int zoom);
 
 private:
 	SDL_Window* window;

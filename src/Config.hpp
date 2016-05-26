@@ -36,11 +36,16 @@ public:
 	void setReset(bool r);		// Resetea el emulador
 	bool getReset() const;
 
+	int getResolution() const;
+	void setResolution(int r);
+
 protected:
 	bool updated;		// Indica si la configuración se ha modificado (se pone a true cuando se ejecuta cualquier función que modifique algo)
 
-	string romFile;
-	bool updatedRomFile;
+	string romFile;			// Nombre del fichero de la ROM
+	bool updatedRomFile;	// Indica si ha cambiado el fichero de ROM para cargarlo de nuevo
+
+	int resolution = 1;		// Factor de multiplicación de la resolución de vídeo
 
 	// Estados de ejecución
 	bool pause;

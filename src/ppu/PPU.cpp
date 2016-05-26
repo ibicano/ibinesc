@@ -850,6 +850,11 @@ void PPU::resetTilesCache() {
 }
 
 
+GFX* PPU::getGfx() {
+	return gfx;
+}
+
+
 const RGB PPU::COLOR_PALETTE[] = {
 										{0x75, 0x75, 0x75},    //0x00
 										{0x27, 0x1B, 0x8F},    //0x01

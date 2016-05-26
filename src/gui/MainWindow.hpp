@@ -35,7 +35,16 @@ protected:
 	QMenu* menuEmulator;
 	QAction* actionPause;
 	QAction* actionReset;
+
+	// Submenú "Video"
 	QMenu* subVideo;
+	QAction* actionRes1x;
+	QAction* actionRes2x;
+	QAction* actionRes3x;
+	QAction* actionRes4x;
+	QAction* actionFullscreen;
+
+	// Diálogo de opciones
 	QAction* actionOptions;
 
 	// Crea los menús de la ventana principal
@@ -51,6 +60,7 @@ protected slots:
 	void reset();
 	void about();
 	void quit();
+	void resolution(int r);
 };
 
 #endif /* GUI_MAINWINDOW_HPP_ */

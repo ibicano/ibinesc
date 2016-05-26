@@ -9,6 +9,7 @@
 
 Config::Config() {
 	romFile = "Prueba inicial";
+	updated = false;
 	updatedRomFile = false;
 
 	pause = false;
@@ -74,4 +75,14 @@ void Config::setReset(bool r) {
 
 bool Config::getReset() const {
 	return reset;
+}
+
+
+int Config::getResolution() const {
+	return resolution;
+}
+
+void Config::setResolution(int r) {
+	resolution = r;
+	updated = true;
 }

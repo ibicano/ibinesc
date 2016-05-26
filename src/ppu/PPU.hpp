@@ -110,6 +110,8 @@ public:
 
 	int control2ColourconfigBits5_7();
 
+	// Devuelve un puntero al motor gráfico
+	GFX* getGfx();
 
 private:
 	PPUMemory* memory;
