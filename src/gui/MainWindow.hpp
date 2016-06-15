@@ -61,6 +61,7 @@ protected slots:
 	void about();
 	void quit();
 	void resolution(int r);
+	void fullscreen();
 };
 
 #endif /* GUI_MAINWINDOW_HPP_ */

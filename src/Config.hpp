@@ -39,13 +39,18 @@ public:
 	int getResolution() const;
 	void setResolution(int r);
 
+	bool getFullscreen();
+	void setFullscreen(bool f);
+
 protected:
-	bool updated;		// Indica si la configuración se ha modificado (se pone a true cuando se ejecuta cualquier función que modifique algo)
+	bool updated;				// Indica si la configuración se ha modificado (se pone a true cuando se ejecuta cualquier función que modifique algo)
 
-	string romFile;			// Nombre del fichero de la ROM
-	bool updatedRomFile;	// Indica si ha cambiado el fichero de ROM para cargarlo de nuevo
+	string romFile;				// Nombre del fichero de la ROM
+	bool updatedRomFile;		// Indica si ha cambiado el fichero de ROM para cargarlo de nuevo
 
-	int resolution = 1;		// Factor de multiplicación de la resolución de vídeo
+	int resolution = 1;			// Factor de multiplicación de la resolución de vídeo
+
+	bool fullscreen = false; 	// Indica si el emulador se ejecuta en pantalla completa
 
 	// Estados de ejecución
 	bool pause;

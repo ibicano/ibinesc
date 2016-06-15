@@ -34,6 +34,8 @@ public:
 	virtual void setViewSize(int w = NATIVE_WIDTH, int h = NATIVE_HEIGHT) = 0;
 	virtual void setZoomView(int zoom = 1) = 0;
 
+	virtual void setFullscreen(bool f) = 0;
+
 protected:
 	int viewWidth = NATIVE_WIDTH;
 	int viewHeight = NATIVE_HEIGHT;
@@ -53,6 +55,8 @@ public:
 
 	virtual void setViewSize(int w = NATIVE_WIDTH, int h = NATIVE_HEIGHT);
 	virtual void setZoomView(int zoom);
+
+	virtual void setFullscreen(bool f);
 
 private:
 	SDL_Window* window;

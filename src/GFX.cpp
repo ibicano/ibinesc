@@ -98,3 +98,8 @@ void GFX_Sdl2::setViewSize(int w, int h) {
 void GFX_Sdl2::setZoomView(int zoom) {
 	setViewSize(zoom * NATIVE_WIDTH, zoom * NATIVE_HEIGHT);
 }
+
+void GFX_Sdl2::setFullscreen(bool f) {
+	if (f) SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	else SDL_SetWindowFullscreen(window, 0);
+}

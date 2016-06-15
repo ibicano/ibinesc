@@ -16,8 +16,6 @@
 using namespace std;
 
 
-//TODO: mejorar la gestión del hilo del GUI. Podemos comunicarnos con la estructura de datos pasada como data, que puede ser una clase
-// Función para ejecutar la GUI en otro hilo
 int threadGui(void* data) {
 	GUI* gui = new GUI(0, (char**)0, (Config*)data);
 	return 0;

@@ -61,6 +61,7 @@ void MainWindow::createMenus() {
 
 	// TODO: implementar la funcionalidad de pantalla completa
 	actionFullscreen = subVideo->addAction("Fullscreen");
+	connect(actionFullscreen, SIGNAL(triggered()), this, SLOT(fullscreen()));
 
 	menuEmulator->addSeparator();
 	actionOptions = menuEmulator->addAction("Options...");
@@ -105,6 +106,10 @@ void MainWindow::quit() {
 
 void MainWindow::resolution(int r) {
 	config->setResolution(r);
+}
+
+void MainWindow::fullscreen() {
+	config->setFullscreen(true);
 }
 
 

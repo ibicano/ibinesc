@@ -168,6 +168,9 @@ void NES::run() {
 							joypad->setStart(1);
 						else if (event.key.keysym.sym == SDLK_RSHIFT)
 							joypad->setSelect(1);
+						else if (event.key.keysym.sym == SDLK_ESCAPE)
+							config->setFullscreen(false);
+							//ppu->getGfx()->setFullscreen(false);
 					}
 					else if (event.type == SDL_KEYUP) {
 						if (event.key.keysym.sym == SDLK_w)
@@ -264,4 +267,6 @@ void NES::refreshConfig() {
 	pause = config->getPause();
 
 	ppu->getGfx()->setZoomView(config->getResolution());
+
+	ppu->getGfx()->setFullscreen(config->getFullscreen());
 }

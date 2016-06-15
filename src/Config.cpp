@@ -86,3 +86,14 @@ void Config::setResolution(int r) {
 	resolution = r;
 	updated = true;
 }
+
+
+bool Config::getFullscreen() {
+	return fullscreen;
+}
+
+
+void Config::setFullscreen(bool f) {
+	fullscreen = f;
+	updated = true;
+}
