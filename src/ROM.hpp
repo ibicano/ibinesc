@@ -54,8 +54,6 @@ public:
     // Devuelve un banco CHR con direccionamiento como si fuesen de 1k en vez de 8k
     unsigned int* getChr1k(int n);
 
-	//TODO: Acabar la especificación de las funciones
-
 private:
 	// Contenido de la ROM
 	vector<unsigned char> rom;

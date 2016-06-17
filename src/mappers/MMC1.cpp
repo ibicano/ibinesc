@@ -38,7 +38,6 @@ MMC1::MMC1(ROM* rom) : Mapper(rom) {
 }
 
 MMC1::~MMC1() {
-	// TODO Auto-generated destructor stub
 }
 
 int MMC1::readPrg(int addr) {

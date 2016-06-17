@@ -59,7 +59,6 @@ void MainWindow::createMenus() {
 
 	subVideo->addSeparator();
 
-	// TODO: implementar la funcionalidad de pantalla completa
 	actionFullscreen = subVideo->addAction("Fullscreen");
 	connect(actionFullscreen, SIGNAL(triggered()), this, SLOT(fullscreen()));
 
@@ -73,9 +72,28 @@ void MainWindow::createMenus() {
 }//createMenus()
 
 
-//TODO: liberar memoria de los menús
+// Libera memoria de los menús
 void MainWindow::destroyMenus() {
+	delete actionAbout;
+	delete menuHelp;
 
+	delete actionOptions;
+
+	delete actionFullscreen;
+
+	delete actionRes4x;
+	delete actionRes3x;
+	delete actionRes2x;
+	delete actionRes1x;
+	delete subVideo;
+
+	delete actionReset;
+	delete actionPause;
+	delete menuEmulator;
+
+	delete actionQuit;
+	delete actionLoadRom;
+	delete menuFile;
 }//destroyMenus()
 
 
