@@ -13,6 +13,7 @@ GUI::GUI(int argc, char** argv, Config* config) {
 	app = new QApplication(argc, argv);
 
 	mainWindow = new MainWindow(config);
+	mainWindow->setGeometry(300, 0, 300, 150);
 	mainWindow->show();
 	app->exec();
 }//GUI()
@@ -21,7 +22,3 @@ GUI::~GUI() {
 	delete mainWindow;
 	delete app;
 }//~GUI()
-
-
-
-
